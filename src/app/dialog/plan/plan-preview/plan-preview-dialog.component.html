@@ -1,0 +1,17 @@
+<ng-container *ngIf="{preview: preview$ | async, uom: uom$ | async, tasks: tasks$ | async} as state">
+  <ng-container *ngIf="state.preview && state.uom && state.tasks">
+    <dialog-header [title]="state.preview.displayName + ' Preview'"></dialog-header>
+
+    <dialog-content>
+      <plan-preview-toolbar
+        (runPlan)="runPlanClick()"
+        (saveReport)="saveReportClick(state.preview)"
+        (downloadXLS)="downloadXLSClick()"
+        (downloadPDF)="downloadPDFClick()"
+      ></plan-preview-toolbar>
+      <!-- <div>{{ state.preview.displayName }}</div> -->
+      <plan-preview-table [preview]="state.preview" [uom]="state.uom" [tasks]="state.tasks" [downloadXLS]="downloadXLS">
+      </plan-preview-table>
+    </dialog-content>
+  </ng-container>
+</ng-container>

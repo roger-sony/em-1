@@ -1,0 +1,19 @@
+<input
+  matInput
+  [formControl]="nounSelect"
+  [matAutocomplete]="autocomplete"
+  [style.width.ch]="((nounSelect.value | stringify) || 'Select noun...').length"
+  placeholder="Select noun..."
+/>
+
+<mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="onNounSelect($event.option.value)">
+  <div class="global-noun" (click)="onNounSelect('Any Noun')">
+    <oph-icon [name]="'global'"></oph-icon>
+    <span>Any Noun</span>
+  </div>
+  <div>
+    <mat-option *ngFor="let noun of filteredNouns$ | async" [title]="noun" [value]="noun">
+      {{ noun }}
+    </mat-option>
+  </div>
+</mat-autocomplete>

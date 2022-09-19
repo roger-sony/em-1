@@ -1,0 +1,38 @@
+<div class="sked-main-wrap">
+  <div class="header">
+    <div class="date-container">{{ now | date: 'EEEE' }} | {{ now | date: 'MMM d' }}</div>
+    <div class="user-container">
+      <div class="coins-container">
+        <img src="/assets/img/icons/mobile-sked/coin.png" [width]="24" [height]="24" alt="coin" />
+        <div class="actual-coins">394</div>
+        <div class="total-coins">/1000</div>
+      </div>
+    </div>
+  </div>
+  <div class="pre-body">
+    <div class="route-breadcrumb" routerLink="/dashboard">
+      <oph-icon class="chevron-left" name="/mobile-sked/game-theme/chevron-left" [size]="14"></oph-icon>
+      <label class="route-label">MORNING ROUTINE</label>
+    </div>
+    <div class="item-timeline-wrap">
+      <span class="time" *ngIf="skedEndDate$ && skedStartDate$ | async">
+        {{ skedStartDate$ | async | date: 'h:mm a' }} - {{ skedEndDate$ | async | date: 'h:mm a' }}
+      </span>
+    </div>
+  </div>
+  <div class="divider-wrap">
+    <mat-divider class="pre-body-divider"></mat-divider>
+    <span class="divider-arrow-down"></span>
+  </div>
+  <div class="body">
+    <div class="paragraphs-wrap" *ngIf="sked$ | async; let sked">
+      <div
+        class="card-wrap {{ getCasePreparedClass(paragraph, sked) }}"
+        *ngFor="let paragraph of sked?.paragraphs; let i = index"
+        [routerLink]="'paragraph/' + paragraph.instanceID"
+      >
+        <paragraph-card [sked]="sked" [paragraph]="paragraph" [index]="i" (updateSked)="initSked()"></paragraph-card>
+      </div>
+    </div>
+  </div>
+</div>

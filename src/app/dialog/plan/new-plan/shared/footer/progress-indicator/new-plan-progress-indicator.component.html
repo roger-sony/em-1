@@ -1,0 +1,5 @@
+<div class="indicator-label">{{ completed }} of {{ total }} completed</div>
+
+<div class="indicator-total">
+  <div class="indicator-completed" [style.width.%]="(completed / total) * 100"></div>
+</div>

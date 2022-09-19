@@ -1,0 +1,13 @@
+<button #menuButton (click)="onMenuClick($event)" [ngClass]="'detail-menu'">
+  <oph-icon [ngClass]="'icon'" [name]="'ellipsis-dark'"></oph-icon>
+</button>
+
+<oph-menu [origin]="menuButton" [minWidth]="168">
+  <oph-menu-item-new [iconName]="'icon-clock'" [text]="'Schedule'" (click)="onScheduleClick()"></oph-menu-item-new>
+  <oph-menu-separator></oph-menu-separator>
+  <oph-menu-item-new [iconName]="'icon-edit'" [text]="'Edit'" (click)="onEditClick()"></oph-menu-item-new>
+  <oph-menu-item-new [iconName]="'icon-pencil'" [text]="'Rename'" (click)="onRenameClick()"></oph-menu-item-new>
+  <oph-menu-item-new [iconName]="'icon-duplicate'" [text]="'Clone'" (click)="onCloneClick()"></oph-menu-item-new>
+  <oph-menu-separator></oph-menu-separator>
+  <oph-menu-item-new [iconName]="'icon-delete'" [text]="'Delete'" (click)="onDeleteClick()"></oph-menu-item-new>
+</oph-menu>

@@ -1,0 +1,37 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.oph-card-chip {
+  margin-right: 8px;
+}
+
+.vertical-divider {
+  border-left: 1px solid $border-color;
+  margin: 0 12px 0 4px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.chip-container {
+  border-top: 1px solid $border-color;
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.task-text {
+  margin: 0;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+}

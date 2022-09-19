@@ -1,0 +1,55 @@
+<p>
+  <em
+    >Note: Changes will apply to all nouns with subcategory <strong>{{ config.noun_subcategory }}</strong></em
+  >
+</p>
+<form [formGroup]="form">
+  <div class="form-group">
+    <app-autocomplete
+      [options]="unitOfMeasureOptions"
+      label="Unit of Measure"
+      placeholder="Gallon"
+      formControlName="display_name"
+      [inputValue]="config.display_name"
+      [fieldRequired]="true"
+    ></app-autocomplete>
+  </div>
+  <div class="form-group" *ngIf="f.type.value === 'range'">
+    <h3>
+      Configure Range Options
+      <mat-icon
+        matTooltip="These will be the possible values for your noun. They'll appear as radio button options when your users go to update a noun."
+        color="accent"
+        >info</mat-icon
+      >
+    </h3>
+    <div cdkDropList class="example-list" (cdkDropListDropped)="handleDrop($event)">
+      <div
+        formArrayName="range_config"
+        *ngFor="let r of form.get('range_config').controls; let i = index"
+        class="example-box"
+        cdkDrag
+      >
+        <mat-icon class="draggy">drag_indicator</mat-icon>
+        <div [formGroupName]="i">
+          <mat-form-field appearance="outline" style="margin-bottom: -1.25em">
+            <input formControlName="display_value" matInput type="text" placeholder="Some Text Value" />
+          </mat-form-field>
+        </div>
+        <span class="fill-remaining-space"></span>
+        <mat-icon class="clicky" (click)="handleDeleteClick(i)" color="warn">delete</mat-icon>
+      </div>
+    </div>
+    <div>
+      <button mat-raised-button (click)="handleAddClick()" type="button" color="primary">+ Add Range Option</button>
+    </div>
+  </div>
+</form>
+
+<!--=========== Debug ===============-->
+<div class="debug">
+  <p>Config Input:</p>
+  <pre>{{ config | json }}</pre>
+  <p>Form Values:</p>
+  <pre>{{ form.value | json }}</pre>
+</div>

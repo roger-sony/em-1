@@ -1,0 +1,22 @@
+@import '~@angular/material/theming';
+@import 'src/styles/variables';
+
+@mixin oph-mat-option-theme($config) {
+  .mat-option {
+    height: 40px !important;
+    line-height: 40px !important;
+
+    &:hover:not(.mat-option-disabled) {
+      background-color: $primary-color-lightest;
+    }
+
+    &.mat-active {
+      background-color: $black-color-lightest;
+    }
+
+    & > .mat-option-text {
+      font-family: mat-font-family($config);
+      font-size: 14px;
+    }
+  }
+}

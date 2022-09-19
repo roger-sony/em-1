@@ -1,0 +1,25 @@
+<div cdkDropList [cdkDropListDisabled]="!canEdit" class="checklist-container" (cdkDropListDropped)="handleDrop($event)">
+  <div *ngFor="let item of checkList; let i = index" class="checklist-item" cdkDrag>
+    <div class="ophanello icon-drag_indicator" *ngIf="canEdit"></div>
+    <input
+      (input)="onInput($event.target.value, i)"
+      ophInput
+      type="text"
+      placeholder="Add item"
+      name="checkList{{ i }}"
+      class="input"
+      [disabled]="!canEdit"
+      [value]="checkList[i].displayValue"
+    />
+    <button
+      *ngIf="(checkList[i].displayValue || i !== checkList.length - 1) && canEdit; else hidden"
+      class="delete-button"
+      (click)="onDelete(i)"
+    >
+      <div class="ophanello icon-delete"></div>
+    </button>
+    <ng-template #hidden>
+      <div class="hidden-div"></div>
+    </ng-template>
+  </div>
+</div>

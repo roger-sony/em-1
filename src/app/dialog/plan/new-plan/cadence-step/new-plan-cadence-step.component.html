@@ -1,0 +1,17 @@
+<dialog-content>
+  <new-plan-dialog-description>
+    <span>Set a cadence for this plan to run. It can be periodical or a one-off event.</span>
+    <button [title]="'Reset Date'" matTooltip="Reset Date" class="reset-cadence">
+      <oph-icon [name]="'reload'" [size]="24" (click)="onReloadButtonClick()"></oph-icon>
+    </button>
+  </new-plan-dialog-description>
+
+  <cadence-form
+    [value]="cadenceForm$ | async"
+    (valueChange)="onFormValueChange($event)"
+    (validityChange)="onFormValidityChange($event)"
+    class="cadence-form"
+  ></cadence-form>
+</dialog-content>
+
+<new-plan-dialog-footer [completed]="2" [nextDisabled]="nextDisabled$ | async"></new-plan-dialog-footer>

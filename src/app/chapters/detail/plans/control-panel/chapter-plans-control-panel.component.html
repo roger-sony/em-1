@@ -1,0 +1,10 @@
+<plans-search-panel></plans-search-panel>
+
+<add-menu
+  [addButtonText]="'Add Plan'"
+  [createOptionText]="'Create new Plan'"
+  [inputPlaceholder]="'Search for Plan'"
+  [options]="options$ | async"
+  (add)="onAdd($event)"
+  (create)="onCreate()"
+></add-menu>

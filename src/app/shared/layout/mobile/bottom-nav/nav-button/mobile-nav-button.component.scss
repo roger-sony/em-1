@@ -1,0 +1,26 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'Bitter', serif;
+  font-size: 10px;
+  color: $black-color-light;
+  text-transform: uppercase;
+  height: 48px;
+  width: 48px;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.active {
+  color: $primary-color;
+}
+
+.mobile-nav-button-text {
+  margin-top: 4px;
+}

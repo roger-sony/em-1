@@ -1,0 +1,14 @@
+<div class="modal">
+  <div class="modal-content">
+    <div class="colorBar"></div>
+    <div class="modalPadding">
+      <div class="header">
+        <h4 class="centerText">Are you sure you want to abandon this task?</h4>
+      </div>
+      <div class="buttonBox">
+        <button class="mr abButton red" mat-raised-button (click)="handleCloseModalClick(true)">Abandon</button>
+        <button class="mr abButton orange" (click)="handleCloseModalClick(false)" mat-raised-button>Go Back</button>
+      </div>
+    </div>
+  </div>
+</div>

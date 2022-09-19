@@ -1,0 +1,84 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  min-height: 68px;
+  font-family: $lato-font-family;
+  padding: 0 24px;
+  border-left: 1px solid $black-color-lightest;
+  border-bottom: 1px solid $black-color-lightest;
+  overflow-x: auto;
+}
+
+.left-container {
+  display: flex;
+  align-items: center;
+
+  .title-container {
+    padding-right: 24px;
+    min-width: 144px;
+
+    .text {
+      color: $black-color-light;
+      font-size: 16px;
+    }
+
+    .template-name {
+      color: $black-color-light;
+      font-size: 20px;
+    }
+  }
+
+  .zoom-container {
+    display: flex;
+    align-items: center;
+    width: 112px;
+    height: 36px;
+    border-right: 1px solid $black-color-lightest;
+    border-left: 1px solid $black-color-lightest;
+  }
+
+  .now-button {
+    background-color: $white-color;
+    border: 1px solid $black-color-lightest;
+    color: $primary-color;
+    width: 88px;
+    height: 36px;
+    margin: 0 16px;
+  }
+
+  .action-button {
+    all: unset;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 4px;
+    margin-left: 20px;
+
+    .icon::before {
+      font-size: 24px;
+    }
+
+    &:hover {
+      background-color: $black-color-lightest;
+      cursor: pointer;
+    }
+  }
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+.icon-info-2 {
+  margin-left: 20px;
+
+  &:before {
+    font-size: 28px;
+  }
+}

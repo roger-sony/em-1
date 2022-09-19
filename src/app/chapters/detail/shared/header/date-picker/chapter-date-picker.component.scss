@@ -1,0 +1,32 @@
+@import 'src/styles/variables';
+
+:host {
+  background-color: rgba($black-color, 0.04);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 4px;
+}
+
+input {
+  all: unset;
+  border-radius: 3px;
+  color: $black-color;
+  cursor: pointer;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  height: 28px;
+  line-height: 28px;
+  margin: 0 4px;
+  padding: 0 8px;
+  text-align: center;
+
+  &:hover {
+    background-color: rgba($black-color, 0.08);
+  }
+
+  &.opened {
+    background-color: rgba($black-color, 0.08);
+  }
+}

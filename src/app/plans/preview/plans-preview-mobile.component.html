@@ -1,0 +1,20 @@
+<ng-container *ngIf="preview$ | async as preview">
+  <mobile-header (back)="onBackClick()">
+    Preview
+    <plans-preview-mobile-menu
+      class="header-buttons"
+      (runPlan)="runPlanClick()"
+      (saveReport)="saveReportClick(preview)"
+    ></plans-preview-mobile-menu>
+  </mobile-header>
+
+  <div class="preview-message">This is preview of the outcome if you run this Plan now.</div>
+
+  <plan-preview-table
+    [preview]="preview"
+    [uom]="uom$ | async"
+    [tasks]="tasks$ | async"
+    mobile="true"
+    class="preview-table"
+  ></plan-preview-table>
+</ng-container>

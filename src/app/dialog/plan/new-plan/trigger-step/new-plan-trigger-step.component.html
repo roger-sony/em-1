@@ -1,0 +1,19 @@
+<dialog-content>
+  <new-plan-dialog-description>
+    Add your first trigger that will run this plan. It can be based out of a noun or a task.
+  </new-plan-dialog-description>
+
+  <trigger-form
+    [mobile]="false"
+    [value]="triggerForm$ | async"
+    (valueChange)="onFormValueChange($event)"
+    (validityChange)="onFormValidityChange($event)"
+    class="trigger-form"
+  ></trigger-form>
+</dialog-content>
+
+<new-plan-dialog-footer
+  [completed]="3"
+  [doneDisabled]="doneDisabled$ | async"
+  (done)="onDone()"
+></new-plan-dialog-footer>

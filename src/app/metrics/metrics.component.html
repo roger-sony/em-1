@@ -1,0 +1,41 @@
+<div class="legacy-content">
+  <header>
+    <h2>Metrics</h2>
+  </header>
+  <mat-form-field appearance="outline">
+    <mat-label>Charts</mat-label>
+    <mat-select [(ngModel)]="selected">
+      <mat-option *ngFor="let c of charts" [value]="c">
+        {{ c }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
+  <div *ngIf="selected === 'Subtasks per Task'">
+    <iframe
+      style="border: none; border-radius: 2px; box-shadow: 0 2px 10px 0 rgba(70, 76, 79, 0.2); margin-left: 10px"
+      width="1400"
+      height="700"
+      src="https://charts.mongodb.com/charts-ophanim-mxixe/embed/charts?id=7511992e-a3b9-45ee-af36-0350e3bfe530&tenant=7f97f14c-a4f2-474b-8453-c0416cb2d52f"
+    >
+    </iframe>
+  </div>
+  <div *ngIf="selected === 'Number of Nouns by Location'">
+    <iframe
+      style="border: none; border-radius: 2px; box-shadow: 0 2px 10px 0 rgba(70, 76, 79, 0.2); margin-left: 10px"
+      width="1400"
+      height="700"
+      src="https://charts.mongodb.com/charts-ophanim-mxixe/embed/charts?id=f97512bf-d109-493a-8610-151440ad400e&tenant=7f97f14c-a4f2-474b-8453-c0416cb2d52f"
+    >
+    </iframe>
+  </div>
+  <div *ngIf="selected === 'Tasks per Sked'">
+    <iframe
+      style="border: none; border-radius: 2px; box-shadow: 0 2px 10px 0 rgba(70, 76, 79, 0.2)"
+      width="1400"
+      height="700"
+      src="https://charts.mongodb.com/charts-ophanim-mxixe/embed/charts?id=d63a464f-3706-4a2b-826b-faa670d2a3c2&tenant=7f97f14c-a4f2-474b-8453-c0416cb2d52f"
+    >
+    </iframe>
+  </div>
+</div>

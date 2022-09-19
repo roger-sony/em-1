@@ -1,0 +1,348 @@
+<div class="legacy-content">
+  <mat-card *ngIf="sked && tasks" class="example-card">
+    <form #form="ngForm" autocomplete="off">
+      <mat-card-content>
+        <button type="button" mat-raised-button color="accent" routerLink="/sked-template/{{ sked.displayName }}">
+          Edit Sked Template for {{ sked.displayName | formatWeekday }} {{ sked._StartTime | convert24To12 }} -
+          {{ sked._EndTime | convert24To12 }}
+        </button>
+        <h1>Editing Sked</h1>
+        <h2>
+          {{ sked.displayName | formatWeekday }} {{ sked._StartTime | convert24To12 }} -
+          {{ sked._EndTime | convert24To12 }}
+        </h2>
+        <div class="form-container">
+          <br /><br />
+          <h3 *ngIf="sked.status === 'complete'">
+            <em>This sked is already complete and may no longer be edited.</em>
+          </h3>
+          <h2>Workers</h2>
+          <mat-form-field appearance="outline">
+            <mat-label>Number of Employees</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="sked.assignedEmployees"
+              name="assignedEmployees"
+              placeholder="0"
+              required
+              min="0"
+            />
+          </mat-form-field>
+          <br /><br />
+          <h2>Tasks</h2>
+          <div *ngFor="let s of sked.tasks; let i = index">
+            <ng-container *ngIf="!s.attributes">
+              <mat-icon *ngIf="s._id" class="clicky" color="accent" (click)="viewTaskDetail(s)">search</mat-icon>
+              <mat-form-field appearance="outline">
+                <!-- TODO: Decide how to filter tasks to prevent user adding multiple instances of a task? -->
+                <mat-label>Task</mat-label>
+                <mat-select
+                  [(ngModel)]="s._id"
+                  name="taskId{{ i }}"
+                  placeholder="Task"
+                  required
+                  (selectionChange)="updateTaskSelection(i)"
+                >
+                  <mat-option
+                    *ngFor="let t of tasks"
+                    [value]="t._id"
+                    [disabled]="s.status === 'complete' || s.status === 'abandoned'"
+                    >{{ t.shortTask }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="ml extra-narrow-input" appearance="outline">
+                <mat-label>Weight</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="s.weight"
+                  name="taskWeight{{ i }}"
+                  placeholder="0"
+                  required
+                  min="0"
+                  (change)="calculateWeightedDuration(i)"
+                  [disabled]="s.status === 'complete' || s.status === 'abandoned'"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="ml extra-narrow-input">
+                <mat-label>Priority</mat-label>
+                <mat-select
+                  placeholder="Priority"
+                  [(ngModel)]="s.priority"
+                  name="taskPriority{{ i }}"
+                  required
+                  (selectionChange)="priorityChange(i)"
+                  [disabled]="s.status === 'complete' || s.status === 'abandoned'"
+                >
+                  <mat-option *ngFor="let n of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20]" [value]="n">{{
+                    n === 20 ? 'Emergency' : n
+                  }}</mat-option>
+                </mat-select>
+                <!-- <mat-hint>1 = Lowest, 10 = Highest</mat-hint> -->
+              </mat-form-field>
+              <span *ngIf="s.weightedDuration" class="ml">Weighted Duration: {{ s.weightedDuration }} minutes</span>
+              <button
+                class="ml"
+                type="button"
+                mat-mini-fab
+                color="warn"
+                (click)="deleteTask(i)"
+                [disabled]="
+                  sked.status === 'complete' ||
+                  s.status === 'complete' ||
+                  s.status === 'abandoned' ||
+                  s.status === 'auto-abandoned'
+                "
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+              <span
+                *ngIf="s.status !== 'created' && sked.status !== 'complete'"
+                [ngClass]="{
+                  complete: s.status === 'complete',
+                  abandoned: s.status === 'abandoned',
+                  'in-progress': s.status === 'in progress',
+                  'auto-abandoned': s.status === 'auto-abandoned',
+                  moved: s.status === 'moved'
+                }"
+              >
+                &nbsp;&nbsp;
+                <mat-icon>{{ getIconForStatus(s.status) }}</mat-icon>
+                {{ s.status }}<span *ngIf="s.completedBy">d by {{ s.completedBy }}</span>
+              </span>
+              <span
+                *ngIf="sked.status === 'complete'"
+                [ngClass]="{
+                  complete: s.status === 'complete',
+                  abandoned: s.status === 'abandoned',
+                  'in-progress': s.status === 'in progress',
+                  'auto-abandoned':
+                    s.status === 'auto-abandoned' || s.status === 'created' || s.status === 'in progress',
+                  moved: s.status === 'moved'
+                }"
+              >
+                &nbsp;&nbsp;
+                <mat-icon>{{ getIconForStatus(s.status) }}</mat-icon>
+                {{ s.status === 'created' || s.status === 'in progress' ? 'auto-abandoned' : s.status
+                }}<span *ngIf="s.completedBy">d by {{ s.completedBy }}</span>
+              </span>
+            </ng-container>
+          </div>
+          <button
+            type="button"
+            mat-mini-fab
+            color="primary"
+            (click)="addTask()"
+            [disabled]="sked.status === 'complete'"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <br /><br />
+          <!--================ Sked Balance Card ==============-->
+          <mat-card id="sked-balance-card" [ngStyle]="{'bottom.px': hideSkedBalanceCard ? -200 : 0}">
+            <button id="sked-balance-card-btn" type="button" (click)="toggleSkedBalanceCard()">
+              {{ hideSkedBalanceCard ? 'Show' : 'Hide' }}
+            </button>
+            <div *ngIf="sked.status === 'complete'; else notcomplete">
+              <h3><em>This sked has already been completed.</em></h3>
+            </div>
+            <ng-template #notcomplete>
+              <div *ngIf="remainingEmployeeTime - totalSkedEffort >= 0; else unbalanced">
+                <h3 class="success">The sked is balanced.</h3>
+                <p>
+                  Remaining Task Duration: <span class="success">{{ totalSkedEffort | number: '1.0-0' }}</span> minutes.
+                </p>
+                <p>
+                  Remaining Employee Time:
+                  <span class="success">{{ remainingEmployeeTime | number: '1.0-0' }}</span> minutes
+                </p>
+                <p>
+                  <strong
+                    >You can still add
+                    <span class="success">{{ remainingEmployeeTime - totalSkedEffort | number: '1.0-0' }}</span> minutes
+                    of tasks to this sked.</strong
+                  >
+                </p>
+              </div>
+              <ng-template #unbalanced>
+                <h3 class="warning">The sked is unbalanced.</h3>
+                <p>
+                  Remaining Task Duration: <span class="warning">{{ totalSkedEffort | number: '1.0-0' }}</span> minutes
+                </p>
+                <p>
+                  Remaining Employee Time:
+                  <span class="warning">{{ remainingEmployeeTime | number: '1.0-0' }}</span> minutes
+                </p>
+                <p>
+                  <strong
+                    >To balance this sked, you can add
+                    <span class="warning">{{ employeesToAdd | number: '1.0-0' }}</span> workers or remove
+                    <span class="warning">{{ totalSkedEffort - remainingEmployeeTime | number: '1.0-0' }}</span> minutes
+                    of tasks.</strong
+                  >
+                </p>
+              </ng-template>
+            </ng-template>
+          </mat-card>
+        </div>
+      </mat-card-content>
+      <!--============= Submit/Cancel =============-->
+      <mat-card-actions>
+        <button
+          type="submit"
+          class="mr"
+          mat-raised-button
+          color="primary"
+          (click)="submitForm()"
+          [disabled]="form.form.invalid || sked.status === 'complete'"
+        >
+          Save Sked
+        </button>
+        <button type="button" mat-raised-button color="warn" (click)="goBack()">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+  <!--=============== Task Detail Modal ====================-->
+  <!-- TODO: Must check attributes field and handle dynamic tasks differently IF we end up showing them. -->
+  <div *ngIf="viewingTaskDetail" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeTaskDetail()">&times;</span>
+      <h2>
+        {{ activeTask.shortTask }}
+        <mat-icon *ngIf="!activeTask._editing" class="clicky" color="primary" (click)="editTaskFields()">edit</mat-icon>
+      </h2>
+      <div *ngIf="!activeTask._editing">
+        <mat-list *ngIf="{usersMap: usersMap$ | async, rolesMap: rolesMap$ | async} as data">
+          <ng-container *ngFor="let f of objectKeys(activeTask)">
+            <mat-list-item
+              *ngIf="f.charAt(0) !== '_' && f !== 'recipes' && f !== 'score' && f !== 'subtasks' && f !== 'shortTask'"
+            >
+              <h3 matLine>
+                <strong>{{ f === 'effort' ? 'Base Estimated Duration' : (f | unCamelCase) }}: </strong>
+                <span>{{ activeTask[f] | displayFormat: f:data }}</span
+                >&nbsp;
+              </h3>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+        <div *ngIf="activeTask.recipes?.length > 0">
+          <h3>
+            <strong>Associated Recipes:</strong><br />
+            <mat-expansion-panel *ngFor="let r of activeTask.recipes">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h4>{{ recipes[r].displayName }}</h4>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <h4 *ngIf="recipes[r].ingredients">Ingredients:</h4>
+              <ul>
+                <li *ngFor="let i of recipes[r].ingredients">{{ i.item }} ({{ i.qty }})</li>
+              </ul>
+              <h4 *ngIf="recipes[r].consumes">Consumes From Inventory:</h4>
+              <ul>
+                <li *ngFor="let c of recipes[r].consumes">{{ c.item }} ({{ c.qty }})</li>
+              </ul>
+              <h4 *ngIf="recipes[r].instructions">Instructions:</h4>
+              <ol>
+                <li *ngFor="let i of recipes[r].instructions">{{ i }}</li>
+              </ol>
+            </mat-expansion-panel>
+          </h3>
+        </div>
+        <p>
+          <button class="mr" mat-raised-button color="primary" (click)="closeTaskDetail(taskForm && taskForm.dirty)">
+            Close
+          </button>
+        </p>
+      </div>
+      <div *ngIf="activeTask._editing">
+        <p>
+          <strong
+            >Please note: Edits made here will apply only to this sked. To edit this task permanently, visit the
+            <a routerLink="/task/{{ activeTask._id }}">Edit Task</a> page.</strong
+          >
+        </p>
+        <form #taskForm="ngForm" autocomplete="off">
+          <!-- <app-autocomplete [options]="taskAutocompleteOptions.noun || []"
+                          [(ngModel)]="activeTask.noun"
+                          name="noun"
+                          [fieldRequired]="true"
+                          [inputValue]="activeTask.noun"
+                          label="Noun"
+                          placeholder="Task Noun"
+                          (ngModelChange)="constructTaskDisplayName()"></app-autocomplete>
+        <br>
+        <app-autocomplete [options]="taskAutocompleteOptions.verb || []"
+                          [(ngModel)]="activeTask.verb"
+                          name="verb"
+                          [fieldRequired]="true"
+                          [inputValue]="activeTask.verb"
+                          label="Verb"
+                          placeholder="Task Verb"
+                          (ngModelChange)="constructTaskDisplayName()"></app-autocomplete>
+        <br> -->
+          <app-autocomplete
+            [options]="taskAutocompleteOptions.location || []"
+            [(ngModel)]="activeTask.location"
+            name="location"
+            [fieldRequired]="true"
+            [inputValue]="activeTask.location"
+            label="Location"
+            placeholder="Task Location"
+            (ngModelChange)="constructTaskDisplayName()"
+          ></app-autocomplete>
+          <br />
+          <app-autocomplete
+            [options]="taskAutocompleteOptions.category || []"
+            [(ngModel)]="activeTask.category"
+            name="category"
+            [fieldRequired]="true"
+            [inputValue]="activeTask.category"
+            label="Category"
+            placeholder="Task Category"
+          ></app-autocomplete>
+          <br />
+          <mat-form-field appearance="outline">
+            <mat-label>Base Estimated Duration</mat-label>
+            <input matInput type="number" [(ngModel)]="activeTask.effort" name="effort" required min="0" />
+          </mat-form-field>
+          <br />
+          <mat-form-field appearance="outline">
+            <mat-label>Movability</mat-label>
+            <mat-select placeholder="Movability" [(ngModel)]="activeTask.movability" name="movability" required>
+              <mat-option *ngFor="let n of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" [value]="n">{{ n }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br />
+          <mat-form-field appearance="outline">
+            <mat-label>Unpleasantness</mat-label>
+            <input matInput type="number" [(ngModel)]="activeTask.unpleasantness" name="unpleasantness" />
+          </mat-form-field>
+          <p>
+            <button
+              type="button"
+              class="mr"
+              mat-raised-button
+              color="primary"
+              (click)="saveTaskDetail(); closeTaskDetail()"
+              [disabled]="!taskForm.valid"
+            >
+              Save Changes
+            </button>
+            <button type="button" mat-raised-button color="warn" (click)="closeTaskDetail(taskForm && taskForm.dirty)">
+              Cancel
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="debug">
+  <h2>Debug</h2>
+  <pre>{{ sked | json }}</pre>
+</div>

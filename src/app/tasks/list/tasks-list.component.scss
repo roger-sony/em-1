@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  min-height: calc(100vh - 32px - 56px);
+  font-style: normal;
+  font-size: 15px;
+  line-height: 24px;
+  background: #faf7ed;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 16px;
+}

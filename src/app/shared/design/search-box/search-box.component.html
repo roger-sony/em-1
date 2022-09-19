@@ -1,0 +1,9 @@
+<oph-icon name="search"></oph-icon>
+
+<input
+  [attr.aria-label]="label || placeholder || ''"
+  [placeholder]="placeholder || ''"
+  [value]="value || ''"
+  (input)="onInput($event)"
+  type="search"
+/>

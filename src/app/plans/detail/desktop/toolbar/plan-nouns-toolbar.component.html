@@ -1,0 +1,9 @@
+<div class="toolbar-container">
+  <div class="left-container">
+    <plan-nouns-search></plan-nouns-search>
+  </div>
+  <div class="right-container">
+    <plan-add-noun-menu *ngIf="productionEnvironment"></plan-add-noun-menu>
+    <plan-create-condition-button *ngIf="!productionEnvironment"></plan-create-condition-button>
+  </div>
+</div>

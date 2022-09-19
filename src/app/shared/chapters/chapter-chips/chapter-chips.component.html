@@ -1,0 +1,11 @@
+<chapter-chip
+  *ngFor="let chapter of chapters; trackBy: trackByChapterId"
+  [chapter]="chapter"
+  [readonly]="readonly"
+  [style.background-color]="chapter.color ? (chapter.color | hexToRgba: 0.25) : '#ffffff'"
+  [style.border]="chapter.color ? null : '1px solid #eeeeee'"
+  [title]="'Go to Chapter'"
+  (click)="onClick($event, chapter)"
+  (remove)="onRemove(chapter)"
+  class="chapter-chip"
+></chapter-chip>

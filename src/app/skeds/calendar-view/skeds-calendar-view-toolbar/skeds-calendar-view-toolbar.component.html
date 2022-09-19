@@ -1,0 +1,24 @@
+<div class="left-container">
+  <div class="title-container">
+    <ng-container *ngIf="calendarOptions">
+      <span class="text">Template Name -&nbsp;</span>
+      <span class="template-name">{{ name || 'No template selected' }}</span>
+    </ng-container>
+  </div>
+  <div class="zoom-container">
+    <button [disabled]="zoomLength - 1 === zoomIndex" class="action-button" (click)="onZoom('out')">
+      <span [class.disabled]="zoomLength - 1 === zoomIndex" class="ophanello icon-zoom---out icon"></span>
+    </button>
+    <button [disabled]="zoomIndex === 0" class="action-button" (click)="onZoom('in')">
+      <span [class.disabled]="zoomIndex === 0" class="ophanello icon-zoom---in icon"></span>
+    </button>
+  </div>
+  <button class="now-button" mat-flat-button type="button" (click)="navigateWeek.next('now')">Now</button>
+  <button [disabled]="status === 'live'" class="action-button" (click)="navigateWeek.next('prev')">
+    <div [class.disabled]="status === 'live'" class="ophanello icon-caret-arrow-left icon"></div>
+  </button>
+  <button [disabled]="status === 'next'" class="action-button" (click)="navigateWeek.next('next')">
+    <span [class.disabled]="status === 'next'" class="ophanello icon-caret-arrow-right icon"></span>
+  </button>
+  <div *ngIf="status !== 'live'" class="ophanello icon-info-2" matTooltip="This week has not been instantiated"></div>
+</div>

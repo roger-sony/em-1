@@ -1,0 +1,103 @@
+<div class="modal" *ngIf="report && tasks">
+  <div class="modal-content">
+    <span class="close" (click)="handleCloseModalClick()">&times;</span>
+    <h2>Detail Report: {{ report._dateCreated | date: 'short' }}</h2>
+    <h4>
+      <em>If the rule condition was met, the row is highlighted <span class="text-success">green</span>.</em>
+    </h4>
+    <mat-card class="report-title-card">
+      <h3>Decision Table: {{ report.display_name }}</h3>
+      <h4>
+        Evaluates&nbsp;
+        <span *ngFor="let r of report.ref_fact">{{ r.display_name | replace: 'Inventory':'Nouns' }}</span>
+        <ng-container *ngFor="let r of report.ref_fact; let first = first">
+          <span *ngIf="!r.display_name && !first">&nbsp;and&nbsp;</span>
+          <span *ngIf="!r.display_name">
+            &nbsp;where&nbsp; {{ r.name | replace: '_':' ' | titlecase }}
+            {{ r.operation | displayFormat: r.operation }} {{ r.value }}
+            <span *ngIf="r.name === 'last_updated'">days ago</span>
+            <span *ngIf="r.name === 'expiry_date'">days from now</span>
+          </span>
+        </ng-container>
+      </h4>
+    </mat-card>
+    <table class="styled-table mt" style="width: 100%">
+      <tr>
+        <th>Noun</th>
+        <th>Rule Condition(s)</th>
+        <th>Measurement</th>
+        <th>Current Value</th>
+        <th>Oldest Updated</th>
+        <th>Action(s) Triggered by Rule</th>
+      </tr>
+      <tr *ngFor="let t of report.table_rules" [ngClass]="{'bg-success': t.conditionMet}">
+        <!--**************** Noun Subcategory ******************-->
+        <td>{{ t.config_name }}</td>
+        <!--**************** Rule Conditions ******************-->
+        <td>
+          <span *ngFor="let f of t.fact_filter">
+            {{ f.name | replace: 'qty':'Current Value' | titlecase }}
+            {{ f.operation | displayFormat: f.operation }}
+            <span *ngIf="f.name !== 'qty'; else qtyDisplay">{{ f.value }}</span>
+            <ng-template #qtyDisplay>
+              <ng-container
+                *ngIf="
+                  !itemMeasurementSettings[t.config_name] || itemMeasurementSettings[t.config_name].type === 'number';
+                  else rangeUOMRuleCondition
+                "
+              >
+                {{ f.value }}
+              </ng-container>
+              <ng-template #rangeUOMRuleCondition>
+                {{ getRangeMeasurementValue(t.config_name, f.value) }}
+              </ng-template>
+            </ng-template>
+            <br />
+          </span>
+        </td>
+        <!--**************** Unit of Measure ******************-->
+        <td>
+          <ng-container *ngIf="itemMeasurementSettings[t.config_name]; else noUOMConfig">
+            {{ itemMeasurementSettings[t.config_name]?.display_name }}
+          </ng-container>
+          <!-- TODO: Delete this code once the switch to new unit of measure configs is complete -->
+          <ng-template #noUOMConfig>
+            <span *ngIf="t.ruleResults.unit_of_measure && t.ruleResults.unit_of_measure.length === 1">
+              {{ t.ruleResults.unit_of_measure[0] }}
+            </span>
+            <em
+              *ngIf="t.ruleResults.unit_of_measure && t.ruleResults.unit_of_measure.length > 1"
+              class="error-msg"
+              style="font-size: 0.7rem"
+            >
+              Warning
+              <mat-icon matTooltip="Multiple units of measure returned for this noun." color="warn">info</mat-icon>
+            </em>
+          </ng-template>
+        </td>
+        <!--**************** Current Value ******************-->
+        <td>
+          <ng-container
+            *ngIf="
+              !itemMeasurementSettings[t.config_name] || itemMeasurementSettings[t.config_name].type === 'number';
+              else rangeUOMRuleResult
+            "
+          >
+            {{ t.ruleResults.qty | displayFormat: 'qty' }}
+          </ng-container>
+          <ng-template #rangeUOMRuleResult>
+            {{ getRangeMeasurementValue(t.config_name, t.ruleResults.qty) }}
+          </ng-template>
+        </td>
+        <!--**************** Oldest Updated ******************-->
+        <td>{{ t.ruleResults?.last_updated | date: 'shortDate' }}</td>
+        <!--**************** Consequence/Action ******************-->
+        <td>{{ tasks[t.consequence]?.displayName || 'n/a' }}</td>
+      </tr>
+    </table>
+
+    <p>
+      <button color="primary" class="mr" mat-raised-button (click)="handleCloseModalClick()">Close</button>
+    </p>
+  </div>
+</div>

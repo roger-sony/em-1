@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45" height="44" viewBox="0 0 45 44">
+    <defs>
+        <filter id="a" width="119.2%" height="205.9%" x="-9.6%" y="-55.9%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="shadowSpreadOuter1"/>
+            <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="5"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.328549592 0 0 0 0 0.328549592 0 0 0 0 0.328549592 0 0 0 0.08 0"/>
+            <feMorphology in="SourceAlpha" operator="dilate" radius=".5" result="shadowSpreadOuter2"/>
+            <feOffset in="shadowSpreadOuter2" result="shadowOffsetOuter2"/>
+            <feGaussianBlur in="shadowOffsetOuter2" result="shadowBlurOuter2" stdDeviation="1"/>
+            <feColorMatrix in="shadowBlurOuter2" result="shadowMatrixOuter2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="shadowMatrixOuter2"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path id="c" d="M22 0c12.15 0 22 9.85 22 22s-9.85 22-22 22S0 34.15 0 22 9.85 0 22 0z"/>
+        <filter id="b" width="138.6%" height="138.6%" x="-19.3%" y="-14.8%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" operator="dilate" radius=".5" result="shadowSpreadOuter1"/>
+            <feOffset dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.358129529 0 0 0 0 0.358129529 0 0 0 0 0.358129529 0 0 0 0.06 0"/>
+            <feMorphology in="SourceAlpha" operator="dilate" radius=".5" result="shadowSpreadOuter2"/>
+            <feOffset in="shadowSpreadOuter2" result="shadowOffsetOuter2"/>
+            <feGaussianBlur in="shadowOffsetOuter2" result="shadowBlurOuter2" stdDeviation=".5"/>
+            <feColorMatrix in="shadowBlurOuter2" result="shadowMatrixOuter2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.02 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="shadowMatrixOuter2"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="nonzero" filter="url(#a)" transform="translate(-165 -14)">
+        <g transform="translate(165.5 14)">
+            <use fill="#000" filter="url(#b)" xlink:href="#c"/>
+            <use fill="#FFF" xlink:href="#c"/>
+        </g>
+        <path fill="#23232F" d="M187.5 14c12.15 0 22 9.85 22 22s-9.85 22-22 22-22-9.85-22-22 9.85-22 22-22z" opacity=".6"/>
+        <g fill="#FFF">
+            <path d="M195.667 34.833h-7v-7c0-.7-.467-1.166-1.167-1.166s-1.167.466-1.167 1.166v7h-7c-.7 0-1.166.467-1.166 1.167s.466 1.167 1.166 1.167h7v7c0 .7.467 1.166 1.167 1.166s1.167-.466 1.167-1.166v-7h7c.7 0 1.166-.467 1.166-1.167s-.466-1.167-1.166-1.167z"/>
+        </g>
+    </g>
+</svg>

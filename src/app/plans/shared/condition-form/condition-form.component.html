@@ -1,0 +1,123 @@
+<ng-container
+  *ngIf="{
+    showConjunction1: showConjunction1$ | async,
+    showConjunction2: showConjunction2$ | async,
+    showConjunction3: showConjunction3$ | async,
+    showOutcome: showOutcome$ | async,
+    showImmediately: showImmediately$ | async,
+    showSchedule: showSchedule$ | async
+  } as state"
+>
+  <h1>if</h1>
+
+  <div
+    class="grouped-container"
+    [class.grouped-container-border]="
+      state.showOutcome && state.showConjunction2 && form.value.conjunction1 !== form.value.conjunction2
+    "
+  >
+    <noun-condition-form
+      [value]="form.value.nounCondition1"
+      [fieldValues]="fieldValues"
+      [unitOfMeasure]="unitOfMeasure"
+      [conjunction]="state.showConjunction1"
+      [outcome]="state.showOutcome"
+      [nouns]="nouns"
+      (valueChanges)="onNounCondition1ValueChange($event)"
+    >
+    </noun-condition-form>
+
+    <condition-form-decision
+      *ngIf="form.value.nounCondition1.value && !state.showConjunction1 && !state.showOutcome"
+      [buttonText]="['Add another noun', 'Add outcome']"
+      (option1)="onAddNoun1()"
+      (option2)="onAddOutcome()"
+    >
+    </condition-form-decision>
+
+    <condition-form-conjunction
+      *ngIf="state.showConjunction1"
+      [value]="form.value.conjunction1"
+      (valueChange)="onConjunction1Change($event)"
+    ></condition-form-conjunction>
+
+    <noun-condition-form
+      *ngIf="state.showConjunction1"
+      [conditionNumber]="2"
+      [value]="form.value.nounCondition2"
+      [fieldValues]="fieldValues"
+      [unitOfMeasure]="unitOfMeasure"
+      [conjunction]="state.showConjunction2"
+      [outcome]="state.showOutcome"
+      [nouns]="nouns"
+      (valueChanges)="onNounCondition2ValueChange($event)"
+      (removeConjunction)="onRemoveConjunction($event)"
+    >
+    </noun-condition-form>
+  </div>
+
+  <condition-form-decision
+    *ngIf="form.value.nounCondition2.value && !state.showConjunction2 && !state.showOutcome"
+    [buttonText]="['Add another noun', 'Add outcome']"
+    (option1)="onAddNoun2()"
+    (option2)="onAddOutcome()"
+  >
+  </condition-form-decision>
+
+  <condition-form-conjunction
+    *ngIf="state.showConjunction2"
+    [value]="form.value.conjunction2"
+    (valueChange)="onConjunction2Change($event)"
+  ></condition-form-conjunction>
+
+  <noun-condition-form
+    *ngIf="state.showConjunction2"
+    [conditionNumber]="3"
+    [value]="form.value.nounCondition3"
+    [fieldValues]="fieldValues"
+    [unitOfMeasure]="unitOfMeasure"
+    [outcome]="state.showOutcome"
+    [nouns]="nouns"
+    (valueChanges)="onNounCondition3ValueChange($event)"
+    (onRemoveConjunction)="onRemoveConjunction($event)"
+  >
+  </noun-condition-form>
+
+  <ng-container *ngIf="state.showOutcome || form.value.nounCondition3.value">
+    <h1>then</h1>
+
+    <div class="item-with-back-button">
+      <condition-task-input [value]="form.value" [tasks]="tasks" (consequence)="onConsequenceChange($event)">
+      </condition-task-input>
+
+      <condition-form-back-button
+        *ngIf="!state.showConjunction3 && !(state.showSchedule || state.showImmediately)"
+        class="back-button-main"
+        (click)="onBackClick()"
+      ></condition-form-back-button>
+    </div>
+
+    <condition-form-decision
+      *ngIf="form.value.consequence && !state.showConjunction3 && !(state.showSchedule || state.showImmediately)"
+      [buttonText]="['Immediately', 'Schedule']"
+      (option1)="onImmediatelyClick()"
+      (option2)="onScheduleClick()"
+    >
+    </condition-form-decision>
+
+    <div *ngIf="state.showImmediately" class="item-with-back-button margin-top">
+      <div class="immediately">
+        <span>Immediately</span>
+      </div>
+      <condition-form-back-button class="back-button-main" (click)="onBackClick()"></condition-form-back-button>
+    </div>
+
+    <div *ngIf="state.showSchedule" class="item-with-back-button margin-top">
+      <condition-form-date-select
+        [value]="form.value"
+        (valueChange)="onScheduleChange($event)"
+      ></condition-form-date-select>
+      <condition-form-back-button class="back-button-main" (click)="onBackClick()"></condition-form-back-button>
+    </div>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,29 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 136px;
+  height: 36px;
+  border: 1px solid $black-color-lightest;
+  border-radius: 4px;
+  color: $primary-color;
+  font-size: 14px;
+  font-family: $lato-font-family;
+}
+
+.icon-caret---down {
+  margin-left: 4px;
+  margin-top: 2px;
+
+  &:before {
+    font-size: 24px;
+  }
+}

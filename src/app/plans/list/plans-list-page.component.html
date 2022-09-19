@@ -1,0 +1,18 @@
+<plans-list-mobile *ngIf="mobile$ | async; else desktop"></plans-list-mobile>
+
+<ng-template #desktop>
+  <plans-list-desktop
+    [loadingPlans]="loadingPlans$ | async"
+    [loadingNounRuleTriggers]="loadingNounRuleTriggers$ | async"
+    [loadingTaskRuleTriggers]="loadingTaskRuleTriggers$ | async"
+    [loadingRuleSchedules]="loadingRuleSchedules$ | async"
+    [plans]="plans$ | async"
+    [nounRuleTriggers]="nounRuleTriggers$ | async"
+    [taskRuleTriggers]="taskRuleTriggers$ | async"
+    [ruleSchedules]="ruleSchedules$ | async"
+    [filteredPlans]="filteredPlans$ | async"
+    [tasks]="tasks$ | async"
+    [unitOfMeasures]="unitOfMeasures$ | async"
+    [chapters]="chapters$ | async"
+  ></plans-list-desktop>
+</ng-template>

@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+@import 'src/styles/variables';
+
+@mixin oph-mat-form-field-theme($config) {
+  .mat-form-field-appearance-fill {
+    &:not(.mat-focused) .mat-form-field-flex {
+      background-color: unset;
+    }
+
+    & .mat-input-element {
+      color: $black-color;
+    }
+
+    & .mat-form-field-prefix {
+      margin-right: 16px;
+    }
+
+    & .mat-form-field-underline::before {
+      background-color: unset;
+    }
+
+    & .mat-form-field-ripple {
+      background-color: unset;
+    }
+  }
+}

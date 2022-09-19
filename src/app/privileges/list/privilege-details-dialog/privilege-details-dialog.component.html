@@ -1,0 +1,16 @@
+<div class="container" [style.width.px]="364">
+  <dialog-header [iconName]="'edit'" title="Privilege edit"></dialog-header>
+
+  <dialog-content class="dialog-content">
+    <mat-form-field appearance="outline">
+      <mat-label>Privilege Name</mat-label>
+      <input matInput [(ngModel)]="privilegeCopy.name" name="privilegeName" placeholder="Privilege name" required />
+    </mat-form-field>
+  </dialog-content>
+
+  <dialog-footer>
+    <dialog-cancel-button></dialog-cancel-button>
+
+    <button mat-flat-button color="primary" type="button" (click)="save()">Save</button>
+  </dialog-footer>
+</div>

@@ -1,0 +1,11 @@
+.icon {
+  cursor: pointer;
+}
+
+.icon:hover {
+  opacity: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+  background-color: rgba(#23232f, 0.05);
+}

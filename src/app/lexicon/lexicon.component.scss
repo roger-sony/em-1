@@ -1,0 +1,29 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+
+  .lexicon-wrap {
+    min-height: calc(100vh - 32px - 56px);
+    font-style: normal;
+    font-size: 15px;
+    line-height: 24px;
+    background: #faf7ed;
+    border-radius: 8px;
+
+    h3 {
+      -webkit-font-smoothing: antialiased;
+      font-family: $bitter-font-family;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      letter-spacing: 0.15px;
+      line-height: 32px;
+      opacity: 0.87;
+      color: rgba(35, 35, 47, 0.8);
+      padding: 16px 0 16px 32px;
+      margin: 0;
+      border-bottom: 1px solid $black-color-lightest;
+    }
+  }
+}

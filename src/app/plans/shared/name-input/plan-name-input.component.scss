@@ -1,0 +1,16 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+}
+
+div {
+  color: $black-color;
+  flex-grow: 1;
+  font-family: $bitter-font-family;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 36px;
+  min-width: 0;
+  -webkit-font-smoothing: antialiased;
+}

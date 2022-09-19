@@ -1,0 +1,17 @@
+export enum TaskFormControl {
+  Name = 'name',
+  Abandon = 'abandon',
+  Skeds = 'skeds',
+  Effort = 'effort',
+  Priority = 'priority',
+  Movability = 'movability',
+  Instructions = 'instructions',
+  Roles = 'roles',
+  Users = 'users',
+  Category = 'category',
+  Location = 'location',
+  Chapters = 'chapters',
+  UpPoints = 'upPoints',
+  Subtasks = 'subtasks',
+  Facts = 'Facts',
+}

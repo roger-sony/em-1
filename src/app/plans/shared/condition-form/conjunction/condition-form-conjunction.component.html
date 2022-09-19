@@ -1,0 +1,9 @@
+<mat-select
+  [class.and]="value === 'and'"
+  [class.or]="value === 'or'"
+  [value]="value"
+  (selectionChange)="valueChange.next($event.value)"
+>
+  <mat-option value="and">and</mat-option>
+  <mat-option value="or">or</mat-option>
+</mat-select>

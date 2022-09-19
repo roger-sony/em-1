@@ -1,0 +1,30 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px;
+}
+
+h1 {
+  -webkit-font-smoothing: antialiased;
+  font-family: $bitter-font-family;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+span {
+  font-family: $lato-font-family;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+
+  .use-button {
+    margin-left: 8px;
+  }
+}

@@ -1,0 +1,39 @@
+<dialog-footer class="new-plan-dialog-footer">
+  <new-plan-progress-indicator [completed]="completed" [total]="total"></new-plan-progress-indicator>
+
+  <div class="new-plan-dialog-buttons">
+    <dialog-cancel-button (click)="onCancelClick()"></dialog-cancel-button>
+
+    <a *ngIf="completed > 1" mat-stroked-button color="primary" (click)="onPreviousClick()" class="previous-button">
+      <oph-icon [name]="'arrow-left_orange'" [size]="16" class="previous-button-icon"></oph-icon>
+      <span>Previous</span>
+    </a>
+
+    <button
+      *ngIf="completed !== total"
+      mat-flat-button
+      color="primary"
+      [disabled]="nextDisabled"
+      (click)="onNextClick()"
+      class="next-button"
+    >
+      <span>Next: {{ completed < 2 ? 'Cadence' : 'First Trigger' }}</span>
+      <oph-icon
+        [name]="nextDisabled ? 'arrow-right_disabled' : 'arrow-right_white'"
+        [size]="16"
+        class="next-button-icon"
+      ></oph-icon>
+    </button>
+
+    <button
+      *ngIf="completed === total"
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="doneDisabled"
+      (click)="onDoneClick()"
+    >
+      Done
+    </button>
+  </div>
+</dialog-footer>

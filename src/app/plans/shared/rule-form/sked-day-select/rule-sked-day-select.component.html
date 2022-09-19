@@ -1,0 +1,5 @@
+<mat-select [formControl]="control" (valueChange)="onValueChange($event)" placeholder="Sked...">
+  <mat-option *ngFor="let skedDay of options" [value]="skedDay">
+    {{ skedDay | skedDayName }}
+  </mat-option>
+</mat-select>

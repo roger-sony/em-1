@@ -1,0 +1,15 @@
+<form [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
+  <div class="input-container">
+    <span class="label">Tenant Name</span>
+    <input class="oph-input" type="text" formControlName="tenantName" required />
+  </div>
+  <div class="input-container">
+    <span class="label">Address</span>
+    <input class="oph-input" type="text" formControlName="address" />
+  </div>
+  <div class="input-container">
+    <span class="label">Email</span>
+    <input class="oph-input" type="email" formControlName="email" />
+  </div>
+  <button type="submit" mat-flat-button color="primary" [disabled]="!tenantForm.valid">Create Tenant</button>
+</form>

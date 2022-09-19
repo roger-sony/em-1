@@ -1,0 +1,27 @@
+<oph-icon [name]="'calendar_light'" [size]="24"></oph-icon>
+
+<input
+  [matDatepicker]="startDatepicker"
+  [placeholder]="'Start date'"
+  [value]="startDate"
+  [attr.size]="((startDate | moment: 'LL') || 'Start date').length - 1"
+  [class.opened]="startDatepicker.opened"
+  (click)="onStartDateClick()"
+  (dateChange)="onStartDateChange($event)"
+  readonly
+/>
+<mat-datepicker #startDatepicker></mat-datepicker>
+
+<oph-icon [name]="'arrow-right'" [size]="16"></oph-icon>
+
+<input
+  [matDatepicker]="endDatepicker"
+  [placeholder]="'End date'"
+  [value]="endDate"
+  [attr.size]="((endDate | moment: 'LL') || 'End date').length - 1"
+  [class.opened]="endDatepicker.opened"
+  (click)="onEndDateClick()"
+  (dateChange)="onEndDateChange($event)"
+  readonly
+/>
+<mat-datepicker #endDatepicker></mat-datepicker>

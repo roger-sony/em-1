@@ -1,0 +1,22 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.add-menu-search {
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  margin: 0 8px 8px;
+  padding-bottom: 8px;
+
+  & > input {
+    flex-grow: 1;
+    min-width: 1px;
+  }
+}
+
+.add-menu-list {
+  max-height: 256px;
+  overflow-y: auto;
+}

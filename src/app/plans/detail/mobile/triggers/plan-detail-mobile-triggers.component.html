@@ -1,0 +1,38 @@
+<ng-container *ngIf="taskRuleTriggers.length || nounRuleTriggers.length; else noTriggers">
+  <div class="triggers-container">
+    <div class="triggers-header" (click)="isOpened = !isOpened">
+      <span class="trigger-title">TRIGGERS</span>
+      <oph-icon [name]="'caret-down-2'" [class.caret-down]="!isOpened"></oph-icon>
+    </div>
+    <div *ngIf="isOpened" class="triggers-list">
+      <div *ngFor="let n of nounRuleTriggers; trackBy: trackByDisplayName" class="trigger-item">
+        <div class="icon-text">
+          <oph-icon class="icon" [name]="'noun-trigger'" [size]="24"></oph-icon>
+          <div class="text">
+            <span class="text-lighter">When&nbsp;</span>
+            <span class="text-light">{{ n.displayName ? n.displayName : '(Display name not defined)' }}</span>
+          </div>
+        </div>
+        <mobile-triggers-menu [planId]="planId" noun="true" [trigger]="n"></mobile-triggers-menu>
+      </div>
+      <div *ngFor="let t of taskRuleTriggers; trackBy: trackByDisplayName" class="trigger-item">
+        <div class="icon-text">
+          <oph-icon class="icon" [name]="'tasks-trigger'" [size]="24"></oph-icon>
+          <div class="text">
+            <span class="text-lighter">When&nbsp;</span>
+            <span class="text-light">
+              {{ tasksMap[t.taskId]?.shortTask || '(Display name not defined)' }} is {{ t.taskEvent }}
+            </span>
+          </div>
+        </div>
+        <mobile-triggers-menu [planId]="planId" [trigger]="t"></mobile-triggers-menu>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noTriggers>
+  <div class="no-triggers">
+    <span class="trigger-title">NO TRIGGERS</span>
+  </div>
+</ng-template>

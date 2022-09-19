@@ -1,0 +1,44 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  overflow: auto;
+}
+
+td {
+  white-space: nowrap;
+}
+
+th {
+  font-family: $bitter-font-family;
+}
+
+.green-row {
+  background-color: $success-color-lightest;
+}
+
+.light-text {
+  color: $black-color-light;
+}
+
+.condition-container {
+  all: unset;
+  position: relative;
+}
+
+.condition-met {
+  cursor: pointer;
+}
+
+.success-icon {
+  position: absolute;
+  top: -1px;
+}
+
+.icon {
+  margin-right: 4px;
+}
+
+.operation {
+  margin-right: 6px;
+}

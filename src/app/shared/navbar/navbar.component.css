@@ -1,0 +1,153 @@
+.desktop-only {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 767px) {
+  .mobile-only {
+    display: flex;
+  }
+  .desktop-only {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+  .desktop-only {
+    display: flex;
+  }
+}
+
+.mat-list-item {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.64px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.navButton {
+  position: relative;
+}
+
+.hiddenLine {
+  height: 5px;
+  width: 89px;
+  display: hidden;
+}
+
+.Nouns {
+  background-color: #00e5ff;
+  height: 7px;
+  width: 89px;
+  position: absolute;
+  margin-top: 5px;
+}
+
+.Tasks {
+  background-color: #f48fb1;
+  height: 7px;
+  width: 89px;
+  position: absolute;
+  margin-top: 5px;
+}
+
+.Rules {
+  background-color: #a5d6a7;
+  height: 7px;
+  width: 89px;
+  position: absolute;
+  margin-top: 5px;
+}
+
+.Skeds {
+  background-color: #b388ff;
+  height: 7px;
+  width: 89px;
+  position: absolute;
+  margin-top: 5px;
+}
+
+.Reports {
+  background-color: #00e5ff;
+  height: 7px;
+  width: 89px;
+  position: absolute;
+  margin-top: 5px;
+}
+
+.Metrics {
+  background-color: #00e5ff;
+  height: 7px;
+  width: 89px;
+  position: absolute;
+  margin-top: 5px;
+}
+
+.Users {
+  background-color: #00e5ff;
+  height: 7px;
+  width: 89px;
+  position: absolute;
+  margin-top: 5px;
+}
+
+.NounsArrow {
+  color: #00e5ff;
+  margin-right: 0px !important;
+  position: absolute;
+  top: 12px;
+  left: -6px;
+}
+
+.TasksArrow {
+  color: #f48fb1;
+  margin-right: 0px !important;
+  position: absolute;
+  top: 12px;
+  left: -6px;
+}
+
+.RulesArrow {
+  color: #a5d6a7;
+  margin-right: 0px !important;
+  position: absolute;
+  top: 12px;
+  left: -6px;
+}
+
+.SkedsArrow {
+  color: #b388ff;
+  margin-right: 0px !important;
+  position: absolute;
+  top: 12px;
+  left: -6px;
+}
+
+.ReportsArrow {
+  color: #00e5ff;
+  margin-right: 0px !important;
+  position: absolute;
+  top: 12px;
+  left: -6px;
+}
+
+.MetricsArrow {
+  color: #00e5ff;
+  margin-right: 0px !important;
+  position: absolute;
+  top: 12px;
+  left: -6px;
+}
+
+.UsersArrow {
+  color: #00e5ff;
+  margin-right: 0px !important;
+  position: absolute;
+  top: 12px;
+  left: -6px;
+}

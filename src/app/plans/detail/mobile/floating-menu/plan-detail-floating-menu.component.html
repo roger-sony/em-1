@@ -1,0 +1,7 @@
+<floating-menu [iconName]="'plus-medium'">
+  <floating-menu-button [iconName]="'bolt'" [small]="true" (click)="onTriggerClick()">Trigger</floating-menu-button>
+  <floating-menu-button [iconName]="'global'" [small]="true" (click)="onGlobalConditionClick()"
+    >Global Condition</floating-menu-button
+  >
+  <floating-menu-button [iconName]="'split'" (click)="onNewConditionClick()">New Condition</floating-menu-button>
+</floating-menu>

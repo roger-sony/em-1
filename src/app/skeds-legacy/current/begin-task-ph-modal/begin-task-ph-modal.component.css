@@ -1,0 +1,156 @@
+.modal-content {
+  max-width: 300px;
+  padding: 0;
+  border-radius: 3px 3px 0 0;
+}
+
+.modalPadding {
+  padding: 0px 30px 30px 30px;
+}
+
+.taskTitleContainer {
+  display: flex;
+  flex-direction: column;
+  /* height: 200px; */
+  justify-content: space-evenly;
+}
+
+.titleBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.expand {
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.subtaskTitle {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.attribute {
+  margin-bottom: 10px;
+}
+
+.smallAttribute {
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.inputBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.updateInput {
+  width: 160px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.okButton {
+  height: 59px;
+  border: solid #555 1px;
+  margin-top: 4px;
+  background-color: #5e35b1;
+  color: white;
+}
+
+.editCloneButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.small {
+  width: 80px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+  justify-content: space-evenly;
+}
+
+.colorBar {
+  height: 16px;
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(135.14deg, #5e35b1 0%, #b388ff 100%);
+}
+
+.mat-expansion-panel-body {
+  padding: 0;
+}
+
+.observationTextArea {
+  margin-top: 20px;
+}
+
+.subtaskDetail {
+  margin-bottom: 15px;
+}
+
+.radioButtonBox {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.radioButton {
+  margin-bottom: 10px;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: rgb(66, 134, 244) !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  color: rgb(66, 134, 244);
+  background-color: rgb(66, 134, 244) !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  border-color: rgb(255, 37, 37, 0.26) !important;
+}
+
+.updated {
+  color: #00c853;
+}
+
+.error {
+  color: red;
+}
+
+.matSpinner {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
+  background: white;
+}
+
+.checkbox-container {
+  padding: 8px;
+}
+::ng-deep .mat-checkbox-layout {
+  white-space: normal !important;
+}
+
+::ng-deep .mat-checkbox-inner-container {
+  margin-top: 3px !important;
+}

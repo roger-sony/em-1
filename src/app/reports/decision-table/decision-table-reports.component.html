@@ -1,0 +1,101 @@
+<div class="legacy-content">
+  <!--***************************************************************************
+                                Header
+****************************************************************************-->
+  <header>
+    <h2>Decision Table Reports</h2>
+    <span class="fill-remaining-space"></span>
+    <button mat-mini-fab color="accent" (click)="getReports()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </header>
+  <!--***************************************************************************
+                                Main
+****************************************************************************-->
+  <main *ngIf="reports && itemMeasurementSettings">
+    <mat-tab-group>
+      <mat-tab label="All">
+        <app-reports-accordion
+          [reports]="reports"
+          [itemMeasurementSettings]="itemMeasurementSettings"
+          (openReportModalClick)="toggleReportDetailModal($event)"
+        >
+        </app-reports-accordion>
+      </mat-tab>
+      <mat-tab label="Dry Runs (No Actions Triggered)">
+        <app-reports-accordion
+          [reports]="reportsDryRun"
+          [itemMeasurementSettings]="itemMeasurementSettings"
+          (openReportModalClick)="toggleReportDetailModal($event)"
+        >
+        </app-reports-accordion>
+      </mat-tab>
+      <mat-tab label="Actual Runs">
+        <app-reports-accordion
+          [reports]="reportsActualRun"
+          [itemMeasurementSettings]="itemMeasurementSettings"
+          (openReportModalClick)="toggleReportDetailModal($event)"
+        >
+        </app-reports-accordion>
+      </mat-tab>
+    </mat-tab-group>
+  </main>
+  <!--***************************************************************************
+                            New Report Modal
+****************************************************************************-->
+  <div *ngIf="showNewReportModal" class="modal">
+    <div class="modal-content" *ngIf="!dTables">Fetching rules...</div>
+    <div class="modal-content" *ngIf="dTables">
+      <span class="close" (click)="toggleNewReportModal()">&times;</span>
+      <h2>Run a Report</h2>
+      <div class="report-btn-container">
+        <button mat-raised-button routerLink="/rule-trigger/new" color="primary">Schedule a Report</button>
+        <button mat-raised-button (click)="toggleNewReportModal(); toggleRunOnDemandModal()" color="accent">
+          Run on Demand
+        </button>
+      </div>
+      <span class="clicky" (click)="toggleNewReportModal()">Close</span>
+    </div>
+  </div>
+  <!--***************************************************************************
+                          Run On Demand Modal
+****************************************************************************-->
+  <div *ngIf="showRunOnDemandModal" class="modal">
+    <div class="modal-content" *ngIf="!dTables">Fetching rules...</div>
+    <div class="modal-content" *ngIf="dTables">
+      <span class="close" (click)="toggleRunOnDemandModal()">&times;</span>
+      <h2>Run On Demand</h2>
+      <div class="report-form-container">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-select [(ngModel)]="activeReport.rule" placeholder="Select a Rule">
+            <mat-option *ngFor="let d of dTables" [value]="d._id">{{ d.display_name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="report-btn-container">
+          <button mat-raised-button [disabled]="!activeReport.rule" (click)="handleRunReportClick()" color="primary">
+            Report Only (Dry Run)
+          </button>
+          <button mat-raised-button [disabled]="!activeReport.rule" (click)="handleRunReportClick(true)" color="accent">
+            Trigger Actions + Report (Actual Run)
+          </button>
+        </div>
+      </div>
+      <span class="clicky" (click)="toggleRunOnDemandModal()">Cancel</span>
+    </div>
+  </div>
+</div>
+
+<!--***************************************************************************
+                          Report Detail Modal
+****************************************************************************-->
+<app-decision-table-report-detail
+  *ngIf="showReportDetailModal"
+  [report]="activeReport"
+  [itemMeasurementSettings]="itemMeasurementSettings"
+  (closeReportModalClick)="toggleReportDetailModal()"
+>
+</app-decision-table-report-detail>
+
+<div class="debug">
+  <pre>{{ reports | json }}</pre>
+</div>

@@ -1,0 +1,23 @@
+<ng-container *ngIf="{mobile: mobile$ | async} as data">
+  <button
+    #menuButton
+    (click)="onMenuClick($event)"
+    [ngClass]="{card: card, 'detail-menu': !card, 'mobile-button': data.mobile}"
+  >
+    <oph-icon [ngClass]="data.mobile ? '' : 'icon'" [name]="'ellipsis-dark'"></oph-icon>
+  </button>
+
+  <oph-menu [origin]="menuButton" [minWidth]="168">
+    <oph-menu-item
+      *ngIf="card"
+      [iconName]="'edit_2'"
+      [text]="'View Plan'"
+      (click)="onViewOptionsClick()"
+    ></oph-menu-item>
+    <oph-menu-item [iconName]="'caret-right_2'" [text]="'Run Plan'" (click)="onRunPlanClick()"></oph-menu-item>
+    <oph-menu-item [iconName]="'view_2'" [text]="'Preview'" (click)="onPreviewClick()"></oph-menu-item>
+    <oph-menu-item [iconName]="'duplicate_2'" [text]="'Duplicate'" (click)="onDuplicateClick()"></oph-menu-item>
+    <oph-menu-separator></oph-menu-separator>
+    <oph-menu-item [iconName]="'delete_2'" [text]="'Delete'" (click)="onDeleteClick()"></oph-menu-item>
+  </oph-menu>
+</ng-container>

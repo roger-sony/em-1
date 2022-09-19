@@ -1,0 +1,19 @@
+<form *ngIf="{endTypeValue: endTypeValue$ | async} as state" [formGroup]="form">
+  <oph-select [formControlName]="control.EndType">
+    <oph-option [value]="endType.Never">Never</oph-option>
+    <oph-option [value]="endType.EndDate">On a date</oph-option>
+    <oph-option *ngIf="!disabled" [value]="endType.MaxSkedsNumber">After a number of skeds</oph-option>
+  </oph-select>
+
+  <oph-date-picker
+    *ngIf="state.endTypeValue === endType.EndDate"
+    [formControlName]="control.EndDate"
+    [minValue]="startDate"
+  ></oph-date-picker>
+
+  <number-input-field
+    *ngIf="state.endTypeValue === endType.MaxSkedsNumber"
+    [formControlName]="control.MaxSkedsNumber"
+    [min]="1"
+  ></number-input-field>
+</form>

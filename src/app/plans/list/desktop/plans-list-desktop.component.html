@@ -1,0 +1,32 @@
+<plans-list-header></plans-list-header>
+
+<ng-container
+  *ngIf="loadingPlans || loadingNounRuleTriggers || loadingTaskRuleTriggers || loadingRuleSchedules; else loadedCard"
+>
+  <div class="plans-card-container">
+    <ng-container *ngFor="let x of emptyCards">
+      <plan-card-loading class="plan-card"></plan-card-loading>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #loadedCard>
+  <plans-empty *ngIf="plans.length === 0; else plansExist"></plans-empty>
+</ng-template>
+
+<ng-template #plansExist>
+  <div class="plans-card-container">
+    <ng-container *ngFor="let p of filteredPlans; trackBy: trackByItems">
+      <plan-card
+        [plan]="p"
+        class="plan-card"
+        [nounTriggers]="nounRuleTriggers"
+        [taskTriggers]="taskRuleTriggers"
+        [ruleSchedules]="ruleSchedules"
+        [unitOfMeasures]="unitOfMeasures"
+        [tasks]="tasks"
+        [chapters]="chapters"
+      ></plan-card>
+    </ng-container>
+  </div>
+</ng-template>

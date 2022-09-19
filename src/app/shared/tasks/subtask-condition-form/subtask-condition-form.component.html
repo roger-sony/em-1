@@ -1,0 +1,70 @@
+<form [formGroup]="form">
+  <oph-select
+    [placeholder]="'Attribute'"
+    formControlName="name"
+    [chip]="true"
+    [minWidth]="'0px'"
+    class="select-chip"
+    (valueChange)="onNameChange($event)"
+    [value]="form.value.name"
+  >
+    <oph-option *ngFor="let name of fieldNames" [value]="name">
+      {{ name | inventoryFieldName }}
+    </oph-option>
+  </oph-select>
+
+  <oph-select
+    [placeholder]="'Operation'"
+    formControlName="operation"
+    [chip]="true"
+    [minWidth]="'0px'"
+    class="select-chip"
+    (valueChange)="onOperationChange($event)"
+    [value]="form.value.operation"
+  >
+    <oph-option *ngFor="let operator of operators$ | async" [value]="operator">
+      {{ operator | inventoryFieldOperatorName }}
+    </oph-option>
+  </oph-select>
+
+  <div class="field-wrap" [class.add-margin]="form.value.name === '_last_updated' || form.value.name === 'expiry_date'">
+    <input
+      *ngIf="form.value.name !== '_last_updated' && form.value.name !== 'expiry_date'"
+      ophInput
+      (input)="onInput($event.target.value)"
+      [matAutocomplete]="autocomplete"
+      class="oph-input"
+      placeholder="Value"
+      formControlName="filterValue"
+    />
+    <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="onValueSelection($event.option.value)">
+      <mat-option *ngFor="let value of filteredFieldValues" [value]="value">
+        {{ value }}
+      </mat-option>
+    </mat-autocomplete>
+    <ng-container *ngIf="form.value.name === '_last_updated'">
+      <input
+        ophInput
+        type="number"
+        (input)="onInput($event.target.value)"
+        [matAutocomplete]="autocomplete"
+        class="oph-input"
+        placeholder="Value"
+        formControlName="filterValue"
+      />
+      <div class="input-text">minutes ago</div>
+    </ng-container>
+    <ng-container *ngIf="form.value.name === 'expiry_date'">
+      <input
+        ophInput
+        type="number"
+        (input)="onInput($event.target.value)"
+        [matAutocomplete]="autocomplete"
+        class="oph-input"
+        placeholder="Value"
+        formControlName="filterValue"
+      />
+      <div class="input-text">days from now</div>
+    </ng-container>
+  </div>
+</form>

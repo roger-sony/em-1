@@ -1,0 +1,103 @@
+<mat-toolbar class="candy-toolbar">
+  <!--*******************************************************************
+                              Mobile Nav
+  ********************************************************************-->
+  <!-- TODO: Reference from menuList instead of hardcoding -->
+  <mat-toolbar-row class="mobile-only">
+    <a routerLink="/">
+      <img src="/assets/img/ophanim_logo.png" alt="Ophanim" />
+    </a>
+    <span class="fill-remaining-space"></span>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item routerLink="/nouns">Nouns</button>
+      <button mat-menu-item routerLink="/tasks">Tasks</button>
+      <button mat-menu-item routerLink="/rule-triggers">Rule-Scheduling</button>
+      <button mat-menu-item routerLink="/decision-tables">Decision Tables</button>
+      <button mat-menu-item routerLink="/decision-table-reports">Reports</button>
+      <button mat-menu-item routerLink="/skeds">Skeds</button>
+      <button mat-menu-item routerLink="/current-sked">Current Sked</button>
+      <button mat-menu-item routerLink="/users">Users</button>
+      <button mat-menu-item routerLink="/roles">Roles</button>
+      <button *ngIf="loggedIn$ | async" mat-menu-item routerLink="/login" data-test="logout-button">Log Out</button>
+    </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar-row>
+  <!--*******************************************************************
+                              Desktop Nav
+  ********************************************************************-->
+  <mat-toolbar-row class="desktop-only">
+    <a mat-list-item routerLink="/" (click)="clearUnderlineToggle()">
+      <img src="/assets/img/ophanim_logo.png" alt="Ophanim" />
+    </a>
+    <ng-container *ngFor="let menuItem of menuList">
+      <ng-container *ngIf="!menuItem.children">
+        <a class="nav-link">
+          <span *ngIf="menuItem.icon" class="icon fa" [ngClass]="menuItem.icon"></span>
+          <span class="text-holder">{{ menuItem.label }}</span>
+        </a>
+      </ng-container>
+      <ng-container *ngIf="menuItem.children.length > 0 && (loggedIn$ | async)">
+        <button
+          #button
+          mat-button
+          [matMenuTriggerFor]="levelOne"
+          class="navButton"
+          #levelOneTrigger="matMenuTrigger"
+          (mouseenter)="buttonEnter(levelOneTrigger, menuItem)"
+          (mouseleave)="buttonLeave(levelOneTrigger, button)"
+          [style.z-index]="dynamicZIndex"
+        >
+          <span class="icon fa" [ngClass]="menuItem.icon"></span>
+          <span>{{ menuItem.label }}<i class="fa fa-chevron-down"></i></span>
+          <div class="hiddenLine"></div>
+          <div [ngClass]="underLineToggle === menuItem.label ? menuItem.label : ''"></div>
+        </button>
+        <mat-menu #levelOne="matMenu" direction="down" yPosition="below" class="candy-matmenu">
+          <span (mouseenter)="menuenter(menuItem)" (mouseleave)="menuLeave(levelOneTrigger, button)">
+            <ng-container *ngFor="let childL1 of menuItem.children">
+              <li
+                class="p-0"
+                *ngIf="!childL1.children"
+                mat-menu-item
+                (mouseenter)="arrowToggler(childL1.label)"
+                (click)="checkForUnderline(childL1.link)"
+                [routerLink]="childL1.link"
+              >
+                <mat-icon *ngIf="arrowToggle === childL1.label" [ngClass]="menuItem.label + 'Arrow'"
+                  >arrow_right</mat-icon
+                >
+                <a class="nav-link">{{ childL1.label }}</a>
+              </li>
+              <ng-container *ngIf="childL1.children && childL1.children.length > 0">
+                <li mat-menu-item #levelTwoTrigger="matMenuTrigger" [matMenuTriggerFor]="levelTwo">
+                  <span class="icon fa" [ngClass]="childL1.icon"></span>
+                  <span>{{ childL1.label }}</span>
+                </li>
+                <mat-menu #levelTwo="matMenu">
+                  <span (mouseenter)="menu2enter()" (mouseleave)="menu2Leave(levelOneTrigger, levelTwoTrigger, button)">
+                    <ng-container *ngFor="let childL2 of childL1.children">
+                      <li class="p-0" mat-menu-item>
+                        <a class="nav-link" [routerLink]="childL2.link">{{ childL2.label }}</a>
+                      </li>
+                    </ng-container>
+                  </span>
+                </mat-menu>
+              </ng-container>
+            </ng-container>
+          </span>
+        </mat-menu>
+      </ng-container>
+    </ng-container>
+    <button
+      *ngIf="loggedIn$ | async"
+      mat-button
+      routerLink="/login"
+      (click)="clearUnderlineToggle()"
+      data-test="logout-button"
+    >
+      Log Out
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

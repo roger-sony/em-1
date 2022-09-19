@@ -1,0 +1,84 @@
+<div>If</div>
+
+<ng-container *ngFor="let factForm of factsArray.controls; trackBy: trackByIndex; index as formIndex">
+  <ng-container
+    *ngIf="{
+      attribute: factForm | childFormControl: factControls.Name,
+      operator: factForm | childFormControl: factControls.Operation,
+      value: factForm | childFormControl: factControls.Value
+    } as control"
+  >
+    <rule-attribute-select [control]="control.attribute" [fieldValues]="fieldValues"></rule-attribute-select>
+
+    <ng-container *ngIf="control.attribute.value">
+      <rule-operator-select
+        [control]="control.operator"
+        [attributeName]="control.attribute.value"
+        [unitOfMeasure]="unitOfMeasure"
+      ></rule-operator-select>
+
+      <ng-container *ngIf="control.operator.value">
+        <rule-value-input
+          [attributeName]="control.attribute.value"
+          [control]="control.value"
+          [fieldValues]="fieldValues"
+          [unitOfMeasure]="unitOfMeasure"
+        ></rule-value-input>
+
+        <div *ngIf="control.attribute.value === 'expiry_date'" class="ml-4">days from now</div>
+        <div *ngIf="control.attribute.value === '_last_updated'" class="ml-4">minutes ago</div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <rule-conjunction-select
+    *ngIf="
+      !global &&
+      (factForm.valid ||
+        formIndex < factsArray.length - 1 ||
+        (consequenceForm | childFormControl: consequenceControls.TaskId)?.value)
+    "
+    [control]="conjunctionsArray | formArrayControl: formIndex"
+    [global]="global"
+    (valueChange)="onConjunctionValueChange($event, formIndex)"
+  ></rule-conjunction-select>
+</ng-container>
+
+<ng-container *ngIf="!global && (finalConjunction$ | async)">
+  <ng-container
+    *ngIf="{
+      taskId: consequenceForm | childFormControl: consequenceControls.TaskId,
+      taskName: consequenceForm | childFormControl: consequenceControls.TaskName,
+      skedDay: consequenceForm | childFormControl: consequenceControls.SkedDay,
+      skedTime: consequenceForm | childFormControl: consequenceControls.SkedTime
+    } as control"
+  >
+    <rule-task-input [idControl]="control.taskId" [nameControl]="control.taskName" [tasks]="tasks"></rule-task-input>
+
+    <ng-container *ngIf="control.taskId.value">
+      <div>to</div>
+
+      <rule-sked-day-select
+        [control]="control.skedDay"
+        (valueChange)="onSkedDayValueChange($event)"
+      ></rule-sked-day-select>
+
+      <ng-container *ngIf="control.skedDay.value">
+        <ng-container *ngIf="control.skedDay.value !== skedDays.CurrentSked">
+          <rule-sked-time-select [control]="control.skedTime"></rule-sked-time-select>
+
+          <div>sked</div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<rule-form-button *ngIf="!mobile" [icon]="'close'" [title]="'Back'" (click)="onBackClick()"></rule-form-button>
+<rule-form-button
+  *ngIf="!mobile"
+  [disabled]="form.invalid"
+  [icon]="'success'"
+  [title]="'Save'"
+  (click)="onSaveClick()"
+></rule-form-button>

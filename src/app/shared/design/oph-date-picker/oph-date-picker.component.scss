@@ -1,0 +1,28 @@
+@import 'src/styles/variables';
+
+:host {
+  background-color: $white-color;
+  border-radius: 3px;
+  border: 1px solid $black-color-lightest;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  height: 34px;
+  min-width: 100px;
+}
+
+.oph-date-picker-trigger {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  & > .oph-input {
+    border: none;
+    flex-grow: 1;
+  }
+
+  & > .oph-icon {
+    flex-grow: 0;
+    margin-right: 4px;
+  }
+}

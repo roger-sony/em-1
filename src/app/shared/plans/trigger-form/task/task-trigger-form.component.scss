@@ -1,0 +1,48 @@
+@import '../../../../../styles/variables';
+
+:host {
+  display: block;
+}
+
+form {
+  color: $black-color-light;
+  font-family: 'Lato', sans-serif;
+  line-height: 1.5;
+  display: grid;
+  grid-gap: 24px 8px;
+  grid-template-areas: 'when task' 'is status';
+  grid-template-columns: min-content minmax(min-content, 1fr);
+  align-items: center;
+}
+
+@media (min-width: $mobile-breakpoint) {
+  form {
+    grid-template-areas: 'when task is status';
+    grid-template-columns: min-content minmax(min-content, 1fr) min-content minmax(min-content, 1fr);
+  }
+}
+
+.when {
+  grid-area: when;
+}
+
+.task {
+  grid-area: task;
+}
+
+.is {
+  grid-area: is;
+}
+
+.status {
+  grid-area: status;
+}
+
+.mobile-input {
+  max-width: 272px;
+}
+
+.autocomplete-list {
+  max-height: 176px;
+  overflow-y: auto;
+}

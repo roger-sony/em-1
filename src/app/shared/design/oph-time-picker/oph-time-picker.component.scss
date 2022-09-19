@@ -1,0 +1,24 @@
+@import 'src/styles/variables';
+
+:host {
+  background-color: $white-color;
+  border-radius: 3px;
+  border: 1px solid $black-color-lightest;
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  width: 120px;
+}
+
+.oph-input {
+  border: none;
+  min-width: 1px;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  margin-right: 4px;
+}

@@ -1,0 +1,21 @@
+<span *ngIf="adjective.type === 'date'; else showChipList" class="value-text">{{
+  adjective.validation | multiWordTitlecase
+}}</span>
+<ng-template #showChipList>
+  <span *ngIf="adjective.type === 'number'" class="value-text">{{ adjective.validation | multiWordTitlecase }}</span>
+
+  <div *ngIf="adjective.type === 'number'; else value" class="values-container number">
+    <label class="value-label">Units of measure</label>
+    <div class="chip-container">
+      <div *ngFor="let uom of adjective.unitOfMeasure" class="chip">{{ uom }}</div>
+    </div>
+  </div>
+  <ng-template #value>
+    <div class="values-container">
+      <label class="value-label">Values</label>
+      <div class="chip-container">
+        <div *ngFor="let option of adjective.options" class="chip">{{ option }}</div>
+      </div>
+    </div>
+  </ng-template>
+</ng-template>

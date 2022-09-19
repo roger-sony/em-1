@@ -1,0 +1,64 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  width: 100%;
+  border-bottom: 1px solid $black-color-lightest;
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+
+  .icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+    background-color: $black-color-lightest;
+    border-radius: 50px;
+    margin: 0 16px 0 8px;
+  }
+}
+
+.name {
+  -webkit-font-smoothing: antialiased;
+  font-family: $bitter-font-family;
+  font-weight: bold;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.button-container {
+  margin-right: 40px;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 272px;
+
+  .disabled {
+    opacity: 0.3;
+  }
+
+  .button {
+    background-color: $black-color-lightest;
+    margin-left: 8px;
+
+    .icon {
+      margin-right: 4px;
+    }
+
+    .button-text {
+      font-size: 14px;
+      color: $black-color-light;
+    }
+  }
+}

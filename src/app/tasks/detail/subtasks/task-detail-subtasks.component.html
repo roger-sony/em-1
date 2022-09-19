@@ -1,0 +1,45 @@
+<div class="main-container">
+  <!-- TODO: Variable name -->
+  <h2>Sentences</h2>
+
+  <div *ngIf="sentences?.length" class="subtask-container">
+    <!-- <div class="add-condition-container">
+      <div>
+        <span class="condition-title">Conditions for Subtasks</span><br />
+        <span class="condition-text">This will apply to all nouns in the</span><br />
+        <span class="condition-text">subtasks</span>
+      </div>
+      <div class="add-condition-button-container">
+        <add-button [buttonText]="'Add Condition'" (click)="onAddCondition()" class="add-condition-button"></add-button>
+      </div>
+    </div> -->
+
+    <!-- <ng-container *ngIf="facts?.length">
+      <task-detail-subtasks-conditions-list
+        [facts]="facts"
+        (edit)="onEditCondition($event)"
+        (delete)="onDeleteCondition($event)"
+      ></task-detail-subtasks-conditions-list>
+
+      <div class="conjuntion-container">
+        <div class="conjunction">And</div>
+      </div>
+    </ng-container> -->
+
+    <subtask-list
+      class="subtask-list"
+      [canEdit]="canEdit"
+      [sentences]="sentences"
+      (edit)="onEditSentence($event)"
+      (delete)="onDeleteSentence($event)"
+    ></subtask-list>
+  </div>
+
+  <!-- TODO: Variable name -->
+  <add-button
+    [buttonText]="'Add Sentence'"
+    *ngIf="canEdit"
+    (click)="onAddSentence()"
+    class="add-subtask-button"
+  ></add-button>
+</div>

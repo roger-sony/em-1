@@ -1,0 +1,8 @@
+<plan-card
+  *ngFor="let plan of plans; trackBy: trackByPlan"
+  [chapterId]="chapterId"
+  [chapters]="chapters"
+  [selected]="plan?.id === selectedPlanId"
+  [plan]="plan"
+  (click)="onCardClick(plan)"
+></plan-card>

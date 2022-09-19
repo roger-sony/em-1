@@ -1,0 +1,15 @@
+@media (min-width: 960px) {
+  :host {
+    display: block;
+    padding-top: 24px;
+  }
+}
+
+.trigger-btn {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+  .mat-icon {
+    font-size: 5rem;
+  }
+}

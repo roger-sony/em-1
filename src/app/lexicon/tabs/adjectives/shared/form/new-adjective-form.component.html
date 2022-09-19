@@ -1,0 +1,52 @@
+<form [formGroup]="form">
+  <new-adjective-input [value]="form.value.name" (valueChange)="onNameChange($event)" [new]="new"></new-adjective-input>
+
+  <div class="select-container">
+    <div class="left-container">
+      <label class="select-label">Type</label>
+      <new-adjective-select [types]="adjectiveTypes" (valueChange)="onTypeChange($event)" [value]="form.value.type">
+        <new-adjective-select-option
+          *ngFor="let type of adjectiveTypes"
+          [name]="type"
+          [iconSrc]="type | adjectiveIconSrc"
+          [selected]="type === form.value.type"
+        ></new-adjective-select-option>
+      </new-adjective-select>
+    </div>
+
+    <div *ngIf="form.value.type && form.value.type !== 'text' && form.value.type !== 'checkbox'" class="right-column">
+      <ng-container *ngIf="form.value.type === 'number'">
+        <new-adjective-select
+          class="number-type-select"
+          [hidePlaceholderIcon]="true"
+          [types]="adjectiveTypes"
+          (valueChange)="onNumberTypeChange($event)"
+          [value]="form.value.numberTypeOption"
+          [width]="220"
+        >
+          <new-adjective-select-option
+            *ngFor="let option of numberTypeOptions"
+            [name]="option"
+            [iconSrc]="''"
+            [selected]="option === form.value.numberTypeOption"
+          ></new-adjective-select-option>
+        </new-adjective-select>
+      </ng-container>
+
+      <adjective-chip-list
+        *ngIf="form.value.type !== 'date'"
+        [label]="optionLabel$ | async"
+        [name]="form.value.type"
+        [value]="form.value.options"
+        (valueChange)="onChipListChange($event)"
+      ></adjective-chip-list>
+
+      <adjective-date-type-options
+        *ngIf="form.value.type === 'date'"
+        [options]="dateTypeOptions"
+        [value]="form.value.dateTypeOption"
+        (valueChange)="onDateTypeChange($event)"
+      ></adjective-date-type-options>
+    </div>
+  </div>
+</form>

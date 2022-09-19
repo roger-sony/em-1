@@ -1,0 +1,5 @@
+<mat-select [formControl]="control" disableOptionCentering="true" placeholder="Attribute...">
+  <mat-option *ngFor="let fieldKey of fieldKeys" [value]="fieldKey">
+    {{ fieldKey | inventoryFieldName }}
+  </mat-option>
+</mat-select>

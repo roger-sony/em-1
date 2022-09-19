@@ -1,0 +1,54 @@
+<!-- This component is depracated and needs to be removed -->
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="handleCloseModalClick()">&times;</span>
+    <h2>{{ task.shortTask }}</h2>
+    <div *ngIf="task['subtasks'] && task['subtasks'].length > 0">
+      <h4>Subtasks</h4>
+      <ol>
+        <li *ngFor="let s of task['subtasks']">{{ s }}</li>
+      </ol>
+    </div>
+    <div *ngIf="task['recipes'] && task['recipes'].length > 0">
+      <br />
+      <h3>
+        <strong>Associated Recipes:</strong>
+        <br />
+        <mat-expansion-panel *ngFor="let r of task.recipes">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h4>{{ recipes[r].displayName }}</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <h4 *ngIf="recipes[r].ingredients">Ingredients:</h4>
+          <ul>
+            <li *ngFor="let i of recipes[r].ingredients">{{ i.item }} ({{ i.qty }})</li>
+          </ul>
+          <h4 *ngIf="recipes[r].consumes">Consumes From Inventory:</h4>
+          <ul>
+            <li *ngFor="let c of recipes[r].consumes">{{ c.item }} ({{ c.qty }})</li>
+          </ul>
+          <h4 *ngIf="recipes[r].instructions">Instructions:</h4>
+          <ol>
+            <li *ngFor="let i of recipes[r].instructions">{{ i }}</li>
+          </ol>
+        </mat-expansion-panel>
+      </h3>
+    </div>
+    <div *ngIf="task['attributes'] && task['attributes'].length > 0">
+      <h4><strong>Note - This task was triggered by inventory item(s):</strong></h4>
+      <ul style="list-style-type: none">
+        <li *ngFor="let a of objectKeys(task['attributes'][0]['_id'])">
+          <span *ngIf="a !== 'undefined'"
+            ><strong>{{ a | replace: '_':' ' | titlecase }}:</strong>
+            {{ task.attributes[0]['_id'][a] | displayFormat: task.attributes[0]['_id'][a] }}</span
+          >
+        </li>
+        <li><strong>Qty:</strong> {{ task['attributes'][0]['qty'] | displayFormat: 'qty' }}</li>
+      </ul>
+    </div>
+    <p>
+      <button class="mr" mat-raised-button (click)="handleCloseModalClick()">Close</button>
+    </p>
+  </div>
+</div>

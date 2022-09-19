@@ -1,0 +1,6 @@
+<div class="cadence-container">
+  <oph-icon [name]="cadence.type" [size]="16"></oph-icon>
+  <span [ngClass]="cadence.display === 'No Cadence' ? 'grey cadence-info' : 'cadence-info'"
+    >&nbsp;{{ cadence.display }}</span
+  >
+</div>

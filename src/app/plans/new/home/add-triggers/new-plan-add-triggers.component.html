@@ -1,0 +1,16 @@
+<ng-container *ngIf="!triggerForm?.noun?.displayName && !triggerForm?.task?.displayName; else triggerSelected">
+  <mobile-subpage-link matRipple [iconName]="'bolt'" (click)="onButtonClick()">
+    <div class="title">Add Triggers</div>
+    <div class="text">Add your first Trigger to run this plan based on a Noun or a Task.</div>
+  </mobile-subpage-link>
+</ng-container>
+
+<ng-template #triggerSelected>
+  <mobile-subpage-link matRipple [iconName]="iconName" (click)="onButtonClick()">
+    <div class="title">{{ triggerForm.type | titlecase }} Trigger</div>
+    <div class="text">
+      When {{ triggerForm[triggerForm.type].displayName }} is
+      {{ triggerForm.type === 'task' ? triggerForm.task.event : 'Updated' }}
+    </div>
+  </mobile-subpage-link>
+</ng-template>

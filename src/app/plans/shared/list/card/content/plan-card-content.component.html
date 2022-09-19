@@ -1,0 +1,46 @@
+<ng-container *ngIf="plan; else loading">
+  <chapter-chips [allChapters]="chapters" [chapterIds]="plan?.chapterIds" [readonly]="true"></chapter-chips>
+
+  <div class="container">
+    <plan-card-nouns
+      class="content-item"
+      [count]="plan && plan.rules ? plan.rules.length : ''"
+      matTooltip="Nouns"
+      matTooltipPosition="above"
+      matTooltipClass="custom-tooltip"
+    ></plan-card-nouns>
+    <plan-card-conditions
+      class="content-item"
+      [count]="conditionCount"
+      matTooltip="Conditions"
+      matTooltipPosition="above"
+      matTooltipClass="custom-tooltip"
+    ></plan-card-conditions>
+    <plan-card-triggers
+      class="content-item"
+      [count]="triggerCount"
+      matTooltip="Triggers"
+      matTooltipPosition="above"
+      matTooltipClass="custom-tooltip"
+    ></plan-card-triggers>
+    <ng-container>
+      <plan-card-cadence
+        *ngFor="let c of cadenceArray"
+        class="content-item"
+        [cadence]="c"
+        matTooltip="Cadence"
+        matTooltipPosition="above"
+        matTooltipClass="custom-tooltip"
+      ></plan-card-cadence>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="empty-container">
+    <div class="empty-item"></div>
+    <div class="empty-item"></div>
+    <div class="empty-item"></div>
+    <div class="empty-item-large"></div>
+  </div>
+</ng-template>

@@ -1,0 +1,33 @@
+@import 'src/styles/variables';
+
+.item-container {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  color: #23232f; // TODO use variable
+  font-family: $lato-font-family;
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration: none;
+  width: 100%;
+  opacity: 0.6;
+
+  &:hover {
+    background-color: rgba(#ff7900, 0.05); // TODO use variable
+    opacity: 1;
+  }
+}
+
+.plan-card-item-indicator {
+  border-radius: 0 3px 3px 0;
+  height: 16px;
+  width: 3px;
+}
+
+.plan-card-item-icon {
+  margin: 0 4px 0 12px;
+}
+
+.plan-card-item-text {
+  margin: 0 9px;
+}

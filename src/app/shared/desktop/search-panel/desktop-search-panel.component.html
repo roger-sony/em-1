@@ -1,0 +1,39 @@
+<div class="menu-items">
+  <desktop-search-input
+    *ngIf="!inputHidden"
+    [value]="searchParams?.text"
+    (valueChange)="onTextChange($event)"
+    [placeholder]="placeholder"
+    class="desktop-search-panel-shrinkable"
+  ></desktop-search-input>
+
+  <empty-toggle
+    *ngIf="!hideEmptyToggle"
+    [value]="searchParams?.empty"
+    (valueChange)="onEmptyChange($event)"
+  ></empty-toggle>
+</div>
+
+<div class="menu-items">
+  <chapters-filter-select
+    *ngIf="chapters?.length"
+    [chapters]="chapters"
+    [defaultChapterId]="defaultChapterId"
+    [value]="searchParams?.chapterIds"
+    (valueChange)="onChaptersChange($event)"
+    class="desktop-search-panel-shrinkable"
+  ></chapters-filter-select>
+
+  <sort-field-select
+    [options]="sortOptions"
+    [value]="searchParams?.sortField"
+    [hideIcons]="hideIcons"
+    [darkBackground]="darkBackground"
+    (valueChange)="onSortFieldChange($event)"
+  ></sort-field-select>
+
+  <sort-direction-button
+    [value]="searchParams?.sortDirection"
+    (valueChange)="onSortDirectionChange($event)"
+  ></sort-direction-button>
+</div>

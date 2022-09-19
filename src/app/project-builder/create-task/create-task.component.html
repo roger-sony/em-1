@@ -1,0 +1,68 @@
+<div class="body" [formGroup]="form">
+  <div class="body-header">
+    <mat-form-field appearance="outline" class="icon-form-field">
+      <mat-select formControlName="icon" panelClass="icon-option-wrap">
+        <mat-select-trigger>
+          <img
+            [src]="'/assets/img/icons/builder/project-builder/task-icons/' + form.get('icon').value + '.svg'"
+            [height]="32"
+            [width]="32"
+            alt=""
+            aria-hidden="true"
+          />
+        </mat-select-trigger>
+        <mat-option *ngFor="let icon of icons" [value]="icon">
+          <img
+            [src]="'/assets/img/icons/builder/project-builder/task-icons/' + icon + '.svg'"
+            [height]="32"
+            [width]="32"
+            alt=""
+            aria-hidden="true"
+          />
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="task-name-form-field">
+      <mat-label>Task name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter activity name"/>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="duration-form-field">
+      <mat-label>Duration</mat-label>
+      <input matInput formControlName="duration" type="number" id="duration" placeholder="0"/>
+      <span matSuffix> min</span>
+    </mat-form-field>
+    <mat-icon class="close-icon" (click)="cancel()">close</mat-icon>
+  </div>
+  <div class="body-content">
+    <div class="tabs-header">
+      <div class="tab-item" [class.active]="activeTab === 'details'" (click)="activeTab = 'details'">Details</div>
+      <div class="tab-item" [class.active]="activeTab === 'actions'" (click)="activeTab = 'actions'">Actions (0)</div>
+    </div>
+    <div class="tabs-body" [ngClass]="'activity-' + activeTab">
+      <mat-form-field class="text-editor" appearance="outline" *ngIf="activeTab === 'details'">
+        <textarea matInput placeholder="Activity description" formControlName="description"></textarea>
+      </mat-form-field>
+
+      <div class="actions-wrap" *ngIf="activeTab === 'actions'">
+        <div class="actions-header">
+          <div>Actions (0)</div>
+          <button>
+            <mat-icon>add_circle_outline</mat-icon>
+            <span> Action</span>
+          </button>
+        </div>
+        <div class="actions-body" *ngIf="form.get('actions')?.value">
+          <div class="action-item" *ngFor="let action of form.get('actions').value">
+            {{ action.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="actions">
+  <div>
+    <button class="cancel-btn" (click)="cancel()">Cancel</button>
+    <button class="save-btn" (click)="save()">Save</button>
+  </div>
+</div>

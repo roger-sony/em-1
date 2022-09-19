@@ -1,0 +1,6 @@
+<desktop-search-panel
+  [sortOptions]="sortOptions"
+  [searchParams]="searchParams$ | async"
+  (searchParamsChange)="onSearchParamsChange($event)"
+  placeholder="Search for Chapters"
+></desktop-search-panel>

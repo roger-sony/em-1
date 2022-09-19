@@ -1,0 +1,31 @@
+@import 'src/styles/variables';
+
+:host {
+  background-color: $mobile-bottom-nav-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 64px;
+  position: relative;
+}
+
+button {
+  background-color: transparent;
+}
+
+a {
+  all: unset;
+}
+
+.left-corner {
+  position: absolute;
+  top: -20px;
+  left: 0;
+}
+
+.right-corner {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  transform: scale(-1, 1);
+}

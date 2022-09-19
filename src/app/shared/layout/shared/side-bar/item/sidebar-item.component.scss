@@ -1,0 +1,45 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  height: 48px;
+  cursor: pointer;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  color: $black-color-light;
+  font-family: Bitter, serif;
+  font-size: 14px;
+  text-decoration: none;
+  width: 100%;
+
+  &:hover {
+    background-color: $primary-color-lightest;
+    color: $black-color;
+  }
+
+  &.active {
+    color: $black-color;
+    font-weight: bold;
+  }
+}
+
+.sidebar-item-indicator {
+  border-radius: 0 3px 3px 0;
+  height: 16px;
+  width: 3px;
+
+  &.active {
+    background-color: $primary-color;
+  }
+}
+
+.sidebar-item-icon {
+  margin-right: 4px;
+}
+
+.sidebar-item-text {
+  margin: 0 4px;
+}

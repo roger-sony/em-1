@@ -1,0 +1,71 @@
+<div *ngIf="task" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="handleCloseModalClick()">&times;</span>
+    <h2>{{ task.shortTask }}</h2>
+    <mat-list>
+      <mat-list-item>
+        <h3 matLine><strong>Base Estimated Duration:</strong> {{ task.effort }} minutes</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="!task.attributes">
+        <h3 matLine><strong>Category:</strong> {{ task.category }}</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="!task.attributes">
+        <h3 matLine><strong>Short Task:</strong> {{ task.shortTask }}</h3>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine><strong>Priority:</strong> {{ task.priority }}</h3>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine><strong>Movability:</strong> {{ task.movability }}</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="task.unpleasantness">
+        <h3 matLine><strong>Unpleasantness:</strong> {{ task.unpleasantness }}</h3>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine><strong>Abandon?</strong> {{ task.abandon ? 'true' : 'false' }}</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="task.assignedTo">
+        <h3 matLine><strong>Assigned To Role:</strong></h3>
+      </mat-list-item>
+      <ul>
+        <li *ngFor="let r of task.assignedTo">{{ roles[r].displayName }}</li>
+      </ul>
+      <mat-list-item *ngIf="task.assignedToUser">
+        <h3 matLine><strong>Assigned To User:</strong></h3>
+      </mat-list-item>
+      <ul>
+        <li *ngFor="let r of task.assignedToUser">{{ users[r].username }}</li>
+      </ul>
+    </mat-list>
+    <div *ngIf="task.instructions">
+      <h3 matLine><strong>Instructions:</strong></h3>
+      <p>{{ task.instructions }}</p>
+    </div>
+    <div *ngIf="task.checkList">
+      <h3 matLine><strong>Checklist:</strong></h3>
+      <ul>
+        <li *ngFor="let c of task.checkList">
+          <span>{{ c.displayValue }}</span>
+          <mat-icon *ngIf="c.value === true">check</mat-icon>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="task['attributes'] && task['attributes'].length > 0">
+      <h4><strong>Note - This task was triggered by the following noun(s):</strong></h4>
+      <ul style="list-style-type: none">
+        <li *ngFor="let a of objectKeys(task['attributes'][0]['_id'])">
+          <span *ngIf="a !== 'undefined'"
+            ><strong
+              >{{ a | replace: '_':' ' | replace: 'item':'noun' | replace: 'inventory':'nouns' | titlecase }}:</strong
+            >
+            {{ task.attributes[0]['_id'][a] | displayFormat: task.attributes[0]['_id'][a] }}</span
+          >
+        </li>
+        <li><strong>Qty:</strong> {{ task['attributes'][0]['qty'] | displayFormat: 'qty' }}</li>
+      </ul>
+    </div>
+    <p>
+      <button class="mr" mat-raised-button (click)="handleCloseModalClick()">Close</button>
+    </p>
+  </div>
+</div>

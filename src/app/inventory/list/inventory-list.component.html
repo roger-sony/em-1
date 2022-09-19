@@ -1,0 +1,371 @@
+<div class="legacy-content">
+  <header>
+    <h2>Nouns</h2>
+    <button mat-mini-fab color="primary" routerLink="/nouns/new">
+      <mat-icon aria-label="add new item">add</mat-icon>
+    </button>
+    <span class="fill-remaining-space"></span>
+    <button mat-mini-fab color="accent" (click)="getInventory()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </header>
+  <main>
+    <!--========== Table Controls ================-->
+    <div class="flex-mobile-wrap">
+      <div>
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" multiple>
+          <mat-button-toggle
+            value="active"
+            [checked]="displayActiveItems"
+            (change)="displayActiveItems = $event.source.checked; filterActiveInventory()"
+            >Show Active Nouns</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="inactive"
+            [checked]="displayInactiveItems"
+            (change)="displayInactiveItems = $event.source.checked; filterActiveInventory()"
+            >Show Inactive Nouns</mat-button-toggle
+          >
+        </mat-button-toggle-group>
+      </div>
+      <span class="fill-remaining-space"></span>
+      <button mat-raised-button color="accent" class="clearFilterButton" (click)="clearStorage()">Clear Filters</button>
+      <mat-form-field>
+        <mat-select
+          placeholder="Show/Hide Columns"
+          [(ngModel)]="displayedColumns"
+          (ngModelChange)="selectChange()"
+          multiple
+        >
+          <mat-option *ngFor="let c of possibleColumns" [value]="c">{{
+            c
+              | replace: '_':' '
+              | replace: 'item':'noun'
+              | replace: 'inventory':'nouns'
+              | replace: 'qty':'Current Value'
+              | titlecase
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!--========== Table ================-->
+    <div style="overflow: auto">
+      <table class="table-responsive" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container *ngFor="let c of displayedColumns" [matColumnDef]="c">
+          <th mat-header-cell *matHeaderCellDef style="padding-top: 10px">
+            <span mat-sort-header>{{
+              c
+                | replace: '_':' '
+                | replace: 'item':'noun'
+                | replace: 'inventory':'nouns'
+                | replace: 'qty':'Current Value'
+                | titlecase
+            }}</span>
+            <!-- TODO: Reverse this boolean, it's confusing -->
+            <mat-form-field appearance="outline" *ngIf="!isUnfilterable(c)">
+              <input
+                class="filter-input"
+                matInput
+                (keyup)="updateFilters(c, $event.target.value)"
+                placeholder="Filter"
+                [value]="inventoryFilters.input[c]"
+              />
+            </mat-form-field>
+          </th>
+          <td mat-cell *matCellDef="let element" class="hover-cell" [ngSwitch]="c">
+            <span *ngSwitchCase="'adjust_inventory'">
+              <button mat-raised-button (click)="handleEditClick('adjust', element)" color="accent">
+                Adjust Current Value
+              </button>
+            </span>
+            <span *ngSwitchCase="'details'">
+              <mat-icon color="accent" (click)="openInventoryDetail(element)" class="clicky">more_vert</mat-icon>
+            </span>
+            <span *ngSwitchCase="'active'">
+              <mat-icon
+                class="clicky big"
+                [color]="element[c] ? 'primary' : 'basic'"
+                (click)="handleInventoryActiveToggle(element)"
+              >
+                {{ element[c] ? 'toggle_on' : 'toggle_off' }}
+              </mat-icon>
+            </span>
+            <!-- TODO: Refactor for better performance -->
+            <span *ngSwitchCase="'qty'">
+              <span *ngIf="itemMeasurementSettings[element.subcategory]?.type === 'range'; else number">
+                <span *ngIf="getRangeMeasurementValue(element.subcategory, element[c]); else pleaseUpdateMessage">
+                  {{ getRangeMeasurementValue(element.subcategory, element[c]) }}
+                </span>
+              </span>
+              <ng-template #number>
+                <span>{{ element[c] | displayFormat: c }}</span>
+              </ng-template>
+            </span>
+            <span *ngSwitchDefault>
+              {{ element[c] | displayFormat: c }}
+            </span>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <mat-paginator
+      class="mat-elevation-z8"
+      (page)="pageSizeChange($event.pageSize)"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 20, 50, 100]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </main>
+
+  <!--=============== Adjust Inventory Modal ====================-->
+  <div *ngIf="adjustingInventory" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="handleEditClick('cancel', {})">&times;</span>
+      <h2>Adjust Noun</h2>
+      <h3>{{ editItem.subcategory }}</h3>
+      <p>
+        <app-autocomplete
+          *ngIf="editTrigger"
+          [options]="triggerOptions"
+          label="Event Trigger"
+          [(ngModel)]="editTrigger"
+          [inputValue]="editTrigger"
+          [fieldRequired]="true"
+        ></app-autocomplete>
+      </p>
+      <p>
+        <strong>Measurement:</strong> {{ editItem.unit_of_measure }}
+        <br />
+        <strong>Current Value:</strong>
+        <span *ngIf="itemMeasurementSettings[editItem.subcategory]?.type === 'range'; else numberEdit">
+          <span *ngIf="getRangeMeasurementValue(editItem.subcategory, editItem.qty); else pleaseUpdateMessage">
+            {{ getRangeMeasurementValue(editItem.subcategory, editItem.qty) }}
+          </span>
+        </span>
+        <ng-template #numberEdit>
+          <span>{{ editItem.qty | displayFormat: c }}</span>
+        </ng-template>
+      </p>
+      <p>
+        <strong>New Value:</strong><br />
+        <ng-container
+          *ngIf="
+            !itemMeasurementSettings[editItem.subcategory] ||
+              itemMeasurementSettings[editItem.subcategory].type === 'number';
+            else rangeTypeAdjust
+          "
+        >
+          <mat-form-field class="example-full-width">
+            <input matInput type="number" [(ngModel)]="editValue" min="0" />
+          </mat-form-field>
+        </ng-container>
+        <ng-template #rangeTypeAdjust>
+          <mat-form-field appearance="outline">
+            <mat-select [(ngModel)]="editValue" placeholder="New Value">
+              <mat-option
+                *ngFor="let r of itemMeasurementSettings[editItem.subcategory].range_config"
+                [value]="r.value"
+                >{{ r.display_value }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </ng-template>
+      </p>
+      <p>
+        <button
+          class="mr"
+          mat-raised-button
+          color="primary"
+          (click)="handleSaveClick()"
+          [disabled]="!editTrigger || editValue < 0"
+        >
+          Save
+        </button>
+        <button class="mr" mat-raised-button color="warn" (click)="handleEditClick('cancel', {})">Cancel</button>
+      </p>
+      <p *ngIf="adjustInventoryError" class="error-msg">{{ adjustInventoryError }}</p>
+    </div>
+  </div>
+
+  <!--=============== Inventory Detail Modal ====================-->
+  <div *ngIf="viewingInventoryDetail" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeInventoryDetail()">&times;</span>
+      <h2>{{ activeInventoryItem._display_name }}</h2>
+      <mat-list>
+        <ng-container *ngFor="let f of objectKeys(activeInventoryItem)">
+          <mat-list-item *ngIf="f.charAt(0) !== '_'">
+            <h3 matLine>
+              <strong
+                >{{
+                  f
+                    | replace: '_':' '
+                    | replace: 'item':'noun'
+                    | replace: 'inventory':'nouns'
+                    | replace: 'qty':'Current Value'
+                    | titlecase
+                }}:
+              </strong>
+              <!-- Handle different display formats for the item's attributes -->
+              <ng-container [ngSwitch]="f">
+                <span *ngSwitchCase="'expiry_date'">
+                  {{ activeInventoryItem[f] | date: 'M/d/yy':'+0000' }}
+                </span>
+                <span *ngSwitchCase="'last_updated'">
+                  {{ activeInventoryItem[f] | date: 'short' }}
+                </span>
+                <ng-container *ngSwitchCase="'qty'">
+                  <span
+                    *ngIf="itemMeasurementSettings[activeInventoryItem.subcategory]?.type === 'range'; else numberType"
+                  >
+                    <span
+                      *ngIf="
+                        getRangeMeasurementValue(activeInventoryItem.subcategory, activeInventoryItem.qty);
+                        else pleaseUpdateMessage
+                      "
+                    >
+                      {{ getRangeMeasurementValue(activeInventoryItem.subcategory, activeInventoryItem.qty) }}
+                    </span>
+                  </span>
+                  <ng-template #numberType>
+                    <span>{{ activeInventoryItem[f] | displayFormat: f }}</span>
+                  </ng-template>
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    (click)="closeInventoryDetail(); handleEditClick('adjust', activeInventoryItem)"
+                  >
+                    Adjust
+                  </button>
+                </ng-container>
+                <span *ngSwitchDefault>{{ activeInventoryItem[f] }}</span>
+              </ng-container>
+            </h3>
+          </mat-list-item>
+        </ng-container>
+      </mat-list>
+      <p>
+        <button class="mr" mat-raised-button color="accent" routerLink="/nouns/{{ activeInventoryItem._id }}">
+          Clone This Noun
+        </button>
+        <button
+          class="mr"
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/nouns', activeInventoryItem._id, {edit: true}]"
+        >
+          Edit This Noun
+        </button>
+        <button
+          class="mr"
+          mat-raised-button
+          color="warn"
+          (click)="closeInventoryDetail(); handleDeleteClick(activeInventoryItem)"
+        >
+          Delete This Noun
+        </button>
+      </p>
+    </div>
+  </div>
+
+  <!--=============== Delete Inventory Modal ====================-->
+  <div *ngIf="deletingInventory" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeDeleteInventoryModal()">&times;</span>
+      <h2>Delete Noun - Are you sure?</h2>
+      <!-- Delete Item Info -->
+      <mat-card style="margin-top: 20px">
+        <p [ngClass]="deleteItem.active ? 'active' : 'inactive'">
+          {{ deleteItem._display_name }} ({{ deleteItem.active ? 'Active' : 'Inactive' }})
+        </p>
+        <p *ngIf="deleteItem.expiry_date">Expires: {{ deleteItem.expiry_date | date: 'shortDate' }}</p>
+        <p>Last Updated: {{ deleteItem.last_updated | date: 'short' }}</p>
+        <p *ngIf="deleteItem.type === 'concrete'">Current Value: {{ deleteItem.qty | displayFormat: 'qty' }}</p>
+        <p *ngIf="deleteItem.type === 'abstract'">
+          Current Value: {{ getRangeMeasurementValue(deleteItem.subcategory, deleteItem.qty) }}
+        </p>
+      </mat-card>
+      <!-- Rule Triggers to Delete -->
+      <div *ngIf="deleteItemRuleTriggers$ | withLoading | async as obs">
+        <ng-template [ngIf]="obs.loading"><h3>Checking for rule triggers...</h3></ng-template>
+      </div>
+      <ng-container *ngIf="deleteItem.type === 'abstract' && (deleteItemRuleTriggers$ | async)?.length > 0">
+        <h3>The noun's rule triggers will also be deleted:</h3>
+        <ul>
+          <li *ngFor="let r of deleteItemRuleTriggers$ | async">
+            <strong>{{ rules[r.ruleId] }}</strong> runs when {{ r.displayName }}
+          </li>
+        </ul>
+      </ng-container>
+      <!-- Similar Items to Delete -->
+      <ng-container *ngIf="deleteSimilarItems?.length > 0">
+        <p style="margin-top: 30px">Ophanim found some similar nouns. Check all nouns to delete.</p>
+        <div class="delete-item-row" *ngFor="let i of deleteSimilarItems">
+          <mat-checkbox [(ngModel)]="i.delete">&nbsp;&nbsp;</mat-checkbox>
+          <mat-expansion-panel style="width: 100%">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span [ngClass]="i.active ? 'active' : 'inactive'"
+                  >{{ i._display_name }} ({{ i.active ? 'Active' : 'Inactive' }})</span
+                >
+              </mat-panel-title>
+              <mat-panel-description>
+                <span>Last Updated: {{ i.last_updated | date: 'short' }}</span>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-list>
+              <mat-list-item *ngIf="i.expiry_date">
+                <strong>Expires: </strong> {{ i.expiry_date | date: 'shortDate' }}
+              </mat-list-item>
+              <mat-list-item>
+                <span *ngIf="i.type === 'concrete'"
+                  ><strong>Current Value: </strong> {{ i.qty | displayFormat: 'qty' }}</span
+                >
+                <span *ngIf="i.type === 'abstract'"
+                  ><strong>Current Value: </strong> {{ getRangeMeasurementValue(i.subcategory, i.qty) }}</span
+                >
+              </mat-list-item>
+              <mat-list-item *ngIf="i.source">
+                <span><strong>Source: </strong> {{ i.source }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="i.maker">
+                <span><strong>Maker: </strong> {{ i.maker }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="i.master_item">
+                <span><strong>Master Noun: </strong> {{ i.master_item }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="i.color">
+                <span><strong>Color: </strong> {{ i.color }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="i.model">
+                <span><strong>Model: </strong> {{ i.model }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="i.sku">
+                <span><strong>SKU: </strong> {{ i.sku }}</span>
+              </mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </div>
+      </ng-container>
+      <p>
+        <button class="mr" mat-raised-button color="warn" (click)="deleteItems()">Delete Noun(s)</button>
+        <br /><br />
+        <button class="mr" mat-raised-button (click)="closeDeleteInventoryModal()">Cancel</button>
+      </p>
+      <p *ngIf="adjustInventoryError" class="error-msg">{{ adjustInventoryError }}</p>
+    </div>
+  </div>
+
+  <ng-template #pleaseUpdateMessage>
+    <em>
+      Please Update
+      <mat-icon
+        color="primary"
+        matTooltip="This noun's value doesn't exist in the latest Measurement Settings. Please edit the noun and select a value."
+        >help</mat-icon
+      >
+    </em>
+  </ng-template>
+</div>

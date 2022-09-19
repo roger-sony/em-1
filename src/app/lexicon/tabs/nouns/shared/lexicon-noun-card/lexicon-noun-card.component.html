@@ -1,0 +1,99 @@
+<div class="card-wrap" [class.disabled]="!noun.active">
+  <div *ngIf="!hideHeader" class="{{ hideHeaderBottomBorder ? 'oph-card-header-no-bottom' : 'oph-card-header' }}">
+    <img
+      src="/assets/img/icons/box-in-grey-circle.svg"
+      [height]="40"
+      [width]="40"
+      alt=""
+      aria-hidden="true"
+      *ngIf="noun.active"
+    />
+    <img
+      src="/assets/img/icons/dash-in-grey-circle.svg"
+      [height]="40"
+      [width]="40"
+      alt=""
+      aria-hidden="true"
+      *ngIf="!noun.active"
+    />
+    <div class="oph-card-title-container">
+      <div class="oph-card-title">
+        <p>{{ noun.name }}</p>
+      </div>
+      <div class="oph-card-additional-info info-container">
+        <div class="updated light">Updated {{ noun.updatedAt | date: 'd MMM y h:mm a' }}</div>
+      </div>
+    </div>
+    <div class="oph-card-button">
+      <button #menuButton (click)="openMenu($event)" [ngClass]="'detail-menu'">
+        <oph-icon [ngClass]="'icon'" [name]="'ellipsis-grey'" size="32"></oph-icon>
+      </button>
+
+      <oph-menu [origin]="menuButton" [minWidth]="168">
+        <oph-menu-item-new
+          [iconName]="'icon-minus'"
+          [text]="'Disable'"
+          (click)="onDisableClick()"
+          *ngIf="noun.active"
+        ></oph-menu-item-new>
+        <oph-menu-item-new
+          [iconName]="'icon-plus'"
+          [text]="'Activate'"
+          (click)="onActivateClick()"
+          *ngIf="!noun.active"
+        ></oph-menu-item-new>
+        <oph-menu-separator></oph-menu-separator>
+        <oph-menu-item-new
+          [iconName]="'icon-refresh'"
+          [text]="'Update values'"
+          (click)="onUpdateValuesClick()"
+        ></oph-menu-item-new>
+        <oph-menu-item-new [iconName]="'icon-edit'" [text]="'Edit'" (click)="onEditClick()"></oph-menu-item-new>
+        <oph-menu-item-new [iconName]="'icon-pencil'" [text]="'Rename'" (click)="onRenameClick()"></oph-menu-item-new>
+        <oph-menu-item-new [iconName]="'icon-duplicate'" [text]="'Clone'" (click)="onCloneClick()"></oph-menu-item-new>
+        <oph-menu-separator></oph-menu-separator>
+        <oph-menu-item-new [iconName]="'icon-delete'" [text]="'Delete'" (click)="onDeleteClick()"></oph-menu-item-new>
+      </oph-menu>
+    </div>
+  </div>
+
+  <div class="oph-card-content" *ngIf="noun.adjectives?.length">
+    <div
+      class="unit-of-measure-wrap"
+      *ngFor="let adjective of noun.adjectives; let i = index"
+      [hidden]="i >= 6 && !showMore"
+    >
+      <div class="unit-of-measure-label">{{ adjective.name | titlecase }}</div>
+
+      <div
+        class="unit-of-measure-value quantitative"
+        *ngIf="!!adjective.unitOfMeasure"
+        matTooltip="{{ adjective.value }} {{ adjective.unitOfMeasure }}"
+      >
+        <p class="quantity">{{ adjective.value }}</p>
+        &nbsp;
+        <span class="unit-of-measure">{{ adjective.unitOfMeasure }}</span>
+      </div>
+
+      <div class="unit-of-measure-value non-quantitative" *ngIf="!adjective.unitOfMeasure">
+        <div class="border-wrap" *ngIf="adjective.type !== 'date'" matTooltip="{{ adjective?.value }}">
+          <p class="quantity" *ngIf="adjective.type !== 'date'">{{ adjective.value }}</p>
+          &nbsp;
+        </div>
+        <div
+          class="border-wrap"
+          *ngIf="adjective.type === 'date'"
+          matTooltip="{{ adjective?.value | date: 'd MMM y' }}"
+        >
+          <p class="quantity">{{ adjective.value | date: 'd MMM y' }}</p>
+          &nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="show-more-wrap" *ngIf="noun.adjectives?.length > 6">
+    <button mat-raised-button *ngIf="!showMore" (click)="showMoreItems($event)">See more</button>
+    <button mat-raised-button *ngIf="showMore" (click)="showLessItems($event)">See less</button>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<mobile-nav-button
+  [active]="routerUrl | moreButtonActive: hideNouns"
+  [iconName]="'bottom-nav/more'"
+  [text]="'More'"
+  (click)="onTriggerClick()"
+></mobile-nav-button>
+
+<oph-menu [minWidth]="180" [origin]="navElement || moreButton.element" [positions]="[position]">
+  <oph-menu-item
+    *ngIf="!hideNouns"
+    [active]="routerUrl === '/nouns'"
+    [iconName]="'sidebar/noun'"
+    [text]="'Nouns'"
+    [mobile]="true"
+    (click)="onNounsClick()"
+  ></oph-menu-item>
+  <oph-menu-item
+    [active]="routerUrl === '/metrics'"
+    [iconName]="'sidebar/metrics'"
+    [text]="'Metrics'"
+    [mobile]="true"
+    (click)="onMetricsClick()"
+  ></oph-menu-item>
+  <oph-menu-item
+    [active]="routerUrl | userGroupActive"
+    [iconName]="'sidebar/users'"
+    [text]="'Users'"
+    [mobile]="true"
+    (click)="onUsersClick()"
+  ></oph-menu-item>
+  <oph-menu-item
+    [active]="routerUrl === '/mobile-sked'"
+    [iconName]="'bottom-nav/skeds'"
+    [text]="'Mobile sked'"
+    [mobile]="true"
+    (click)="onMobileSkedClick()"
+  ></oph-menu-item>
+</oph-menu>

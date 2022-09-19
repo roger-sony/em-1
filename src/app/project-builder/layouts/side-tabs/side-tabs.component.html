@@ -1,0 +1,66 @@
+<mat-tab-group mat-align-tabs="center" [selectedIndex]="tabIndex | async" (selectedTabChange)="onTabChange($event)">
+  <mat-tab label="Activities">
+    <div class="tasks-content">
+      <oph-form-field class="search-input">
+        <oph-icon [name]="'search'" [size]="24"></oph-icon>
+        <input ophInput placeholder="Search Activities" />
+      </oph-form-field>
+      <button class="create-task" (click)="createTask()">
+        <mat-icon class="add">add</mat-icon>
+        <span class="btn-label">Create Activity</span>
+      </button>
+      <mat-divider class="wide-divider"></mat-divider>
+      <div class="drag-area-wrap">
+        <div
+          cdkDropList
+          id="taskTemplatesList"
+          [cdkDropListData]="taskTemplates | async"
+          cdkDropListSortingDisabled
+          class="task-template-list"
+        >
+          <div class="task-template-box" *ngFor="let template of taskTemplates | async; let i = index" cdkDrag>
+            <div class="icon-wrap">
+              <oph-icon [name]="'/builder/project-builder/task-icons/' + template.icon" [size]="32"></oph-icon>
+            </div>
+            <div class="title-wrap">
+              <div class="title">{{ template.name }}</div>
+              <div class="duration">{{ template.duration }} min</div>
+            </div>
+            <div class="tasks-number">
+              {{ template.actions?.length || 0 }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Projects">
+    <div class="projects-content" *ngIf="{current: currentProject | async} as state">
+      <oph-form-field class="search-input">
+        <oph-icon [name]="'search'" [size]="24"></oph-icon>
+        <input ophInput placeholder="Search Project" />
+      </oph-form-field>
+      <button class="create-project" (click)="createProject()">
+        <mat-icon class="add">add</mat-icon>
+        <span class="btn-label">Create Project</span>
+      </button>
+      <mat-divider class="wide-divider"></mat-divider>
+      <mat-selection-list [multiple]="false">
+        <mat-list-option
+          *ngFor="let project of projects | async"
+          [style.border-color]="project.color || '#5d4037'"
+          [style.box-shadow]="'0 0 0 1px ' + project.color"
+          [value]="project"
+          [selected]="project.id === state.current?.id"
+          (mousedown)="onProjectChange($event, project, state.current)"
+        >
+          <div class="content-wrap">
+            <div class="colored-thing" [style.background-color]="project.color || '#E5E3DC'"></div>
+            <div class="title">{{ project.title || 'UNTITLED' }}</div>
+            <div class="numeric-thing">{{ project.tasks?.length || 0 }}</div>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </mat-tab>
+</mat-tab-group>

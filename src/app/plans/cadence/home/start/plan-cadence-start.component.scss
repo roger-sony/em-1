@@ -1,0 +1,36 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.start-buttons {
+  display: flex;
+  justify-content: space-between;
+  height: 48px;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  font-family: $lato-font-family;
+  font-size: 16px;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 8px;
+
+  &.date-button {
+    display: flex;
+    align-items: center;
+
+    & > .oph-icon {
+      margin-right: 16px;
+    }
+  }
+}
+
+.mobile-time-picker {
+  height: 256px;
+  width: 140px;
+  margin: 16px auto;
+}

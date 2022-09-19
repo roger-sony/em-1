@@ -1,0 +1,28 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  width: 100%;
+}
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-family: $lato-font-family;
+  color: $black-color-light;
+}
+
+oph-icon {
+  margin: 48px 0 16px 0;
+}
+
+.no-data-text {
+  margin-bottom: 8px;
+}

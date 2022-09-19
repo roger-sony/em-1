@@ -1,0 +1,33 @@
+<ng-container *ngIf="formValue.name === 'qty' && filteredUOM?.type === 'range'; else manualValue">
+  <mat-select
+    *ngIf="formValue.name === 'qty' && filteredUOM?.type === 'range'; else manualValue"
+    [formControl]="valueInput"
+    placeholder="Value..."
+  >
+    <mat-option *ngFor="let rangeOption of filteredUOM.rangeConfig" [value]="rangeOption.value | stringify">
+      {{ rangeOption.displayValue }}
+    </mat-option>
+  </mat-select>
+</ng-container>
+
+<ng-template #manualValue>
+  <input
+    matInput
+    [formControl]="valueInput"
+    [matAutocomplete]="autocomplete"
+    [style.width.ch]="((valueInput.value | stringify) || 'value...').length"
+    [type]="
+      formValue.name === 'expiry_date' || (formValue.name === 'qty' && (!filteredUOM || filteredUOM?.type === 'number'))
+        ? 'number'
+        : 'text'
+    "
+    (blur)="onBlur($event)"
+    placeholder="value..."
+  />
+
+  <mat-autocomplete #autocomplete="matAutocomplete">
+    <mat-option *ngFor="let fieldValue of filteredFieldValues$ | async" [title]="fieldValue" [value]="fieldValue">
+      {{ fieldValue }}
+    </mat-option>
+  </mat-autocomplete>
+</ng-template>

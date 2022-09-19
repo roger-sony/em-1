@@ -1,0 +1,22 @@
+@import 'src/styles/variables';
+
+.toolbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 20px;
+}
+
+.left-container {
+  display: flex;
+  align-items: center;
+}
+
+.right-container {
+  display: flex;
+  align-items: center;
+}
+
+.plan-nouns-select {
+  margin-right: 10px;
+}

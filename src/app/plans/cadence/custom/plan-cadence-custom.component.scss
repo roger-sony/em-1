@@ -1,0 +1,40 @@
+@import 'src/styles/variables';
+
+.plan-cadence-custom-form {
+  padding: 8px;
+}
+
+.plan-cadence-custom-repetition {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 8px;
+
+  & > .oph-icon {
+    margin-right: 16px;
+  }
+}
+
+.plan-cadence-custom-pickers {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px auto 16px;
+  width: 294px;
+
+  & > .interval-number-picker {
+    height: 304px;
+    width: 64px;
+    text-align: center;
+  }
+
+  & > .interval-type-picker {
+    height: 304px;
+    width: 214px;
+  }
+}
+
+.plan-cadence-custom-link {
+  border-top: 1px solid $black-color-lightest;
+  padding: 8px 0;
+}

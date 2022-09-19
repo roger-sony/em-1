@@ -1,0 +1,17 @@
+@import '../../../../node_modules/@angular/material/theming';
+@import '../../variables';
+
+@mixin rule-form-input($config) {
+  .mat-input-element {
+    background-color: $black-color-lightest;
+    border: 0;
+    border-radius: 3px;
+    font-family: $lato-font-family;
+    font-size: 14px;
+    height: 32px;
+    line-height: 32px;
+    outline: none;
+    padding: 0 4px;
+    width: auto;
+  }
+}

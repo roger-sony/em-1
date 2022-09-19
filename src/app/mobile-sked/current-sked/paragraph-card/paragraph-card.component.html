@@ -1,0 +1,47 @@
+<mat-card class="sked-card index-{{ index }} {{ getCasePreparedClass(paragraph, sked) }}">
+  <div class="sked-card-body">
+    <div class="sked-label-wrap">
+      <paragraph-card-svg [name]="getRandomIconName()" [color]="getIconColor()"></paragraph-card-svg>
+
+      <div class="paragraph-info-wrap">
+        <p class="sked-label">{{ paragraph?.name }}</p>
+        <div class="paragraph-info">
+          <div *ngIf="paragraph.status === 'scheduled'">
+            <oph-icon name="/mobile-sked/game-theme/calendar" [size]="16"></oph-icon>
+
+            <span class="time" *ngIf="paragraph.startDateTime">
+              {{ paragraph.startDateTime | date: 'h:mm a' }} - {{ getEndTime(paragraph) | date: 'h:mm a' }}
+            </span>
+          </div>
+          <div *ngIf="paragraph.status !== 'scheduled'">
+            <div class="assigned-user" *ngIf="!paragraph.assignedToUser?.length">
+              <user-avatar [size]="24"></user-avatar>
+            </div>
+            <div class="effort">{{ paragraph.derivedEffort }} min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="complete-icon-wrap" *ngIf="paragraph.status === 'finished' && (canEdit$ | async)">
+      <oph-icon
+        (click)="stopParagraph(paragraph, $event)"
+        name="/mobile-sked/complete"
+        class="chevron-left"
+        [size]="24"
+      ></oph-icon>
+    </div>
+    <div class="pause-icon-wrap" *ngIf="paragraph.status === 'in progress' && (canEdit$ | async)">
+      <button mat-flat-button *ngIf="!hasActivePause(paragraph)" (click)="pauseParagraph(sked._id, paragraph, $event)">
+        <oph-icon class="chevron-left" name="/mobile-sked/pause" [size]="24"></oph-icon>
+      </button>
+      <button mat-flat-button *ngIf="hasActivePause(paragraph)" (click)="resumeParagraph(sked._id, paragraph, $event)">
+        <oph-icon class="chevron-left" name="/mobile-sked/play" [size]="24"></oph-icon>
+      </button>
+    </div>
+  </div>
+  <mat-progress-bar
+    mode="determinate"
+    *ngIf="paragraph.status === 'in progress' || paragraph.status === 'finished'"
+    [value]="timeLeft$ | async"
+  ></mat-progress-bar>
+</mat-card>

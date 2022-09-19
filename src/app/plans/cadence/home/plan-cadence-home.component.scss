@@ -1,0 +1,28 @@
+@import 'src/styles/variables';
+
+form {
+  margin: 0 8px;
+}
+
+.plan-cadence-start,
+.plan-cadence-repetition,
+.plan-cadence-end {
+  border-bottom: 1px solid $black-color-lightest;
+  padding: 8px 0;
+}
+
+.plan-cadence-checkboxes {
+  padding: 8px 4px;
+
+  & > .mat-checkbox {
+    display: block;
+    height: 48px;
+    line-height: 48px;
+    margin-bottom: 8px;
+
+    &::ng-deep .mat-checkbox-label {
+      font-size: 16px;
+      margin-left: 12px;
+    }
+  }
+}

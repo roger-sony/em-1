@@ -1,0 +1,20 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="true" mode="over">
+  <mat-drawer #drawer>
+    <div class="mat-drawer-content">
+      <side-bar
+        (close)="drawer.toggle()"
+        [privileges]="privileges$ | async"
+        [routerUrl]="routerUrl$ | async"
+      ></side-bar>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <!--<header></header>-->
+
+    <ng-content></ng-content>
+
+    <nav *ngIf="showBottomNav | async">
+      <mobile-bottom-nav (toggle)="drawer.toggle()"></mobile-bottom-nav>
+    </nav>
+  </mat-drawer-content>
+</mat-drawer-container>

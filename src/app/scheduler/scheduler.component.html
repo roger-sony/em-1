@@ -1,0 +1,103 @@
+<div class="privileges-wrap">
+  <div>
+    <ul class="days-wrap">
+      <li class="days" *ngFor="let day of days">
+        {{ day }}
+      </li>
+    </ul>
+  </div>
+  <div class="dates-wrap" *ngIf="{month: currentMonth | async} as state">
+    <div class="week-wrap" *ngFor="let weekObject of weeks | async; let i = index">
+      <div class="week-title-wrap" *ngIf="getWeek(state.month?.weeks, i)">
+        <div class="title">{{ getWeekLabel(state.month?.weeks, i) }}</div>
+        <div class="actions-wrap">
+          <mat-icon [matMenuTriggerFor]="menu" (onMenuOpen)="cancelDuplicating()">more_horiz</mat-icon>
+          <mat-menu #menu="matMenu" hidden>
+            <button mat-menu-item>Do nothing</button>
+            <button mat-menu-item (click)="removeWeek(getWeek(state.month?.weeks, i)?._id)">Remove week</button>
+          </mat-menu>
+
+          <mat-icon
+            class="content-copy"
+            matTooltip="Duplicate week"
+            matTooltipPosition="above"
+            *ngIf="!(weekForDuplicate.value?.label === getWeekLabel(state.month?.weeks, i))"
+            (click)="startDuplicateWeek(state.month?.weeks, i)"
+            >content_copy</mat-icon
+          >
+          <mat-icon
+            class="content-copy"
+            matTooltip="Duplicate week"
+            matTooltipPosition="above"
+            *ngIf="weekForDuplicate.value?.label === getWeekLabel(state.month?.weeks, i)"
+            (click)="cancelDuplicating()"
+            >cancel</mat-icon
+          >
+
+          <mat-icon
+            class="copy-to-next-slot"
+            (click)="copyToNextEmptySlot(state.month?.weeks, i)"
+            matTooltip="Copy '{{ getWeekLabel(state.month?.weeks, i) }}' to the next empty slot"
+            matTooltipPosition="above"
+            >add</mat-icon
+          >
+        </div>
+      </div>
+      <ul class="dates-table" [class.has-skeds]="!!getWeek(state.month?.weeks, i)">
+        <li
+          *ngFor="let date of dates | async | slice: weekObject.start:weekObject.end; let j = index"
+          (click)="selected.emit(date)"
+        >
+          <span class="date-number">
+            {{ date | date: 'd' }}
+            <span *ngIf="date.getDay() === 0">{{ date | date: 'MMMM' }}</span>
+          </span>
+
+          <div class="list-content">
+            <div class="day-item" *ngFor="let day of dayNames; let k = index" [hidden]="j !== k">
+              <div class="sked-item" *ngFor="let item of getWeek(state.month?.weeks, i)?.planing[day]">
+                <div class="sked-interval">{{ item.interval }}</div>
+                <div class="sked-colors">
+                  <div
+                    class="color-item"
+                    *ngFor="let color of item.colors | slice: 0:2"
+                    [style.background-color]="color"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div
+        [class.week-template-item]="!getWeek(state.month?.weeks, i)"
+        *ngIf="!getWeek(state.month?.weeks, i) && !weekForDuplicate.value"
+      >
+        <div *ngTemplateOutlet="emptyTemplate; context: {index: i}"></div>
+      </div>
+
+      <div
+        class="duplicate"
+        [class.week-template-item]="!getWeek(state.month?.weeks, i)"
+        *ngIf="!getWeek(state.month?.weeks, i) && !!weekForDuplicate.value"
+      >
+        <div *ngTemplateOutlet="duplicateTemplate; context: {index: i}"></div>
+      </div>
+    </div>
+
+    <ng-template #emptyTemplate let-index="index">
+      <div class="template-item-label">Create a new Week</div>
+      <button class="create-week-btn" (click)="createNewWeek(index)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </ng-template>
+
+    <ng-template #duplicateTemplate let-index="index">
+      <div class="template-item-label">Paste Week</div>
+      <button class="create-week-btn" (click)="insertDuplicatedWeek(index)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </ng-template>
+  </div>
+</div>

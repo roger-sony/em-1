@@ -1,0 +1,21 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  margin: 1px 0 0 4px;
+}
+
+button {
+  border-radius: 16px;
+  padding: 0 12px;
+  border: 1px solid $black-color-lightest;
+  color: rgba($black-color, 0.64);
+  cursor: pointer;
+  line-height: 32px;
+  margin-right: 4px;
+}
+
+.selected {
+  border: 1px solid $primary-color;
+  color: rgba($black-color, 0.8);
+}

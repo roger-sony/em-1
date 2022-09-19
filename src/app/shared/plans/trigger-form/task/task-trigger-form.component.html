@@ -1,0 +1,46 @@
+<form [formGroup]="form">
+  <div class="when">When</div>
+
+  <input
+    ophInput
+    [formControlName]="controlNames.DisplayName"
+    [matAutocomplete]="taskAutocomplete"
+    [matAutocompleteDisabled]="mobile"
+    (click)="onTaskInputClick()"
+    class="task"
+    placeholder="Select Task"
+    [ngClass]="mobile ? 'mobile-input' : ''"
+  />
+
+  <div class="is">is</div>
+
+  <input
+    ophInput
+    [formControlName]="controlNames.Event"
+    [matAutocomplete]="taskEventAutocomplete"
+    [matAutocompleteDisabled]="mobile"
+    (click)="onStatusInputClick()"
+    class="status"
+    placeholder="Select Status"
+    [ngClass]="mobile ? 'mobile-input' : ''"
+  />
+</form>
+
+<mat-autocomplete #taskAutocomplete="matAutocomplete">
+  <div class="autocomplete-list">
+    <mat-option *ngFor="let task of filteredTasks$ | async; trackBy: trackByTaskId" [value]="task.shortTask">
+      {{ task.shortTask }}
+    </mat-option>
+  </div>
+  <add-menu-separator></add-menu-separator>
+  <oph-menu-item
+    [fontSize]="14"
+    [iconName]="'plus-small'"
+    [text]="'Create new Task'"
+    (click)="onCreateTaskClick($event)"
+  ></oph-menu-item>
+</mat-autocomplete>
+
+<mat-autocomplete #taskEventAutocomplete="matAutocomplete">
+  <mat-option *ngFor="let taskEvent of taskEvents" [value]="taskEvent">{{ taskEvent }}</mat-option>
+</mat-autocomplete>

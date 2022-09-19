@@ -1,0 +1,52 @@
+@import 'src/styles/variables';
+
+.dropdown-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.icon-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 3px;
+  background-color: $black-color-lightest;
+}
+
+.icon {
+  opacity: 0.5;
+}
+
+.icon-background:hover .icon {
+  opacity: 1;
+}
+
+.dropdown {
+  padding-top: 9px;
+  padding-bottom: 8px;
+  position: absolute;
+  width: 200px;
+  height: 160px;
+  background-color: white;
+  border: solid black;
+  right: -14px;
+  z-index: 10;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 1px rgba(91, 91, 91, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+}
+
+hr {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 185px;
+  height: 1px;
+  opacity: 0.25;
+  background-color: $black-color;
+}
+
+.not-allowed {
+  cursor: not-allowed;
+}

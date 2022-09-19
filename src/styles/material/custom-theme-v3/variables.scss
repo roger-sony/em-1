@@ -1,0 +1,121 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+
+// Define the default theme (same as the example above).
+// define a real custom palette (using http://mcg.mbitson.com)
+$Oph-primary: (
+  50: #faf7ed,
+  100: #f0ecdd,
+  200: #d9d6c8,
+  300: #bfb299,
+  400: #a6a498,
+  500: #5d4037,
+  600: #52342b,
+  700: #45261d,
+  800: #402218,
+  900: #321911,
+  A100: #fefdf5,
+  A200: #fcf3c5,
+  A400: #ffec8f,
+  A700: #ffe875,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white,
+  ),
+);
+
+$Oph-accent: (
+  50: #ffe3b8,
+  100: #ffc16b,
+  200: #ffae52,
+  300: #fa953d,
+  400: #fb8b41,
+  500: #fa7428,
+  600: #f06719,
+  700: #e06824,
+  800: #c75d20,
+  900: #c64f0b,
+  A100: #ffffff,
+  A200: #fff6f0,
+  A400: #ffdecb,
+  A700: #ffceb2,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: $black-87-opacity,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: $black-87-opacity,
+  ),
+);
+
+// mandatory stuff for theming
+$Oph-palette-primary: mat-palette($Oph-primary, 500, A100, A400);
+$Oph-palette-accent: mat-palette($Oph-accent, 500, A100, A400);
+$Oph-palette-warn: mat-palette($mat-red);
+$background-color: #d8d3c6;
+
+// include the custom theme components into a theme object
+$Oph-theme: mat-light-theme($Oph-palette-primary, $Oph-palette-accent, $Oph-palette-warn);
+
+@function mat-light-theme-foreground($color) {
+  @return (
+    base: $color,
+    divider: rgba($color, 0.12),
+    dividers: rgba($color, 0.38),
+    disabled: rgba($color, 0.38),
+    disabled-button: rgba($color, 0.38),
+    disabled-text: rgba($color, 0.38),
+    hint-text: rgba($color, 0.38),
+    secondary-text: rgba($color, 0.64),
+    icon: rgba($color, 0.64),
+    icons: rgba($color, 0.54),
+    text: rgba($color, 0.87),
+    slider-min: rgba($color, 0.87),
+    slider-off: rgba($color, 0.26),
+    slider-off-active: rgba($color, 0.38)
+  );
+}
+
+// You can put any color here.
+$Oph-foreground: mat-light-theme-foreground(#2f2723);
+
+// include the custom theme object into the angular material theme
+$Oph-theme-custom: map-merge(
+  $Oph-theme,
+  (
+    foreground: $Oph-foreground,
+  )
+);
+
+$foreground: map-get($Oph-theme, $Oph-foreground);
+
+$Oph-dark-theme: mat-dark-theme(
+  (
+    color: (
+      primary: $Oph-primary,
+      accent: $Oph-accent,
+      warn: $Oph-palette-warn,
+    ),
+  )
+);

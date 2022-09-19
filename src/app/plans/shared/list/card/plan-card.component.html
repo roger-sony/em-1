@@ -1,0 +1,16 @@
+<oph-card (click)="cardClick()" [iconName]="'rules'" [title]="plan.displayName" [ngClass]="classSelection">
+  <plan-card-menu
+    class="oph-card-header-button"
+    [plan]="plan"
+    [unitOfMeasures]="unitOfMeasures"
+    [tasks]="tasks"
+    [card]="true"
+  ></plan-card-menu>
+
+  <plan-card-content
+    [plan]="plan"
+    [triggerCount]="triggerCount"
+    [cadenceArray]="cadenceArray"
+    [chapters]="chapters"
+  ></plan-card-content>
+</oph-card>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+    <defs>
+        <filter id="a" width="119.2%" height="213.2%" x="-9.6%" y="-55.9%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="shadowSpreadOuter1"/>
+            <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="5"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.328549592 0 0 0 0 0.328549592 0 0 0 0 0.328549592 0 0 0 0.08 0"/>
+            <feMorphology in="SourceAlpha" operator="dilate" radius=".5" result="shadowSpreadOuter2"/>
+            <feOffset in="shadowSpreadOuter2" result="shadowOffsetOuter2"/>
+            <feGaussianBlur in="shadowOffsetOuter2" result="shadowBlurOuter2" stdDeviation="1"/>
+            <feColorMatrix in="shadowBlurOuter2" result="shadowMatrixOuter2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="shadowMatrixOuter2"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <path fill="#F26334" fill-rule="nonzero" d="M10 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM2 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm16 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" filter="url(#a)" transform="rotate(90 5.667 12.833)"/>
+</svg>

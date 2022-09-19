@@ -1,0 +1,37 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.value-text {
+  font-size: 14px;
+  color: rgba($black-color, 0.8);
+  font-weight: 400;
+}
+
+.number {
+  margin-top: 16px;
+}
+
+.values-container {
+  color: rgba($black-color, 0.64);
+  max-width: 272px;
+
+  .value-label {
+    font-size: 12px;
+  }
+
+  .chip-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 8px;
+
+    .chip {
+      border: 1px solid $black-color-lightest;
+      border-radius: 16px;
+      padding: 8px 12px;
+      margin: 0 8px 8px 0;
+    }
+  }
+}

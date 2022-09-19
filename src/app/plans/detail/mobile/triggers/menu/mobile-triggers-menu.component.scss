@@ -1,0 +1,10 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}

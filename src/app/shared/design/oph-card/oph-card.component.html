@@ -1,0 +1,14 @@
+<div *ngIf="!hideHeader" class="{{ hideHeaderBottomBorder ? 'oph-card-header-no-bottom' : 'oph-card-header' }}">
+  <oph-card-icon *ngIf="iconName" [name]="iconName"></oph-card-icon>
+  <div class="oph-card-title-container">
+    <div class="oph-card-title">{{ title }}</div>
+    <ng-content select=".oph-card-additional-info"></ng-content>
+  </div>
+  <div class="oph-card-button">
+    <ng-content select=".oph-card-header-button"></ng-content>
+  </div>
+</div>
+
+<div class="oph-card-content">
+  <ng-content></ng-content>
+</div>

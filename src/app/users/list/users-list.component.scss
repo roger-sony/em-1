@@ -1,0 +1,136 @@
+:host {
+  .users-list-wrap {
+    min-height: calc(100vh - 32px - 56px);
+    font-style: normal;
+    font-size: 15px;
+    line-height: 24px;
+    background: #faf7ed;
+    border-radius: 8px;
+    padding: 16px;
+    box-sizing: border-box;
+
+    h2 {
+      display: inline;
+      margin: 0 0.5rem 0 0;
+    }
+
+    header {
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    button {
+      margin-right: 0.5rem;
+
+      &.iconed-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .fill-remaining-space {
+      flex: 1 1 auto;
+    }
+
+    .user-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .button-container {
+      margin-left: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 70px;
+    }
+
+    .edit-button {
+      all: unset;
+      padding: 4px 8px 2px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .edit-button:hover {
+      background-color: rgb(226, 226, 226);
+    }
+
+    mat-icon {
+      cursor: pointer;
+    }
+
+    table {
+      &.mat-table {
+        .mat-column-UserName {
+          &:not(.mat-header-cell) {
+            padding-left: 12px;
+          }
+
+          &.mat-header-cell {
+            padding-left: 45px;
+          }
+
+          .title-block-wrap {
+            display: flex;
+
+            mat-icon {
+              margin-right: 8px;
+            }
+          }
+        }
+
+        .mat-column-Action {
+          width: 75px;
+
+          .actions-block-wrap {
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+
+        .user-details {
+          overflow: hidden;
+          display: flex;
+          flex-wrap: wrap;
+
+          .roles-title {
+            flex: 0 0 100%;
+          }
+
+          .role-wrap {
+            padding: 12px 24px 0 8px;
+
+            ul {
+              margin-top: 0;
+            }
+          }
+        }
+
+        tr.detail-row {
+          height: 0;
+        }
+
+        tr.element-row:not(.expanded-row):hover {
+          background: whitesmoke;
+        }
+
+        tr.element-row:not(.expanded-row):active {
+          background: #efefef;
+        }
+
+        .element-row td {
+          border-bottom-width: 0;
+        }
+
+        .element-detail {
+          overflow: hidden;
+          display: flex;
+        }
+      }
+    }
+  }
+}

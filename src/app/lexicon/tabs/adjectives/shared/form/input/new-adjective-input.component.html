@@ -1,0 +1,14 @@
+<ng-container *ngIf="{focused: focused$ | async} as state">
+  <input
+    #nameInput
+    [class.focus]="state.focused"
+    [class.blur]="!state.focused"
+    [value]="value"
+    (input)="onInput($event.target.value)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (keydown)="onKeydown($event)"
+    placeholder="Enter adjective name..."
+  />
+  <button *ngIf="value" mat-icon-button class="ophanello icon-remove" (click)="onClearText()"></button>
+</ng-container>

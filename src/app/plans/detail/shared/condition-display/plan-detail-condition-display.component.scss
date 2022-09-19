@@ -1,0 +1,42 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  font-family: $lato-font-family;
+  line-height: 2;
+  color: rgba($black-color, 0.8);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.icon-container {
+  display: inline-block;
+  position: relative;
+  border-radius: 3px;
+  line-height: 1;
+  padding: 4px;
+
+  .name {
+    margin-left: 18px;
+  }
+
+  .icon {
+    position: absolute;
+    top: 4px;
+  }
+}
+
+.task {
+  background-color: #e1f5fe;
+}
+
+.noun {
+  background-color: rgba($primary-color, 0.08);
+}
+
+a {
+  text-decoration: none;
+  color: rgba($black-color, 0.8);
+}

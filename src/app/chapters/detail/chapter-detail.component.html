@@ -1,0 +1,21 @@
+<ng-container *ngIf="chapter$ | async as chapter">
+  <mobile-header *ngIf="mobile$ | async; else desktopHeader" (back)="onBackClick()">
+    {{ chapter?.name }}
+  </mobile-header>
+
+  <ng-template #desktopHeader>
+    <chapter-detail-header [chapter]="chapter" class="chapter-header"></chapter-detail-header>
+  </ng-template>
+
+  <div class="chapter-page">
+    <div class="chapter-main">
+      <chapter-detail-navigation [chapter]="chapter" class="chapter-navigation"></chapter-detail-navigation>
+      <div class="chapter-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <chapter-task-scheduler *ngIf="taskScheduler$ | async" class="chapter-sidebar"></chapter-task-scheduler>
+  </div>
+</ng-container>
+
+<!-- TODO add loading state -->

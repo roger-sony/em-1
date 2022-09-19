@@ -1,0 +1,13 @@
+<dialog-header [iconCircle]="true" [iconName]="'chapter'" [title]="'Edit Chapter'"></dialog-header>
+
+<chapter-form
+  [chapter]="chapter$ | async"
+  [value]="chapterForm$ | async"
+  (valueChange)="onValueChange($event)"
+  (validityChange)="onValidityChange($event)"
+></chapter-form>
+
+<dialog-footer>
+  <dialog-cancel-button (close)="onClose()"></dialog-cancel-button>
+  <button class="create-button" mat-flat-button color="primary" type="button" (click)="onSaveClick()">Edit</button>
+</dialog-footer>

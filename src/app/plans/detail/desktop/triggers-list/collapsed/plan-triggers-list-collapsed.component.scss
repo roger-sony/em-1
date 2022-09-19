@@ -1,0 +1,27 @@
+@import '../../../../../../styles/variables';
+
+.triggers-list-collapsed {
+  margin: 0px 20px;
+  border: solid $black-color-lightest;
+  border-width: 43px 17px 0px 17px;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+.triggers-title {
+  font-family: $bitter-font-family;
+  font-size: 14px;
+  line-height: 1.43;
+  color: $black-color-light;
+  position: absolute;
+  top: -31px;
+  left: 4px;
+}
+
+.caret-icon {
+  position: absolute;
+  right: 0px;
+  top: -33px;
+  transform: rotate(180deg);
+}

@@ -1,0 +1,132 @@
+/* Custom Sass Variables to be included
+in component-level or app-level stylesheets
+
+If you are looking for a variable that isn't in this file,
+note that some variables, e.g. Material color palette variables,
+may be referenced from the Angular Material library in node_modules.
+*/
+
+/*****************************************************************************
+    Simplified Palette -- Used Throughout Application in Custom Components
+******************************************************************************/
+@function lightColor($color) {
+  @return rgba($color, 0.5);
+}
+
+@function lighterColor($color) {
+  @return rgba($color, 0.25);
+}
+
+@function lightestColor($color) {
+  @return rgba($color, 0.05);
+}
+
+$primary-color: #f26334;
+$primary-color-light: lightColor($primary-color);
+$primary-color-lighter: lighterColor($primary-color);
+$primary-color-lightest: lightestColor($primary-color);
+
+$secondary-color: #3900ff;
+$secondary-color-light: lightColor($secondary-color);
+$secondary-color-lighter: lighterColor($secondary-color);
+$secondary-color-lightest: lightestColor($secondary-color);
+
+$success-color: #00d592;
+$success-color-light: lightColor($success-color);
+$success-color-lighter: lighterColor($success-color);
+$success-color-lightest: lightestColor($success-color);
+
+$warning-color: #ffb300;
+$warning-color-light: lightColor($warning-color);
+$warning-color-lighter: lighterColor($warning-color);
+$warning-color-lightest: lightestColor($warning-color);
+
+$error-color: #ff0000;
+$error-color-light: lightColor($error-color);
+$error-color-lighter: lighterColor($error-color);
+$error-color-lightest: lightestColor($error-color);
+
+$black-color: #23232f;
+$black-color-light: lightColor($black-color);
+$black-color-lighter: lighterColor($black-color);
+$black-color-lightest: lightestColor($black-color);
+
+$white-color: #ffffff;
+$white-color-light: lightColor($white-color);
+$white-color-lighter: lighterColor($white-color);
+$white-color-lightest: lightestColor($white-color);
+
+$mobile-breakpoint: 960px;
+
+$lato-font-family: 'Lato', sans-serif;
+$bitter-font-family: 'Bitter', serif;
+
+$light-background-color: #f9fafb;
+
+$border-color: rgba($black-color, 0.08);
+
+// Legacy styles
+
+$background-color: #f4f8f9;
+$modal-background-color: #fff;
+
+$text-color: #37474f;
+
+$legacy-error-color: #ef5350;
+$error-color-faded: #ffebee;
+$alert-color: #ffa726;
+$alert-color-faded: #fff8e1;
+$legacy-success-color: #00c853;
+$success-color-faded: #e0f2f1;
+
+$inventory: #039be5;
+$inventory-selected: #00e5ff;
+
+$tasks: #d81b60;
+$tasks-selected: #f48fb1;
+
+$rules: #43a047;
+$rules-selected: #a5d6a7;
+
+$skeds: #5e35b1;
+$skeds-selected: #b388ff;
+$sked-current-light-blue: #4dd0e1;
+$sked-current-dark-blue: #0097a7;
+
+$mobile-bottom-nav-color: #000000;
+
+/*****************************************************************************
+            Complex Palettes Defined for Angular Material Framework
+******************************************************************************/
+$mat-ophanimblue: (
+  50: #e2eaf5,
+  100: #b7cbe5,
+  200: #88a8d4,
+  300: #5885c2,
+  400: #346ab5,
+  500: #1050a8,
+  600: #0e49a0,
+  700: #0c4097,
+  800: #09378d,
+  900: #05277d,
+  A100: #abbdff,
+  A200: #7896ff,
+  A400: #456eff,
+  A700: #2b5aff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);

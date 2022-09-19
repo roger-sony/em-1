@@ -1,0 +1,20 @@
+<mat-form-field class="mr" appearance="outline" [style.width]="getWidth()">
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+  <input
+    (blur)="onBlur()"
+    [placeholder]="placeholder"
+    id="valueInputAuto{{ index }}"
+    type="text"
+    matInput
+    [formControl]="myControl"
+    [matAutocomplete]="auto"
+    [required]="fieldRequired"
+    [attr.disabled]="fieldDisabled"
+  />
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{ option }}
+    </mat-option>
+  </mat-autocomplete>
+  <div id="valueInputErrorAuto" style="color: red" *ngIf="inputError">Please enter a value</div>
+</mat-form-field>

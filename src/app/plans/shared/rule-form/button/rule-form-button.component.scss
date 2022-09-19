@@ -1,0 +1,19 @@
+@import '../../../../../styles/variables';
+
+:host {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}
+
+button {
+  all: unset;
+  background-color: $black-color-lightest;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+}

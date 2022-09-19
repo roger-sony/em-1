@@ -1,0 +1,8 @@
+<button #toggleButton (click)="onToggleClick()">
+  <oph-icon [name]="'ellipsis'" [size]="28"></oph-icon>
+</button>
+
+<oph-menu [origin]="toggleButton">
+  <oph-menu-item [iconName]="'edit_2'" [text]="'Edit'" (click)="onClickEdit()"></oph-menu-item>
+  <oph-menu-item [iconName]="'delete_2'" [text]="'Delete'" (click)="onClickDelete()"></oph-menu-item>
+</oph-menu>

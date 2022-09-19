@@ -1,0 +1,49 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+label {
+  color: $black-color-light;
+  display: block;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 8px 8px;
+}
+
+.start-date-row {
+  display: flex;
+}
+
+.start-date-row,
+.custom-cadence {
+  margin-bottom: 24px;
+}
+
+.oph-date-picker,
+.oph-time-picker {
+  margin-right: 8px;
+}
+
+.button-container {
+  display: flex;
+  margin: -16px 0 16px 0;
+
+  .button {
+    background-color: $black-color-lightest;
+    height: 36px;
+    width: 58px;
+    color: $black-color-light;
+    margin-right: 8px;
+  }
+
+  .margin-top-16 {
+    margin-top: 16px;
+  }
+
+  .disabled {
+    opacity: 0.4;
+  }
+}

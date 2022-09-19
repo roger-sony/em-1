@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.new-plan-dialog-footer {
+  justify-content: space-between;
+}
+
+.new-plan-dialog-buttons {
+  display: flex;
+}
+
+.previous-button {
+  padding-left: 8px;
+}
+
+.previous-button-icon {
+  margin-right: 12px;
+}
+
+.next-button {
+  padding-right: 8px;
+}
+
+.next-button-icon {
+  margin-left: 12px;
+}
+
+a,
+button {
+  margin-left: 8px;
+}

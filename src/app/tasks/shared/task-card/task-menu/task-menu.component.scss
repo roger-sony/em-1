@@ -1,0 +1,28 @@
+@import 'src/styles/variables';
+
+button {
+  all: unset;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: $black-color-lightest;
+  }
+}
+
+.icon {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.detail-menu {
+  height: 36px;
+  width: 36px;
+  background-color: $white-color;
+}

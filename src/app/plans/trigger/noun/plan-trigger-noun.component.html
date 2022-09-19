@@ -1,0 +1,5 @@
+<mobile-header [borderShown]="true" (back)="onBackClick()">
+  <input #searchInput [placeholder]="'Select Noun'" [value]="search$ | async" (input)="onInput($event)" />
+</mobile-header>
+
+<div *ngFor="let noun of filteredNouns$ | async" (click)="onNounClick(noun)">{{ noun.subcategory }}</div>

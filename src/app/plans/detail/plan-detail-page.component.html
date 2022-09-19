@@ -1,0 +1,44 @@
+<plan-detail-mobile
+  *ngIf="mobile$ | async; else desktop"
+  class="plan-detail-container"
+  [filteredPlans]="filteredPlans$ | async"
+  [nounsSearch]="nounsSearch$ | async"
+  [activePlan]="activePlan$ | async"
+  [nounRuleTriggers]="nounRuleTriggers$ | async"
+  [taskRuleTriggers]="taskRuleTriggers$ | async"
+  [ruleSchedules]="ruleSchedules$ | async"
+  [unitOfMeasures]="unitOfMeasures$ | async"
+  [tasks]="tasks$ | async"
+  [nouns]="nouns$ | async"
+  [loadingPlans]="loadingPlans$ | async"
+  [loadingNounRuleTriggers]="loadingNounRuleTriggers$ | async"
+  [loadingTaskRuleTriggers]="loadingTaskRuleTriggers$ | async"
+  [loadingRuleSchedules]="loadingRuleSchedules$ | async"
+  [loadingUnitOfMeasures]="loadingUnitOfMeasures$ | async"
+  [loadingTasks]="loadingTasks$ | async"
+></plan-detail-mobile>
+
+<ng-template #desktop>
+  <plan-detail-desktop
+    class="plan-detail-container"
+    [filteredPlans]="filteredPlans$ | async"
+    [nounsSearch]="nounsSearch$ | async"
+    [activePlan]="activePlan$ | async"
+    [nounRuleTriggers]="nounRuleTriggers$ | async"
+    [taskRuleTriggers]="taskRuleTriggers$ | async"
+    [ruleSchedules]="ruleSchedules$ | async"
+    [unitOfMeasures]="unitOfMeasures$ | async"
+    [unitOfMeasuresMap]="unitOfMeasuresMap$ | async"
+    [tasks]="tasks$ | async"
+    [nouns]="nouns$ | async"
+    [loadingPlans]="loadingPlans$ | async"
+    [loadingNounRuleTriggers]="loadingNounRuleTriggers$ | async"
+    [loadingTaskRuleTriggers]="loadingTaskRuleTriggers$ | async"
+    [loadingRuleSchedules]="loadingRuleSchedules$ | async"
+    [loadingUnitOfMeasures]="loadingUnitOfMeasures$ | async"
+    [loadingTasks]="loadingTasks$ | async"
+    [chapters]="chapters$ | async"
+    [productionEnvironment]="productionEnvironment$ | async"
+  >
+  </plan-detail-desktop>
+</ng-template>

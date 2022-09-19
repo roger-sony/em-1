@@ -1,0 +1,28 @@
+@import '../../../../../styles/variables';
+
+:host {
+  display: block;
+}
+
+form {
+  color: $black-color-light;
+  display: flex;
+  align-items: center;
+  font-family: 'Lato', sans-serif;
+  line-height: 1.5;
+}
+
+input {
+  flex-grow: 1;
+  margin: 0 8px;
+  max-width: 288px;
+}
+
+.mobile-input {
+  max-width: 204px;
+}
+
+.autocomplete-list {
+  max-height: 176px;
+  overflow-y: auto;
+}

@@ -1,0 +1,53 @@
+<form [formGroup]="form" [ngClass]="mobile ? 'mobile' : ''">
+  <ng-container *ngIf="!typeHidden">
+    <div class="trigger-type-label">Trigger Type</div>
+    <div class="trigger-type-buttons">
+      <trigger-type-button
+        [active]="typeControl.value === types.Noun"
+        [text]="'Noun Trigger'"
+        (click)="onNounTypeClick()"
+      ></trigger-type-button>
+      <trigger-type-button
+        [active]="typeControl.value === types.Task"
+        [text]="'Task Trigger'"
+        (click)="onTaskTypeClick()"
+      ></trigger-type-button>
+    </div>
+  </ng-container>
+
+  <div [ngSwitch]="typeControl.value" [style.font-size.px]="mobile ? 16 : 14" class="trigger-conditions">
+    <noun-trigger-form
+      *ngSwitchCase="types.Noun"
+      [form]="nounForm"
+      [mobile]="mobile"
+      [nouns]="nouns$ | async"
+    ></noun-trigger-form>
+
+    <task-trigger-form
+      *ngSwitchCase="types.Task"
+      [form]="taskForm"
+      [mobile]="mobile"
+      [tasks]="tasks$ | async"
+    ></task-trigger-form>
+  </div>
+
+  <mat-checkbox [formControlName]="controlNames.SaveReport" class="trigger-checkbox">
+    <span>Save a report</span>
+    <oph-icon
+      [name]="'form/info'"
+      [size]="24"
+      matTooltip="If checked, a report will be saved every time this rule runs."
+      class="trigger-checkbox-tooltip"
+    ></oph-icon>
+  </mat-checkbox>
+  <div *ngIf="mobile" class="mobile-margin"></div>
+  <mat-checkbox [formControlName]="controlNames.TriggerConsequences">
+    <span>Trigger consequences</span>
+    <oph-icon
+      [name]="'form/info'"
+      [size]="24"
+      matTooltip="If unchecked, this rule will NOT trigger any actions. Uncheck this if you only want to run reports."
+      class="trigger-checkbox-tooltip"
+    ></oph-icon>
+  </mat-checkbox>
+</form>

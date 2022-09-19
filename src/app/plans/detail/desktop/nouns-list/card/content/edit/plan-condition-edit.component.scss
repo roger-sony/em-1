@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+:host {
+  border-bottom: 1px solid $black-color-lightest;
+  border-top: 1px solid $black-color-lightest;
+  display: flex;
+  margin: 0 8px;
+  padding: 8px 0;
+}
+
+.condition-list-icon {
+  margin: 4px;
+}
+
+.condition-form {
+  margin-right: 8px;
+}

@@ -1,0 +1,37 @@
+<ng-container *ngIf="{nouns: filteredNouns$ | async} as state">
+  <ng-container *ngIf="!(nounsLoaded$ | async); else loaded">
+    <loading-screen></loading-screen>
+  </ng-container>
+
+  <ng-template #loaded>
+    <nouns-toolbar
+      (toggleView)="onViewChange($event)"
+      (inactiveStateChange)="onInactiveChange($event)"
+      (includeConcreteChange)="onIncludeTypeChange('concrete', $event)"
+      (includeAbstractChange)="onIncludeTypeChange('abstract', $event)"
+      (createNoun)="onCreateNoun($event)"
+      [cardView]="cardView"
+      [searchParams]="searchParams$ | async"
+      [possibleColumns]="possibleColumns$ | async"
+      [displayedColumns]="displayedColumns$ | async"
+    ></nouns-toolbar>
+
+    <ng-container *ngIf="cardView; else tableView">
+      <nouns-grid
+        *ngIf="filteredNouns$ | async"
+        (createNoun)="onCreateNoun($event)"
+        (updateNouns)="onUpdateNouns()"
+        [nouns]="filteredNouns$ | async"
+      ></nouns-grid>
+    </ng-container>
+
+    <ng-template #tableView>
+      <nouns-table
+        *ngIf="filteredNounsTable$ && queryParams$ && displayedColumns$ | async"
+        [nouns]="filteredNounsTable$ | async"
+        [queryParams]="queryParams$ | async"
+        [displayedColumns]="displayedColumns$ | async"
+      ></nouns-table>
+    </ng-template>
+  </ng-template>
+</ng-container>

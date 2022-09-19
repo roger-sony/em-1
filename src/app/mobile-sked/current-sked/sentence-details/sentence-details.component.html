@@ -1,0 +1,144 @@
+<div class="details-wrap" *ngIf="sentence$ | async; let sentence">
+  <div class="header">
+    <div class="back-wrap">
+      <oph-icon
+        routerLink="/current-sked/paragraph/{{ paragraphId }}"
+        class="chevron-left"
+        name="/mobile-sked/game-theme/chevron-left"
+        [size]="12"
+      ></oph-icon>
+      <div class="title">{{ sentence.verb.name }} {{ sentence.noun.name }}</div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="pre-content">
+      <div class="time-left">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M9.99996 18.3334C14.6023 18.3334 18.3333 14.6025 18.3333 10.0001C18.3333 5.39771 14.6023 1.66675 9.99996 1.66675C5.39759 1.66675 1.66663 5.39771 1.66663 10.0001C1.66663 14.6025 5.39759 18.3334 9.99996 18.3334Z"
+            [style.stroke]="getClockColor() | async"
+            stroke-opacity="0.64"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M10 5V10L13.3333 11.6667"
+            [style.stroke]="getClockColor() | async"
+            stroke-opacity="0.64"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        {{ sentence.effort }} min
+      </div>
+    </div>
+    <div class="content">
+      <div *ngFor="let adjective of sentence.noun.adjectives">
+        <mat-form-field *ngIf="adjective.type === 'text'">
+          <mat-label>{{ adjective.name }}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adjective.value"
+            (ngModelChange)="onChange()"
+            [disabled]="!adjective.updateable || isReadOnly"
+          />
+        </mat-form-field>
+        <mat-form-field *ngIf="adjective.type === 'number'">
+          <mat-label>{{ adjective.name }}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adjective.value"
+            (ngModelChange)="onChange()"
+            type="number"
+            [disabled]="!adjective.updateable || isReadOnly"
+          />
+        </mat-form-field>
+        <mat-form-field *ngIf="adjective.type === 'date'">
+          <mat-label>{{ adjective.name }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="adjective.value"
+            (ngModelChange)="onChange()"
+            [disabled]="!adjective.updateable || isReadOnly"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf="adjective.type === 'selection'">
+          <mat-label>{{ adjective.name }}</mat-label>
+          <input
+            matInput
+            [value]="adjective.value"
+            (click)="onDropdownClick($event, adjective)"
+            [disabled]="!adjective.updateable || isReadOnly"
+            readonly
+          />
+          <button
+            *ngIf="!isReadOnly"
+            matSuffix
+            mat-icon-button
+            aria-label="Open dropdown"
+            (click)="onDropdownClick($event, adjective)"
+          >
+            <mat-icon class="expand-more-icon">expand_more</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field *ngIf="adjective.type === 'multiselection'">
+          <mat-label>{{ adjective.name }}</mat-label>
+          <input
+            matInput
+            [value]="adjective.value"
+            (click)="onMultiselectClick($event, adjective)"
+            [disabled]="!adjective.updateable || isReadOnly"
+            readonly
+          />
+        </mat-form-field>
+        <section *ngIf="adjective.type === 'checkbox'">
+          <mat-checkbox
+            class="example-margin"
+            [(ngModel)]="adjective.value"
+            (ngModelChange)="onChange()"
+            [labelPosition]="'before'"
+            [disabled]="!adjective.updateable || isReadOnly"
+          >
+            {{ adjective.name }}
+          </mat-checkbox>
+        </section>
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button [disabled]="!sentenceChanged" (click)="save(sentence)">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-panel" *ngIf="sentence$ | async; let sentence">
+    <button class="bold-button" (click)="onResumeClick(sentence)" *ngIf="sentence?.status === 'complete'">
+      <sentence-details-svg name="play"></sentence-details-svg>
+      Resume
+    </button>
+    <button
+      class="bold-button"
+      [disabled]="isReadOnly"
+      (click)="onCompleteClick(sentence)"
+      *ngIf="!sentence.hasOwnProperty('status') || sentence?.status === 'in progress'"
+    >
+      <sentence-details-svg name="complete"></sentence-details-svg>
+      Complete
+    </button>
+    <button disabled class="disable-focus bold-button" tabindex="-1">
+      <sentence-details-svg name="more"></sentence-details-svg>
+      More
+    </button>
+    <ng-template let-bottomSheetRef="bottomSheetRef" #templateBottomSheet>
+      <!-- TODO: Here will be placed "more" functions for sentences like example below -->
+      <!-- <button mat-raised-button (click)="onCompleteClick(sentence)">
+             <oph-icon name="/mobile-sked/details/complete" [size]="20"></oph-icon>
+             Complete
+           </button> -->
+    </ng-template>
+  </div>
+</div>

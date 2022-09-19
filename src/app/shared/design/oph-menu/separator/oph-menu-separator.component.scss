@@ -1,0 +1,7 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  border-bottom: 1px solid $black-color-lighter;
+  margin: 0 8px;
+}

@@ -1,0 +1,47 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="toggleAddActivityModalClick()">&times;</span>
+    <div class="modalPadding" *ngIf="availableDTables; else loading">
+      <div class="header">
+        <h2>Add Activity</h2>
+      </div>
+      <div *ngIf="availableDTables.length === 0" class="message">
+        <p>There are no available rules to run.</p>
+      </div>
+      <div *ngIf="availableDTables.length > 0" class="innerContent">
+        <mat-radio-group aria-label="Select an option" class="radioButtonBox" [(ngModel)]="selectedDTable">
+          <mat-radio-button
+            *ngFor="let d of availableDTables"
+            name="{{ d.display_name }}"
+            value="{{ d._id }}"
+            class="radioButtons"
+            >{{ d.display_name }}</mat-radio-button
+          >
+        </mat-radio-group>
+        <div class="buttonBox">
+          <button
+            mat-raised-button
+            color="primary"
+            class="button"
+            (click)="runRuleOnDemand()"
+            [disabled]="!selectedDTable"
+          >
+            Add Activity
+          </button>
+          <button mat-raised-button color="warn" class="button" (click)="toggleAddActivityModalClick()">Go Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="matSpinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+<sked-activity-success-modal
+  *ngIf="viewingActivitySuccessModal"
+  (closeSuccessModal)="toggleAddActivityModalClick()"
+></sked-activity-success-modal>

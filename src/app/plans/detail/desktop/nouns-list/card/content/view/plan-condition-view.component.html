@@ -1,0 +1,31 @@
+<ng-container *ngIf="facts?.length">
+  <div class="noun-item" (mouseenter)="hoveredItem = id" (mouseleave)="hoveredItem = null">
+    <oph-icon class="icon" [name]="'square-dot-dark'"></oph-icon>
+
+    <div class="text-container">
+      <span class="text-lighter">If&nbsp;</span>
+      <ng-container *ngFor="let fact of facts; index as factIndex">
+        <span *ngIf="factIndex > 0" class="text-lighter">and &nbsp;</span>
+        <span class="text-light bold">{{ fact.name | inventoryFieldName }} &nbsp;</span>
+        <span class="text-light bold">{{ fact.operation | inventoryFieldOperatorName }} &nbsp;</span>
+        <span class="text-light bold">{{ fact.value | inventoryFieldValue: fact.name:unitOfMeasure }} &nbsp;</span>
+      </ng-container>
+      <ng-container *ngIf="rule">
+        <span class="text-lighter">then add&nbsp;</span>
+        <a [routerLink]="['/tasks', rule.consequence]" class="text-light-underline bold" title="Go to Task">
+          {{ taskName }}&nbsp;
+        </a>
+        <span class="text-lighter">to&nbsp;</span>
+        <a [routerLink]="rule.sked | skedLink" class="text-light-underline bold" title="Go to Sked">
+          {{ rule.sked | skedName }}&nbsp;
+        </a>
+      </ng-container>
+    </div>
+
+    <plan-noun-condition-menu
+      [style.opacity]="hoveredItem === id ? 1 : 0"
+      (edit)="onEdit()"
+      (delete)="onDelete()"
+    ></plan-noun-condition-menu>
+  </div>
+</ng-container>

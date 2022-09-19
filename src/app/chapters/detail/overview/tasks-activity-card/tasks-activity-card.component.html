@@ -1,0 +1,25 @@
+<chapter-overview-activity-card [iconName]="'tasks'" [text]="'Tasks (' + tasks.length + ')'">
+  <tasks-activity-card-filter
+    class="activity-card-header-buttons"
+    [activityFilter]="activityFilter"
+  ></tasks-activity-card-filter>
+  <div *ngIf="tasks.length === 0; else content" class="empty">No Activity</div>
+  <ng-template #content>
+    <div *ngFor="let task of tasks">
+      <div class="title">{{ task.shortTask }}</div>
+
+      <!-- TODO: put back in when there are dates -->
+      <!-- <div class="time-panel">
+        <date-item [text]="'Next Scheduled'" [date]="task.nextScheduled"></date-item>
+        <time-item [time]="task.nextScheduled"></time-item>
+      </div> -->
+
+      <div class="completed-container">
+        <span class="large-number">{{ task.tasksComplete }}</span
+        >/ {{ task.tasksTotal }} completed -
+        <oph-icon [name]="task.status | iconName" [size]="14"></oph-icon>
+        <span>{{ task.status }}</span>
+      </div>
+    </div>
+  </ng-template>
+</chapter-overview-activity-card>

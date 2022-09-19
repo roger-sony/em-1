@@ -1,0 +1,19 @@
+<div class="content-item flex-column">
+  <input
+    ophInput
+    (input)="onInput($event.target.value)"
+    [matAutocomplete]="autocomplete"
+    class="oph-input"
+    placeholder="Select Sentence"
+    [formControl]="selectedSentence"
+  />
+  <mat-autocomplete #autocomplete="matAutocomplete">
+    <mat-option
+      *ngFor="let sentence of filteredSentences$ | async"
+      [value]="sentence.verb.name + ' ' + sentence.noun.name"
+      (click)="onOption(sentence)"
+    >
+      {{ sentence.verb.name }} {{ sentence.noun.name }}
+    </mat-option>
+  </mat-autocomplete>
+</div>

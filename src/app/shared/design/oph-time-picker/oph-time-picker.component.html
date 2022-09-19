@@ -1,0 +1,18 @@
+<input
+  *ngIf="{value: value$ | async} as state"
+  ophInput
+  [matAutocomplete]="autocomplete"
+  [placeholder]="placeholder"
+  [value]="(state.value ? (state.value | moment: format) : '') | skedMidnightTime"
+  (change)="onInputChange($event)"
+/>
+
+<button (click)="onButtonClick($event)">
+  <oph-icon [name]="'caret-down_grey'" [size]="24" class="oph-select-icon"></oph-icon>
+</button>
+
+<mat-autocomplete #autocomplete="matAutocomplete" [panelWidth]="120" (optionSelected)="onOptionSelected($event)">
+  <mat-option *ngFor="let option of options; trackBy: trackByOption" [title]="option" [value]="option">
+    {{ option | skedMidnightTime }}
+  </mat-option>
+</mat-autocomplete>

@@ -1,0 +1,52 @@
+<div class="container" [style.width.px]="280">
+  <div class="header-wrap">
+    <img src="/assets/img/icons/box-in-grey-circle.svg" [height]="40" [width]="40" alt="" aria-hidden="true" />
+    <dialog-header title="{{ 'Update ' + noun.name }}"></dialog-header>
+  </div>
+
+  <dialog-content class="dialog-content">
+    <div class="unit-of-measure-wrap" *ngIf="noun">
+      <div class="update-item" *ngFor="let adjective of noun.adjectives" [hidden]="!adjective.updateable">
+        <label class="unit-of-measure-label">{{ adjective.name | titlecase }}</label>
+
+        <oph-form-field *ngIf="!adjective.options && adjective.type !== 'date'">
+          <input
+            ophInput
+            [(ngModel)]="adjective.value"
+            [placeholder]="adjective.name"
+            [disabled]="!adjective.updateable"
+          />
+          <span matSuffix [class.disabled]="!adjective.updateable">{{ adjective.unitOfMeasure }}</span>
+        </oph-form-field>
+
+        <div class="control-wrap date-picker" *ngIf="adjective.type === 'date' && !adjective.options">
+          <oph-date-picker
+            class="margin"
+            [(ngModel)]="adjective.value"
+            [minValue]="null"
+            [maxValue]="null"
+          ></oph-date-picker>
+        </div>
+
+        <oph-form-field *ngIf="adjective.options" class="control-wrap oph-select">
+          <oph-select
+            [class.selected]="!!adjective.value"
+            [(ngModel)]="adjective.value"
+            [hideBorder]="true"
+            [hideIcons]="false"
+          >
+            <oph-option *ngFor="let option of adjective.options" [value]="option">
+              {{ option }}
+            </oph-option>
+          </oph-select>
+        </oph-form-field>
+      </div>
+    </div>
+  </dialog-content>
+
+  <dialog-footer>
+    <dialog-cancel-button></dialog-cancel-button>
+
+    <button mat-flat-button color="primary" type="button" (click)="onUpdateClick()">Save</button>
+  </dialog-footer>
+</div>

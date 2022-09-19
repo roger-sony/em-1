@@ -1,0 +1,15 @@
+<ng-container *ngIf="tasks">
+  <input
+    matInput
+    [formControl]="taskInput"
+    [matAutocomplete]="taskAutocomplete"
+    [style.width.ch]="(taskInput.value || 'Task...').length"
+    placeholder="Task..."
+  />
+
+  <mat-autocomplete #taskAutocomplete="matAutocomplete">
+    <mat-option *ngFor="let task of filteredTasks$ | async; trackBy: trackByTaskId" [value]="task.shortTask">
+      {{ task.shortTask }}
+    </mat-option>
+  </mat-autocomplete>
+</ng-container>

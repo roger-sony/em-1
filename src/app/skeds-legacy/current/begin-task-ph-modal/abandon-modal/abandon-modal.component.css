@@ -1,0 +1,28 @@
+.modal-content {
+  max-width: 300px;
+  height: 200px;
+  padding: 0;
+  border-radius: 3px 3px 0 0;
+  margin-top: 200px;
+}
+
+.modalPadding {
+  padding: 0px 30px 30px 30px;
+}
+
+.colorBar {
+  height: 16px;
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(135.14deg, #5e35b1 0%, #b388ff 100%);
+}
+
+.header {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.buttonBox {
+  display: flex;
+  justify-content: space-between;
+}

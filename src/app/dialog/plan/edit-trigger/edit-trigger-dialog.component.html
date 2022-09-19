@@ -1,0 +1,18 @@
+<dialog-header [title]="'Edit Trigger'" (close)="onClose()"></dialog-header>
+
+<dialog-content>
+  <trigger-form
+    [required]="true"
+    [value]="triggerForm$ | async"
+    (valueChange)="onFormValueChange($event)"
+    (validityChange)="onFormValidityChange($event)"
+  ></trigger-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button (close)="onClose()"></dialog-cancel-button>
+
+  <button mat-flat-button color="primary" type="button" [disabled]="doneDisabled$ | async" (click)="onDoneClick()">
+    Done
+  </button>
+</dialog-footer>

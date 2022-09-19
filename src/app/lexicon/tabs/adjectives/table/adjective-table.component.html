@@ -1,0 +1,63 @@
+<table
+  mat-table
+  [dataSource]="dataSource"
+  matSort
+  [matSortActive]="initialSort?.active"
+  [matSortDirection]="initialSort?.direction"
+  class="mat-elevation-z8"
+  (matSortChange)="onSortChange($event)"
+>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let adjective" class="name-cell">
+      <span> {{ adjective.name }} </span>
+      <span *ngIf="!adjective.active" class="red">&nbsp;(disabled)</span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="source">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Source</th>
+    <td mat-cell *matCellDef="let adjective" class="source-cell">{{ adjective.lexicon || 'Base' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+    <td mat-cell *matCellDef="let adjective" class="type-cell">
+      <div class="type-container">
+        <div class="icon-container">
+          <oph-icon [name]="iconMap[adjective.type]" [size]="adjective.type === 'selection' ? 10 : 16"></oph-icon>
+        </div>
+        <span>{{ adjective.type | titlecase }} </span>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="values">
+    <th mat-header-cell *matHeaderCellDef>Values</th>
+    <td mat-cell *matCellDef="let adjective" class="values-cell">
+      <ng-container *ngIf="adjective.type !== 'text' && adjective.type !== 'checkbox'">
+        <adjective-table-value-cell [adjective]="adjective"></adjective-table-value-cell>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="menu">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let adjective; let i = index" class="menu-cell">
+      <div class="menu" [class.showMenu]="(activeIndex$ | async) === i">
+        <adjective-menu
+          [disabled]="!adjective.active"
+          (menuAction)="onMenuAction($event, adjective.id)"
+        ></adjective-menu>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns; let i = index"
+    (mouseover)="onRowHover(i)"
+    (mouseleave)="onRowLeave(i)"
+  ></tr>
+</table>

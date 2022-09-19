@@ -1,0 +1,43 @@
+@import 'src/styles/variables';
+
+:host {
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  padding: 0 0 8px 0;
+}
+
+.vertical-divider {
+  border-left: 1px solid $border-color;
+  margin: 0 8px 0 8px;
+}
+
+.table-toggle {
+  all: unset;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+  background-color: $black-color-lightest;
+}
+
+.table-toggle div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+  color: rgba($black-color, 0.6);
+}
+
+.no-search-panel {
+  width: 85%;
+}
+
+.icon-grid::before {
+  font-size: 24px;
+}

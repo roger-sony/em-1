@@ -1,0 +1,11 @@
+.cron-select-wrap {
+  display: inline-block;
+}
+
+:host {
+  display: block;
+}
+
+.select-options {
+  display: inline-block;
+}

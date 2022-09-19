@@ -1,0 +1,427 @@
+<div class="legacy-content">
+  <header>
+    <h2>Decision Table</h2>
+  </header>
+  <main *ngIf="dTableConfig && itemMeasurementSettings && inventoryFieldOptions && consequenceOptions && canView">
+    <mat-card style="margin-bottom: 20px">
+      <!--************** Initial Filter ********************-->
+      <div>
+        Show me ...
+        <mat-form-field appearance="outline">
+          <mat-select
+            [(ngModel)]="initialFactFilter"
+            placeholder="Initial Fact/Filter"
+            (selectionChange)="getInventoryFieldValues()"
+          >
+            <mat-option *ngFor="let f of initialFacts" [value]="f">{{ f.display_name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!--************** Table Name ********************-->
+      <div *ngIf="initialFactFilter">
+        This table will be called ...
+        <mat-form-field appearance="outline" style="width: 450px">
+          <input matInput [(ngModel)]="dTableConfig.display_name" type="text" placeholder="Table Name" />
+        </mat-form-field>
+      </div>
+      <!--************** Universal Filter Form ********************-->
+      <div *ngIf="dTableConfig.display_name && initialFactFilter">
+        <em>(Optional)</em> Add condition(s) to ALL rules in this table:
+        <mat-form-field appearance="outline">
+          <mat-select
+            [(ngModel)]="universalFilterName"
+            placeholder="Attribute"
+            (selectionChange)="handleSelect(universalFilterName)"
+          >
+            <mat-option *ngFor="let i of inventoryFieldNames" [value]="i">{{
+              i
+                | replace: '_':' '
+                | replace: 'item':'noun'
+                | replace: 'inventory':'nouns'
+                | replace: 'qty':'Current Value'
+                | titlecase
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-select [(ngModel)]="universalFilterOperation" placeholder="Operation">
+            <mat-option
+              *ngIf="
+                universalFilterName === 'qty' ||
+                universalFilterName === 'expiry_date' ||
+                universalFilterName === '_last_updated'
+              "
+              value="$gt"
+              >&gt;</mat-option
+            >
+            <mat-option
+              *ngIf="
+                universalFilterName === 'qty' ||
+                universalFilterName === 'expiry_date' ||
+                universalFilterName === '_last_updated'
+              "
+              value="$lt"
+              >&lt;</mat-option
+            >
+            <mat-option value="$eq">=</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- universalFilterValue can be a different data type depending on
+      which universalFilterName is chosen -->
+        <ng-container [ngSwitch]="universalFilterName">
+          <!-- Placeholder if no universalFilterName is selected yet. -->
+          <mat-form-field *ngSwitchCase="''" appearance="outline">
+            <input matInput type="number" placeholder="Value" />
+          </mat-form-field>
+          <ng-container *ngSwitchCase="'expiry_date'">
+            <mat-form-field appearance="outline">
+              <input [(ngModel)]="universalFilterValue" matInput type="number" placeholder="Value" />
+            </mat-form-field>
+            days from now
+          </ng-container>
+          <ng-container *ngSwitchCase="'_last_updated'">
+            <mat-form-field appearance="outline">
+              <input [(ngModel)]="universalFilterValue" matInput type="number" placeholder="Value" />
+            </mat-form-field>
+            days ago
+          </ng-container>
+          <!-- Has to be number input for qty universalFilterName -->
+          <mat-form-field *ngSwitchCase="'qty'" appearance="outline">
+            <input [(ngModel)]="universalFilterValue" matInput type="number" placeholder="Value" />
+          </mat-form-field>
+          <!-- Autocomplete for string-type universalFilterNames -->
+          <app-autocomplete
+            *ngSwitchDefault
+            [options]="inventoryFieldOptions[universalFilterName]"
+            placeholder="Value"
+            [(ngModel)]="universalFilterValue"
+            [inputValue]="universalFilterValue"
+          >
+          </app-autocomplete>
+        </ng-container>
+        <button
+          class="apply-btn"
+          mat-raised-button
+          color="accent"
+          (click)="addUniversalFilter()"
+          [disabled]="!universalFilterName || !universalFilterOperation || !universalFilterValue"
+        >
+          Apply
+        </button>
+        <!--************** Universal Filter List ********************-->
+        <mat-chip-list>
+          <mat-chip *ngFor="let r of dTableConfig.ref_fact">
+            {{ r.name | replace: '_':' ' | replace: 'qty':'Current Value' | titlecase }}
+            {{ r.operation | displayFormat: r.operation }} {{ r.value }} &nbsp;&nbsp;
+            <mat-icon (click)="deleteUniversalFilter(r)">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-card>
+    <!--************** Decision Table ********************-->
+    <div style="overflow: auto" *ngIf="dTableConfig.display_name && initialFactFilter">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!--************** Subcategory ********************-->
+        <ng-container matColumnDef="subcategory">
+          <th mat-header-cell *matHeaderCellDef>Noun</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <app-autocomplete
+              *ngIf="inventoryFieldOptions.subcategory"
+              [options]="inventoryFieldOptions.subcategory"
+              placeholder="Noun Subcategory"
+              [(ngModel)]="element.config_name"
+              [fieldRequired]="true"
+              [inputValue]="element.config_name"
+              [index]="i"
+            >
+            </app-autocomplete>
+          </td>
+        </ng-container>
+        <!--************** Filters (Rule Conditions) ********************-->
+        <ng-container matColumnDef="filters">
+          <th mat-header-cell *matHeaderCellDef>When</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <!--************** Filter Form Inputs ********************-->
+            <mat-form-field appearance="outline">
+              <mat-select
+                [(ngModel)]="element.filterName"
+                placeholder="Attribute"
+                (selectionChange)="handleSelectTable(element, i)"
+              >
+                <mat-option *ngFor="let i of inventoryFieldNames" [value]="i">{{
+                  i
+                    | replace: '_':' '
+                    | replace: 'item':'noun'
+                    | replace: 'inventory':'nouns'
+                    | replace: 'qty':'Current Value'
+                    | titlecase
+                }}</mat-option>
+              </mat-select>
+              <div style="color: red" *ngIf="element.selectNameError" class="valueInputError">
+                Please select a value
+              </div>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-select [(ngModel)]="element.filterOperation" placeholder="Operation">
+                <mat-option
+                  *ngIf="
+                    (element.filterName === 'qty' && itemMeasurementSettings[element.config_name]?.type === 'number') ||
+                    element.filterName === 'expiry_date' ||
+                    element.filterName === '_last_updated'
+                  "
+                  value="$gt"
+                  >{{ '>' }}</mat-option
+                >
+                <mat-option
+                  *ngIf="
+                    (element.filterName === 'qty' && itemMeasurementSettings[element.config_name]?.type === 'number') ||
+                    element.filterName === 'expiry_date' ||
+                    element.filterName === '_last_updated'
+                  "
+                  value="$lt"
+                  >{{ '<' }}</mat-option
+                >
+                <mat-option value="$eq">=</mat-option>
+              </mat-select>
+              <div style="color: red" *ngIf="element.selectOperationError" class="valueInputError">
+                Please select a value
+              </div>
+            </mat-form-field>
+            <!-- filterValue can be a different data type depending on
+          which filterName is chosen -->
+            <ng-container [ngSwitch]="element.filterName">
+              <!-- Placeholder if no filterName is selected yet. -->
+              <mat-form-field *ngSwitchCase="''" appearance="outline">
+                <input matInput type="number" placeholder="Value" />
+              </mat-form-field>
+              <ng-container *ngSwitchCase="'expiry_date'">
+                <mat-form-field appearance="outline">
+                  <input
+                    [(ngModel)]="element.filterValue"
+                    matInput
+                    type="number"
+                    (change)="handleValueChange(element)"
+                    placeholder="Value"
+                  />
+                  <div style="color: red" *ngIf="element.selectValueError" class="valueInputError">
+                    Please enter a value
+                  </div>
+                </mat-form-field>
+                days from now
+              </ng-container>
+              <ng-container *ngSwitchCase="'_last_updated'">
+                <mat-form-field appearance="outline">
+                  <input [(ngModel)]="element.filterValue" matInput type="number" placeholder="Value" />
+                  <div style="color: red" *ngIf="element.selectValueError" class="valueInputError">
+                    Please enter a value
+                  </div>
+                </mat-form-field>
+                hours ago
+              </ng-container>
+              <!-- Can be number OR select for qty filterName -->
+              <ng-container *ngSwitchCase="'qty'">
+                <!-- If unit of measure config hasn't been created yet, OR if it's
+              a number type, show a number input -->
+                <mat-form-field
+                  *ngIf="
+                    !itemMeasurementSettings[element.config_name] ||
+                    itemMeasurementSettings[element.config_name]?.type === 'number'
+                  "
+                  appearance="outline"
+                >
+                  <mat-label>{{ itemMeasurementSettings[element.config_name].display_name }}</mat-label>
+                  <input [(ngModel)]="element.filterValue" matInput type="number" placeholder="Value" />
+                  <div style="color: red" *ngIf="element.selectValueError" class="valueInputError">
+                    Please enter a value
+                  </div>
+                </mat-form-field>
+                <!-- If unit of measure config is a range type, show dropdown -->
+                <mat-form-field
+                  *ngIf="itemMeasurementSettings[element.config_name]?.type === 'range'"
+                  appearance="outline"
+                >
+                  <mat-label>{{ itemMeasurementSettings[element.config_name].display_name }}</mat-label>
+                  <mat-select [(ngModel)]="element.filterValue" placeholder="Value" required>
+                    <mat-option
+                      *ngFor="let o of itemMeasurementSettings[element.config_name].range_config"
+                      [value]="o.value"
+                      >{{ o.display_value }}</mat-option
+                    >
+                  </mat-select>
+                  <div style="color: red" *ngIf="element.selectValueError" class="valueInputError">
+                    Please enter a value
+                  </div>
+                </mat-form-field>
+              </ng-container>
+              <!-- Autocomplete for string-type filterNames -->
+              <app-autocomplete-noun-filters
+                *ngSwitchDefault
+                [activeOptions]="element.activeOptions ? element.activeOptions : []"
+                [inactiveOptions]="element.inactiveOptions ? element.inactiveOptions : []"
+                placeholder="Value"
+                [filterName]="element.filterName ? element.filterName : ''"
+                [index]="i"
+                [(ngModel)]="element.filterValue"
+                [inputValue]="element.filterValue || ''"
+                [inputError]="element.selectValueError"
+                (ngModelChange)="handleValueChange(element)"
+                name="element._id"
+                ngDefaultControl
+              >
+              </app-autocomplete-noun-filters>
+            </ng-container>
+
+            &nbsp;&nbsp;
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="addFilterToRule(element)"
+              [disabled]="!(element.filterName && element.filterOperation && element.filterValue)"
+            >
+              <mat-icon>add_circle_outline</mat-icon>
+            </button>
+            <!--************** Filters List ********************-->
+            <mat-chip-list class="mat-chip-list-stacked">
+              <mat-chip *ngFor="let f of element.fact_filter" style="width: auto">
+                <span *ngIf="f.name === 'qty'; else default">
+                  Current Value {{ f.operation | displayFormat: f.operation }}
+                  {{ getMeasurementValue(element.config_name, f.value) }}
+                </span>
+                <ng-template #default>
+                  <span
+                    >{{ f.name | replace: '_':' ' | replace: 'qty':'Current Value' | titlecase }}
+                    {{ f.operation | displayFormat: f.operation }} {{ f.value }}</span
+                  >
+                </ng-template>
+                &nbsp;&nbsp;
+                <mat-icon (click)="deleteFilterFromRule(f, element)">cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </td>
+        </ng-container>
+        <!--************** Action ********************-->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Then</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field *ngIf="consequenceOptions" appearance="outline">
+              <mat-select
+                [value]="
+                  element.consequence && element.consequence.length > 0 && consequenceOptions[element.consequence]
+                    ? consequenceOptions[element.consequence].shortTask
+                    : ''
+                "
+                placeholder="Action to Trigger"
+                (selectionChange)="handleConsequenceChange(element, $event.value)"
+                required
+              >
+                <mat-option *ngFor="let c of consequenceOptions" [value]="c.shortTask">{{ c.shortTask }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="daySelect" appearance="outline" *ngIf="element.consequence?.length > 0">
+              <mat-label>Add to Sked:</mat-label>
+              <mat-select [(ngModel)]="element.selectedDay" (selectionChange)="handleScheduleChange(element)">
+                <mat-option *ngFor="let d of skedDayOptions" [value]="d.value">{{ d.day }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field
+              *ngIf="element.selectedDay && element.selectedDay !== 'Current Sked' && element.consequence?.length > 0"
+              class="timeSelect"
+              appearance="outline"
+            >
+              <mat-select [(ngModel)]="element.selectedTime" (selectionChange)="handleScheduleChange(element)">
+                <mat-option *ngFor="let t of skedTimeOptions" [value]="t.value">{{ t.time }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <!--************** Delete Rule ********************-->
+        <ng-container matColumnDef="delete_rule">
+          <th mat-header-cell *matHeaderCellDef>Delete Rule</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon class="clicky" color="warn" (click)="deleteRule(element)">remove_circle</mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <!--************** Add A Rule ********************-->
+      <mat-card>
+        <button mat-raised-button color="primary" (click)="addRule()"><mat-icon>add</mat-icon> Add Another Rule</button>
+      </mat-card>
+    </div>
+    <!--************** Current Sked Check Box ***************-->
+    <mat-card style="margin-top: 20px">
+      <mat-checkbox [(ngModel)]="dTableConfig.runFromCurrentSked" class="currentSkedCheckbox">
+        Let users run this table from the Current Sked screen.
+      </mat-checkbox>
+    </mat-card>
+    <!--************** Save Table/Cancel ********************-->
+    <mat-card style="margin-top: 20px">
+      <button mat-raised-button color="accent" (click)="saveDecisionTableCheck()">Save Table</button>
+      <button
+        *ngIf="dTableConfig._id"
+        style="margin-left: 5px"
+        mat-raised-button
+        color="primary"
+        (click)="saveDecisionTableCheck(true)"
+      >
+        Save as New Table
+      </button>
+      <button
+        *ngIf="dTableConfig._id"
+        type="button"
+        style="margin-left: 5px"
+        mat-raised-button
+        color="warn"
+        (click)="confirmDeleteDecisionTable()"
+      >
+        <mat-icon>delete</mat-icon> Delete Table
+      </button>
+      <br /><br />
+      <button type="button" mat-button color="primary" (click)="goBack()">Cancel</button>
+    </mat-card>
+  </main>
+
+  <!--=============== Save Modal ====================-->
+  <div *ngIf="viewingSaveModal" class="modal save-modal">
+    <div class="modal-content">
+      <span class="close" (click)="toggleSaveModal()">&times;</span>
+      <h2>Save Table</h2>
+      <p>Disregard incomplete fields?</p>
+      <div>
+        <button class="saveModalButtons" mat-raised-button color="primary" (click)="saveDecisionTable()">
+          Disregard and Save
+        </button>
+        <button class="saveModalButtons" mat-raised-button color="primary" (click)="toggleSaveModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--=============== Delete Modal ====================-->
+<div *ngIf="viewingDeleteModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="viewingDeleteModal = false">&times;</span>
+    <h2>Delete {{ dTableConfig.display_name }} - Are you sure?</h2>
+    <ng-container *ngIf="ruleTriggers && ruleTriggers.length > 0">
+      <p>The following rule triggers will also be deleted:</p>
+      <ul>
+        <li *ngFor="let r of ruleTriggers">{{ r.displayName || '{no name}' }}</li>
+      </ul>
+    </ng-container>
+    <div>
+      <button class="saveModalButtons" mat-raised-button color="warn" (click)="deleteDecisionTable()">
+        Delete Table
+      </button>
+      <br />
+      <button class="saveModalButtons" mat-button color="primary" (click)="viewingDeleteModal = false">Go Back</button>
+    </div>
+  </div>
+</div>
+
+<div class="debug">
+  <h2>Debug</h2>
+  <pre>{{ dTableConfig | json }}</pre>
+</div>

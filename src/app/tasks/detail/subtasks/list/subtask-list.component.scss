@@ -1,0 +1,75 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  line-height: 32px;
+}
+
+.subtask-item {
+  position: relative;
+  padding: 8px;
+  border-top: 1px solid $black-color-lightest;
+  border-right: 1px solid $black-color-lightest;
+
+  &:first-child {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid $black-color-lightest;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .text {
+    color: rgba($black-color, 0.8);
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .menu-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    right: 0;
+    top: 0;
+    width: 88px;
+  }
+}
+
+.control-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  border-radius: 4px;
+
+  .control-button {
+    color: $black-color-light;
+    cursor: pointer;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    border: none;
+    background-color: $white-color;
+
+    &:hover {
+      color: $black-color;
+      background-color: #e9e9eb;
+      z-index: 1000;
+    }
+
+    .icon::before {
+      font-size: 24px;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+button {
+  width: 151px;
+  padding: 0 4px;
+
+  & .oph-icon {
+    margin: 0 4px;
+  }
+}

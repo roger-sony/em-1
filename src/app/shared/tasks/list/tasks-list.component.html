@@ -1,0 +1,8 @@
+<task-card
+  *ngFor="let task of tasks; trackBy: trackByTask"
+  [chapterId]="chapterId"
+  [chaptersMap]="chaptersMap"
+  [selected]="task?.id === selectedTaskId"
+  [task]="task"
+  (click)="onCardClick(task)"
+></task-card>

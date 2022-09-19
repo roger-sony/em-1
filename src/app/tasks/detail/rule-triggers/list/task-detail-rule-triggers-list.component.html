@@ -1,0 +1,23 @@
+<div
+  *ngFor="let trigger of ruleTriggers; let i = index"
+  class="trigger-item"
+  (mouseenter)="hoveredIndex = i"
+  (mouseleave)="hoveredIndex = null"
+>
+  <div>
+    <span class="text">When this task is {{ trigger.taskEvent }} then trigger</span><br />
+    <div class="task-display-container">
+      <div class="ophanello icon-plan"></div>
+      <span>{{ plansMap[trigger.ruleId]?.displayName || 'Plan not found' }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="hoveredIndex === i" class="control-items">
+    <button class="control-button" (click)="edit.next(i)">
+      <span class="ophanello icon-edit icon"></span>
+    </button>
+    <button class="control-button" (click)="delete.next(i)">
+      <span class="ophanello icon-delete icon"></span>
+    </button>
+  </div>
+</div>

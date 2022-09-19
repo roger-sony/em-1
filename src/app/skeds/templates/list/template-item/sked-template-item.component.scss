@@ -1,0 +1,56 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  max-height: 258px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  // align-items: center;
+  padding: 16px;
+  // height: 64px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 90%;
+
+  .name {
+    -webkit-font-smoothing: antialiased;
+    font-family: $bitter-font-family;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .small-text {
+    font-family: $lato-font-family;
+    font-size: 12px;
+    color: $black-color-light;
+    margin-top: 4px;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+}
+
+oph-card {
+  position: relative;
+  width: 100%;
+
+  .template-status-container {
+    position: absolute;
+    right: 4px;
+    top: 68px;
+    display: flex;
+  }
+}
+
+sked-template-in-use {
+  margin-left: 4px;
+}

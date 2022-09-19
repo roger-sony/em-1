@@ -1,0 +1,23 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  background-color: $white-color;
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid $black-color-lightest;
+  margin: 8px 8px 0 0;
+}
+
+span {
+  color: $black-color;
+  margin-right: 10px;
+}
+
+button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

@@ -1,0 +1,20 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+@media (min-width: 600px) {
+  :host {
+    padding: 0 16px;
+  }
+}
+
+.collection-count {
+  color: rgba($black-color, 0.64);
+  font-weight: normal;
+
+  &::before {
+    content: '\00a0';
+  }
+}

@@ -1,0 +1,33 @@
+<plan-detail-mobile-header
+  [plan]="activePlan"
+  [tasks]="tasks"
+  [unitOfMeasures]="unitOfMeasures"
+></plan-detail-mobile-header>
+
+<plan-detail-mobile-cadence [ruleSchedule]="planRuleSchedule" [plan]="activePlan"></plan-detail-mobile-cadence>
+
+<ng-container
+  *ngIf="
+    planTaskTriggers?.length || planNounTriggers?.length || activePlan?.facts.length || activePlan?.rules.length;
+    else noData
+  "
+>
+  <plan-detail-mobile-triggers
+    [planId]="activePlan.id"
+    [taskRuleTriggers]="planTaskTriggers"
+    [nounRuleTriggers]="planNounTriggers"
+    [tasks]="tasks"
+  ></plan-detail-mobile-triggers>
+</ng-container>
+
+<ng-template #noData>
+  <div class="no-data-container">
+    <oph-icon [name]="'info-icon'" [size]="48"></oph-icon>
+    <span class="no-data-text">There are no Triggers or</span>
+    <span>Conditions in this Plan yet</span>
+  </div>
+</ng-template>
+
+<plan-detail-floating-menu [planId]="planId$ | async"></plan-detail-floating-menu>
+
+<plan-detail-mobile-conditions [plan]="activePlan" [search]="nounsSearch"></plan-detail-mobile-conditions>

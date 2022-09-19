@@ -1,0 +1,43 @@
+<desktop-header
+  *ngIf="{calendarShown: calendarShown$ | async} as state"
+  [iconName]="'chapter'"
+  [title]="chapter?.name"
+  (back)="onBack()"
+  class="desktop-header"
+>
+  <div [ngClass]="chapter?.status !== 'live' ? 'draft-chip' : 'live-chip'" class="desktop-header-title-suffix">
+    <oph-icon [name]="chapter?.status === 'live' ? 'live-2' : 'edit'" [size]="16"></oph-icon>
+    <span *ngIf="chapter?.status !== 'live'">Draft</span>
+    <span *ngIf="chapter?.status === 'live'" class="live-text">Live</span>
+  </div>
+
+  <desktop-header-button *ngIf="chapter?.status === 'live'" [iconName]="'stop'" (click)="onPauseClick()">
+    Pause
+  </desktop-header-button>
+
+  <desktop-header-button *ngIf="chapter?.status !== 'live'" [iconName]="'live'" (click)="onGoLiveClick()">
+    Go live
+  </desktop-header-button>
+
+  <desktop-header-button [iconSize]="16" [iconName]="'refresh'" (click)="onUpdateProgressClick()">
+    Update Progress
+  </desktop-header-button>
+
+  <!-- <desktop-header-button
+    [accent]="state.calendarShown"
+    [iconName]="state.calendarShown ? 'calendar-single-event_dark' : 'calendar-single-event'"
+    (click)="onTaskSchedulerClick(!state.calendarShown)"
+  >
+    Task Scheduler
+  </desktop-header-button>
+
+  <chapter-date-picker
+    [startDate]="chapter?.startDate"
+    [endDate]="chapter?.endDate"
+    (startDateChange)="onStartDateChange($event)"
+    (endDateChange)="onEndDateChange($event)"
+    class="chapter-date-picker"
+  ></chapter-date-picker> -->
+
+  <chapter-detail-menu (delete)="onDelete()" (edit)="onEdit()"></chapter-detail-menu>
+</desktop-header>

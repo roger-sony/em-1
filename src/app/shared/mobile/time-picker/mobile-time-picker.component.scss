@@ -1,0 +1,19 @@
+:host {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-areas: 'hour minute' 'period period';
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: minmax(0, 1fr) min-content;
+}
+
+.hour-picker {
+  grid-area: hour;
+}
+
+.minute-picker {
+  grid-area: minute;
+}
+
+.period {
+  grid-area: period;
+}

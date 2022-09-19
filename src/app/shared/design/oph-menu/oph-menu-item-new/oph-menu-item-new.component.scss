@@ -1,0 +1,36 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  color: rgba($black-color, 0.6);
+  cursor: pointer;
+  padding: 0 16px;
+
+  &:hover {
+    background-color: rgba(#ff7900, 0.05); // TODO use variable
+    color: $black-color;
+
+    .oph-menu-item-icon {
+      opacity: 1;
+    }
+  }
+}
+
+.oph-menu-item-text {
+  font-family: $lato-font-family;
+  margin: 0 8px 0 0;
+
+  &.active {
+    color: $primary-color;
+  }
+}
+
+.oph-menu-item-icon {
+  margin-right: 16px;
+  opacity: 0.7;
+}
+
+.ophanello::before {
+  font-size: 24px;
+}

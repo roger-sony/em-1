@@ -1,0 +1,6 @@
+<ng-container *ngIf="(hideNavigation$ | async) === false">
+  <h3>Skeds</h3>
+  <skeds-navigation></skeds-navigation>
+</ng-container>
+
+<router-outlet></router-outlet>

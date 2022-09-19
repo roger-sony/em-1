@@ -1,0 +1,18 @@
+<!-- TODO: Variable name -->
+<dialog-header [title]="'Add Sentence'"></dialog-header>
+
+<dialog-content class="content">
+  <!-- <subtask-form (valueChanges)="onValueChange($event)" (validityChange)="onValidityChange($event)"></subtask-form> -->
+  <add-sentence-form
+    [sentences]="sentences$ | async"
+    (valueChange)="onValueChange($event)"
+    (validityChange)="onValidityChange($event)"
+  ></add-sentence-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+  <button mat-flat-button color="primary" type="button" (click)="onSaveSentence()" [disabled]="!(valid$ | async)">
+    Add
+  </button>
+</dialog-footer>

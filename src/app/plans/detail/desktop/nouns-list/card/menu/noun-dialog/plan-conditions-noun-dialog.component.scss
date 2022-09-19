@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  width: 364px;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.oph-input {
+  margin-top: 16px;
+}
+
+a,
+button {
+  margin-left: 8px;
+}

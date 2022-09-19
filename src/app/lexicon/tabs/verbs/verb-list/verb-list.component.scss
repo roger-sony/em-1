@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+table {
+  margin-top: 48px;
+  width: 724px;
+  max-width: 100%;
+  box-shadow: none;
+}
+
+.menu-button {
+  all: unset;
+  cursor: pointer;
+}
+
+.menu {
+  visibility: hidden;
+}
+
+.showMenu {
+  visibility: visible;
+}

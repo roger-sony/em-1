@@ -1,0 +1,22 @@
+<div class="list-picker-header"></div>
+
+<div
+  *ngIf="{contentMargin: contentMargin$ | async, value: value$ | async} as state"
+  class="list-picker-content"
+  [style.margin-top.px]="state.contentMargin"
+  [style.margin-bottom.px]="state.contentMargin"
+>
+  <div
+    #listPickerItem
+    *ngFor="let item of items; trackBy: trackByItemValue"
+    [class.selected]="item.value === state.value"
+    (click)="onItemClick(item.value)"
+    [style.padding]="config?.itemPadding"
+    [style.text-align]="config?.itemTextAlign"
+    class="list-picker-item"
+  >
+    {{ item.displayValue || item.value }}
+  </div>
+</div>
+
+<div class="list-picker-footer"></div>

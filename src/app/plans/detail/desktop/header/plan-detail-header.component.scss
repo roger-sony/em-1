@@ -1,0 +1,38 @@
+@import 'src/styles/variables';
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.left-container {
+  display: flex;
+  margin: 5px 0;
+}
+
+.back-button {
+  margin-right: 8px;
+}
+
+.plan-name-chapters {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.plan-name-input {
+  margin: 0 8px;
+}
+
+.right-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.item {
+  margin: 5px;
+}

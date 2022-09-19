@@ -1,0 +1,10 @@
+<tasks-search-panel></tasks-search-panel>
+
+<add-menu
+  [addButtonText]="'Add Task'"
+  [createOptionText]="'Create new Task'"
+  [inputPlaceholder]="'Search for Task'"
+  [options]="options$ | async"
+  (add)="onAdd($event)"
+  (create)="onCreate()"
+></add-menu>

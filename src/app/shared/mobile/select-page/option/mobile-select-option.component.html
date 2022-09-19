@@ -1,0 +1,8 @@
+<div matRipple [title]="option?.displayValue || option?.value || ''" class="option-button">
+  <div class="option-display-value">
+    {{ option?.displayValue || option?.value || '' }}
+    <ng-content></ng-content>
+  </div>
+
+  <oph-icon *ngIf="selected" [name]="'success'" [size]="24" class="option-selected-icon"></oph-icon>
+</div>

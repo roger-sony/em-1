@@ -1,0 +1,9 @@
+{
+  "env": {
+    "apiUrl": "https://ophanim2-api-qa.timbergrove.com",
+    "url": "http://localhost:4200",
+    "username": "test",
+    "password": "test1234;"
+  },
+  "projectId": "yn2gu8"
+}

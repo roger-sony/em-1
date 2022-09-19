@@ -1,0 +1,3 @@
+<button mat-flat-button *ngFor="let option of options" [class.selected]="option === value" (click)="onClick(option)">
+  {{ option }}
+</button>

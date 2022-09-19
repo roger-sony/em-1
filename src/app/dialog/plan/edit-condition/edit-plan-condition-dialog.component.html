@@ -1,0 +1,22 @@
+<dialog-header [title]="'Edit Condition'"></dialog-header>
+
+<dialog-content>
+  <condition-form
+    [conditionForm]="initialConditionForm$ | async"
+    [fieldValues]="fieldValues$ | async"
+    [unitOfMeasure]="unitOfMeasures$ | async"
+    [tasks]="tasks$ | async"
+    [nouns]="nouns$ | async"
+    (valueChanges)="onConditionFormValueChange($event)"
+    (validityChange)="onValidityChange($event)"
+  >
+  </condition-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+
+  <button mat-flat-button color="primary" type="button" (click)="onEditClick()" [disabled]="(valid$ | async) === false">
+    Edit
+  </button>
+</dialog-footer>

@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  border: 1px solid $black-color-lightest;
+  color: $primary-color;
+  height: 32px;
+}
+
+span {
+  margin: 0 8px;
+}

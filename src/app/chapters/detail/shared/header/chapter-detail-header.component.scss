@@ -1,0 +1,45 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.desktop-header {
+  width: 100%;
+}
+
+.desktop-header-button,
+.chapter-date-picker {
+  margin-right: 8px;
+}
+
+.draft-chip {
+  background-color: $black-color-lightest;
+  border-radius: 16px;
+  color: $black-color-light;
+  display: flex;
+  font-family: $lato-font-family;
+  font-size: 12px;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 4px;
+  margin-left: 8px;
+
+  & > .oph-icon {
+    margin-right: 2px;
+  }
+}
+
+.live-chip {
+  background-color: rgba(0, 213, 146, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  font-family: $lato-font-family;
+  font-size: 12px;
+  font-weight: 300;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 4px;
+  margin-left: 8px;
+}

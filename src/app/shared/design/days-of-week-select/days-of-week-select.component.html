@@ -1,0 +1,8 @@
+<button
+  *ngFor="let dayIndex of dayIndexes"
+  [class.selected]="value$ | async | arrayIncludes: dayIndex"
+  (click)="onDayButtonClick(dayIndex)"
+  type="button"
+>
+  {{ dayNames[dayIndex] }}
+</button>

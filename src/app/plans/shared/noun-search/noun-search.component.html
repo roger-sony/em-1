@@ -1,0 +1,8 @@
+<mobile-header [borderShown]="true" (back)="onBackClick()">
+  <input [placeholder]="'Select Noun'" (input)="onInput($event.value)" [(ngModel)]="searchInput" />
+</mobile-header>
+
+<div *ngFor="let noun of filteredNouns$ | async" (click)="onNounClick(noun)">
+  {{ noun.subcategory }}
+  <oph-icon *ngIf="noun.id === selectedNounId" [name]="'success'"></oph-icon>
+</div>

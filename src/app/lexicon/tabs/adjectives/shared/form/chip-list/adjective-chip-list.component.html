@@ -1,0 +1,29 @@
+<div
+  *ngIf="{inputFocused: inputFocused$ | async} as state"
+  class="chip-list-container"
+  [class.focus]="state.inputFocused"
+  [class.blur]="!state.inputFocused"
+>
+  <mat-label class="chip-list-label">{{ label }}</mat-label>
+  <mat-chip-list #chipList>
+    <adjective-chip-list-chip
+      *ngFor="let name of value"
+      [name]="name"
+      (remove)="onRemove(name)"
+    ></adjective-chip-list-chip>
+    <input
+      #input
+      class="input"
+      placeholder="Add value..."
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="onAdd($event)"
+      (focus)="onChipListFocus()"
+      (blur)="onChipListBlur()"
+      (keyup)="onKeyUp($event)"
+      autofocus
+      autocomplete="off"
+    />
+  </mat-chip-list>
+</div>

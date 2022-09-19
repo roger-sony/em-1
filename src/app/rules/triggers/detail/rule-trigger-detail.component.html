@@ -1,0 +1,35 @@
+<div class="legacy-content">
+  <mat-card class="example-card">
+    <h2>Rule Trigger Type</h2>
+    <mat-card-content>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/rule-trigger/schedule-trigger/{{ ruleTriggerId }}">
+          <mat-icon color="primary" mat-list-icon>update</mat-icon>
+          <h4 mat-line>Recurring</h4>
+          <p mat-line><em>Ex. Every Tuesday at 12pm</em></p>
+        </a>
+        <a mat-list-item routerLink="/rule-trigger/one-time-trigger/{{ ruleTriggerId }}">
+          <mat-icon color="primary" mat-list-icon>today</mat-icon>
+          <h4 mat-line>One Time</h4>
+          <p mat-line><em>Ex. January 23, 2018</em></p>
+        </a>
+        <a mat-list-item routerLink="/rule-trigger/task-trigger/{{ ruleTriggerId }}">
+          <mat-icon color="primary" mat-list-icon>playlist_add_check</mat-icon>
+          <h4 mat-line>Task Update</h4>
+          <p mat-line><em>Ex. Task is marked complete</em></p>
+        </a>
+        <a mat-list-item routerLink="/rule-trigger/noun-trigger/{{ ruleTriggerId }}">
+          <mat-icon color="primary" mat-list-icon>swap_vertical_circle</mat-icon>
+          <h4 mat-line>Noun Update</h4>
+          <p mat-line><em>Ex. Noun's Current Value is updated</em></p>
+        </a>
+      </mat-nav-list>
+      <br /><br />
+      <a routerLink="/rule-triggers"> &lt; Back to Rule Triggers </a>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="debug">
+  <h2>Debug</h2>
+</div>

@@ -1,0 +1,26 @@
+h2 {
+  display: inline;
+  margin-right: 0.5rem;
+}
+
+header {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  margin-right: 0.5rem;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
+}
+
+.preview-title-card {
+  text-align: center;
+}

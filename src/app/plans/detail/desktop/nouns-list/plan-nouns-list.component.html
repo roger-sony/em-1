@@ -1,0 +1,18 @@
+<ng-container *ngIf="{groups: groups$ | async, layoutClass: layoutClass$ | async} as state">
+  <plans-noun-list-empty *ngIf="!state.groups?.length; else planCard"></plans-noun-list-empty>
+
+  <ng-template #planCard>
+    <div [class]="state.layoutClass">
+      <plan-noun-card
+        *ngFor="let group of state.groups; trackBy: trackByGroupName; let groupIndex = index"
+        [group]="group"
+        [index]="groupIndex"
+        [plan]="plan"
+        [editedGroup]="editedGroup$ | async"
+        [editedIndex]="editedIndex$ | async"
+        (cancelEditing)="onCancelEditing()"
+        class="noun-card"
+      ></plan-noun-card>
+    </div>
+  </ng-template>
+</ng-container>

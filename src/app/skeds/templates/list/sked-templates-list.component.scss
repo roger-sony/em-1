@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  min-height: calc(100vh - 32px - 56px);
+  font-style: normal;
+  font-size: 15px;
+  line-height: 24px;
+  background: #faf7ed;
+  border-radius: 8px;
+}
+
+.template-list-container {
+  padding: 24px 64px;
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-rows: max-content;
+  grid-auto-rows: max-content;
+}
+
+sked-template-item {
+  cursor: pointer;
+}

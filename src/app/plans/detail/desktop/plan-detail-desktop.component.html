@@ -1,0 +1,77 @@
+<plans-panel
+  *ngIf="panelOpen; else collapsed"
+  (changePanelStateMain)="panelState()"
+  [filteredPlans]="filteredPlans"
+  [activePlan]="activePlan"
+  [nounRuleTriggers]="nounRuleTriggers"
+  [taskRuleTriggers]="taskRuleTriggers"
+  [ruleSchedules]="ruleSchedules"
+  [loadingPlans]="loadingPlans"
+  [unitOfMeasures]="unitOfMeasures"
+  [tasks]="tasks"
+  [chapters]="chapters"
+  class="plans-panel"
+></plans-panel>
+
+<ng-template #collapsed>
+  <plans-panel-collapsed (changePanelState)="panelState()"></plans-panel-collapsed>
+</ng-template>
+
+<ng-container
+  *ngIf="
+    loadingPlans ||
+      loadingNounRuleTriggers ||
+      loadingTaskRuleTriggers ||
+      loadingRuleSchedules ||
+      loadingUnitOfMeasures ||
+      loadingTasks;
+    else showDetail
+  "
+>
+  <div class="plans-detail"></div>
+</ng-container>
+
+<ng-template #showDetail>
+  <div class="plans-detail">
+    <plan-detail-header
+      [filteredPlans]="filteredPlans"
+      [activePlan]="activePlan"
+      [taskRuleTriggers]="taskRuleTriggers"
+      [ruleSchedules]="ruleSchedules"
+      [unitOfMeasures]="unitOfMeasures"
+      [tasks]="tasks"
+      [chapters]="chapters"
+      class="plan-detail-header"
+    >
+    </plan-detail-header>
+
+    <div class="plan-detail-content">
+      <plan-triggers-list
+        *ngIf="tasks && nouns"
+        [taskRuleTriggers]="taskRuleTriggers"
+        [nounRuleTriggers]="nounRuleTriggers"
+        [activePlan]="activePlan"
+        [tasks]="tasks"
+        [nouns]="nouns"
+      >
+      </plan-triggers-list>
+      <plan-nouns-toolbar [plan]="activePlan" [productionEnvironment]="productionEnvironment"></plan-nouns-toolbar>
+      <div class="line"></div>
+      <plan-conditions-list
+        *ngIf="!productionEnvironment"
+        [plan]="activePlan"
+        [tasks]="tasks"
+        [unitOfMeasures]="unitOfMeasures"
+        [unitOfMeasuresMap]="unitOfMeasuresMap"
+      ></plan-conditions-list>
+      <plan-nouns-list
+        *ngIf="productionEnvironment"
+        [plan]="activePlan"
+        [search]="nounsSearch"
+        [panelOpen]="panelOpen"
+        class="nouns-list"
+      >
+      </plan-nouns-list>
+    </div>
+  </div>
+</ng-template>

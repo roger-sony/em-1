@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="header-wrap">
+    <h4>Rename</h4>
+  </div>
+
+  <dialog-content class="dialog-content">
+    <div class="update-item">
+      <mat-form-field>
+        <input matInput [(ngModel)]="nounName" required />
+      </mat-form-field>
+    </div>
+  </dialog-content>
+
+  <dialog-footer>
+    <dialog-cancel-button></dialog-cancel-button>
+
+    <button mat-flat-button color="primary" type="button" [disabled]="!nounName" (click)="onUpdateClick()">Save</button>
+  </dialog-footer>
+</div>

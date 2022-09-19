@@ -1,0 +1,7 @@
+<page-wrapper>
+  <router-outlet></router-outlet>
+</page-wrapper>
+
+<div *ngIf="loading.showSpinner | async" class="loading-spinner-overlay legacy-spinner">
+  <mat-spinner></mat-spinner>
+</div>

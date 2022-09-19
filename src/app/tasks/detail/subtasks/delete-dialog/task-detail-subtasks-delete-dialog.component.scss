@@ -1,0 +1,10 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+span {
+  font-size: 20px;
+  color: rgba($black-color, 0.88);
+}

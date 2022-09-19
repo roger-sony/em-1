@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.nouns-control-panel {
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 0 16px;
+}
+
+.nouns-empty,
+.nouns-list {
+  flex-grow: 1;
+  min-height: 1px;
+}
+
+.nouns-list {
+  padding: 16px;
+  overflow-y: auto;
+}

@@ -1,0 +1,11 @@
+<div class="mobile-header" [class.mobile-header-border]="borderShown">
+  <back-button [size]="40" (back)="onBack()" class="back-button"></back-button>
+
+  <div class="main-content">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="side-content">
+    <ng-content select=".header-buttons"></ng-content>
+  </div>
+</div>

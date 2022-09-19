@@ -1,0 +1,99 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.checklist-container {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  cursor: move;
+  font-size: 14px;
+  padding: 8px 8px 8px 16px;
+  width: auto;
+  border-top: 1px solid $black-color-lightest;
+  border-left: 1px solid $black-color-lightest;
+  border-right: 1px solid $black-color-lightest;
+
+  &:first-child {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid $black-color-lightest;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .input {
+    width: 100%;
+    cursor: text;
+    background-color: transparent;
+  }
+
+  .icon-drag_indicator {
+    margin-right: 16px;
+    color: $black-color-light;
+
+    &:before {
+      font-size: 24px;
+    }
+  }
+}
+
+.delete-button {
+  all: unset;
+  height: 36px;
+  min-width: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: $black-color-lightest;
+  }
+
+  .icon-delete {
+    color: $black-color-light;
+
+    &:hover {
+      color: $black-color;
+    }
+
+    &:before {
+      font-size: 24px;
+    }
+  }
+}
+
+.hidden-div {
+  width: 60px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.checklist-container.cdk-drop-list-dragging .checklist-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

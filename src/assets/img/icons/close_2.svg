@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25">
+    <defs>
+        <filter id="a" width="165.6%" height="468.8%" x="-32.8%" y="-184.4%" filterUnits="objectBoundingBox">
+            <feOffset dy="8" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="12"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.361271513 0 0 0 0 0.361271513 0 0 0 0 0.361271513 0 0 0 0.1 0"/>
+            <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="shadowSpreadOuter2"/>
+            <feOffset dx="-24" in="shadowSpreadOuter2" result="shadowOffsetOuter2"/>
+            <feGaussianBlur in="shadowOffsetOuter2" result="shadowBlurOuter2" stdDeviation="6"/>
+            <feColorMatrix in="shadowBlurOuter2" result="shadowMatrixOuter2" values="0 0 0 0 0.653249547 0 0 0 0 0.653249547 0 0 0 0 0.653249547 0 0 0 0.532260708 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="shadowMatrixOuter2"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <path fill="#23232F" fill-rule="nonzero" d="M18 6c-.4-.4-1-.4-1.4 0L12 10.6 7.4 6c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4.6 4.6L6 16.6c-.4.4-.4 1 0 1.4.2.2.4.3.7.3.3 0 .5-.1.7-.3l4.6-4.6 4.6 4.6c.2.2.5.3.7.3.2 0 .5-.1.7-.3.4-.4.4-1 0-1.4L13.4 12 18 7.4c.4-.4.4-1 0-1.4z" filter="url(#a)" opacity=".6" transform="translate(.5 .5)"/>
+</svg>

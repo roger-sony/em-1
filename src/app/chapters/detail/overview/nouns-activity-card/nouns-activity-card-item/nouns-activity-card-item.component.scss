@@ -1,0 +1,73 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  font-size: 14px;
+  color: $black-color-light;
+}
+
+// .avatar {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   color: $white-color;
+//   font-size: 12px;
+//   font-family: $bitter-font-family;
+//   background-color: blue;
+//   height: 24px;
+//   width: 24px;
+//   border-radius: 50px;
+//   margin-right: 8px;
+// }
+
+.circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin-right: 16px;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  min-height: 16px;
+  border-radius: 50px;
+  border: 1px solid $black-color-lightest;
+  box-shadow: 0 2px 4px 1px rgba(91, 91, 91, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+  z-index: 10;
+}
+
+.line {
+  height: 100%;
+  width: 2px;
+  background-color: $black-color-lightest;
+}
+
+.white-line {
+  background-color: $white-color;
+}
+
+.bullet {
+  height: 4px;
+  width: 4px;
+  border-radius: 50px;
+  background-color: $black-color;
+}
+
+.noun {
+  text-decoration: underline;
+  color: $black-color;
+}
+
+.lower-text {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 4px;
+}

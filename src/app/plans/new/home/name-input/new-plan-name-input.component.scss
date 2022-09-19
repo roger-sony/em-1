@@ -1,0 +1,18 @@
+@import 'src/styles/variables';
+
+input {
+  all: unset;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $bitter-font-family;
+  font-size: 20px;
+  font-weight: bold;
+  height: 28px;
+  margin: 22px 0 22px;
+  padding: 0 8px 0 48px;
+  width: 80%;
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+}

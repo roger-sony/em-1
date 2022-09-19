@@ -1,0 +1,10 @@
+@import 'src/styles/variables';
+
+.small-text {
+  opacity: 0.5;
+  font-family: $lato-font-family;
+  font-size: 12px;
+  line-height: 1.33;
+  color: $black-color;
+  margin-left: 41px;
+}

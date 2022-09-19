@@ -1,0 +1,15 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  padding: 16px;
+}
+
+.oph-card-chip {
+  margin-right: 8px;
+}
+
+.horizontal-divider {
+  border-left: 1px solid $border-color;
+  margin: 0 12px 0 4px;
+}

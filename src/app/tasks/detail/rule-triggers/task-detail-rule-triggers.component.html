@@ -1,0 +1,10 @@
+<h2>Plan triggers</h2>
+<span class="text">Depending on the task's state these plans will trigger</span>
+<task-detail-rule-triggers-list
+  *ngIf="storedRuleTriggers?.length"
+  [ruleTriggers]="storedRuleTriggers"
+  [plansMap]="plansMap"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+></task-detail-rule-triggers-list>
+<add-button (click)="onAdd()" [buttonText]="'Add Plan Trigger'"></add-button>

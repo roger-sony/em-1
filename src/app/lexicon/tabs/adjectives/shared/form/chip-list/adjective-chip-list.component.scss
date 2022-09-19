@@ -1,0 +1,36 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.chip-list-container {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 8px;
+  background-color: $light-background-color;
+  width: 100%;
+  min-height: 48px;
+
+  .chip-list-label {
+    font-size: 12px;
+    color: rgba($black-color, 0.64);
+  }
+
+  .input {
+    all: unset;
+    margin-top: 12px;
+    padding: 8px;
+    caret-color: $primary-color;
+    color: $black-color;
+  }
+}
+
+.focus {
+  border-bottom: 2px solid $primary-color;
+}
+
+.blur {
+  border-bottom: 2px solid #949499;
+}

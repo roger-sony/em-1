@@ -1,0 +1,10 @@
+<div class="content-container-progress">
+  <div class="left-container">
+    <oph-icon [size]="16" [name]="'vector'"></oph-icon>
+    <span class="progress-text">Progress</span>
+  </div>
+  <span class="percentage">{{ progress }}%</span>
+</div>
+
+<div class="progress-bar-light"></div>
+<div class="progress-bar-dark" [style.width.%]="progress"></div>

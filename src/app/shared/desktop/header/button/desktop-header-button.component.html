@@ -1,0 +1,4 @@
+<button [class.desktop-header-button-accent]="accent" [disabled]="disabled">
+  <oph-icon *ngIf="iconName" [name]="iconName" [size]="iconSize || 24"></oph-icon>
+  <ng-content></ng-content>
+</button>

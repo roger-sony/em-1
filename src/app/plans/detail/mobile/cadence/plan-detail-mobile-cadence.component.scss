@@ -1,0 +1,16 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  font-size: 16px;
+}
+
+.plan-cadence-custom-link {
+  border-bottom: 1px solid $black-color-lightest;
+  padding: 8px 8px;
+}
+
+.text {
+  font-size: 14px;
+  color: $black-color-light;
+}

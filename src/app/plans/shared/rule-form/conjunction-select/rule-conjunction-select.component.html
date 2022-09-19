@@ -1,0 +1,4 @@
+<mat-select [formControl]="control" [placeholder]="'...'" (valueChange)="onValueChange($event)">
+  <mat-option [value]="conjunctions.And">{{ conjunctions.And }}</mat-option>
+  <mat-option *ngIf="!global" [value]="conjunctions.ThenAdd">{{ conjunctions.ThenAdd }}</mat-option>
+</mat-select>

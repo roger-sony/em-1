@@ -1,0 +1,33 @@
+@import 'src/styles/variables';
+
+.set-button {
+  height: 104px;
+  max-width: 359px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-family: $lato-font-family;
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
+.icon-left {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.icon-right {
+  margin-top: 4px;
+}
+
+.line {
+  border-top: 1px solid $black-color-lightest;
+  margin: 0px 8px;
+}
+
+.content {
+  display: block;
+}

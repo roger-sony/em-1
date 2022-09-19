@@ -1,0 +1,10 @@
+@import '../../../../../styles/variables';
+
+:host {
+  display: block;
+  color: $black-color-light;
+  flex-grow: 1;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  padding: 16px;
+}

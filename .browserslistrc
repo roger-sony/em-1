@@ -1,0 +1,14 @@
+# This file is currently used by autoprefixer to adjust CSS to support the below specified browsers
+# For additional information regarding the format and rule options, please see:
+# https://github.com/browserslist/browserslist#queries
+
+# You can see what browsers were selected by your queries by running:
+#   npx browserslist
+# Or go to https://browserl.ist/ and add the following entries separated by a comma.
+
+last 2 Chrome versions
+last 2 ChromeAndroid versions
+last 2 Firefox versions
+last 2 FirefoxAndroid versions
+last 2 Safari versions
+last 1 iOS versions

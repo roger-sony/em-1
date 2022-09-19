@@ -1,0 +1,13 @@
+<ng-container *ngIf="{taskInstances: taskInstances$ | async} as state">
+  <dialog-header [title]="'Paragraphs'"></dialog-header>
+
+  <div class="header-container">
+    <oph-icon [name]="'calendar-single-event'"></oph-icon>
+    <div class="text-container">
+      <span class="light-text">Scheduled Time</span>
+      <span>{{ state.taskInstances[0]?.cadence.startDateTime | moment: 'HH:mm A' || 'No start time available' }}</span>
+    </div>
+  </div>
+
+  <tasks-list [tasks]="state.taskInstances"></tasks-list>
+</ng-container>

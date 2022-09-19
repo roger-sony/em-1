@@ -1,0 +1,10 @@
+<dialog-content>
+  <form [formGroup]="form">
+    <new-plan-dialog-description>
+      Write down a name for your plan that clearly describes its purpose
+    </new-plan-dialog-description>
+    <input #nameInput formControlName="name" [placeholder]="'Type a Name for this Plan…'" />
+  </form>
+</dialog-content>
+
+<new-plan-dialog-footer [completed]="form.valid ? 1 : 0" [nextDisabled]="form.invalid"></new-plan-dialog-footer>

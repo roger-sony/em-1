@@ -1,0 +1,19 @@
+<div class="card-container-grid-layout">
+  <task-card
+    *ngFor="let task of filteredTasksPage"
+    [canEdit]="canEdit"
+    [task]="task"
+    [chapters]="chapters"
+    [hideHeaderBottomBorder]="hideHeaderBottomBorder"
+  ></task-card>
+</div>
+<div class="horizontal-divider"></div>
+<mat-paginator
+  class="mat-paginator"
+  (page)="pageEventChange($event)"
+  [pageIndex]="pageIndex"
+  [pageSize]="pageSize"
+  [length]="paragraphsCount"
+  [pageSizeOptions]="[10, 20, 50, 100]"
+  showFirstLastButtons
+></mat-paginator>

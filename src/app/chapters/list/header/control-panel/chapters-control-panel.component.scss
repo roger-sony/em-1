@@ -1,0 +1,9 @@
+@import 'src/styles/variables';
+
+:host {
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  padding: 8px 0;
+}

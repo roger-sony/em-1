@@ -1,0 +1,40 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+
+  ::ng-deep {
+    dialog-header {
+      margin: 0;
+      height: 40px;
+
+      * {
+        font-family: $bitter-font-family;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 32px;
+      }
+    }
+
+    dialog-content {
+      font-family: $lato-font-family;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.15px;
+      color: rgba(35, 35, 47, 0.8);
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    dialog-footer {
+      margin: 0;
+
+      dialog-cancel-button {
+        margin-right: 8px;
+      }
+    }
+  }
+}

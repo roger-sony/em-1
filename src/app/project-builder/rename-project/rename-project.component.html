@@ -1,0 +1,10 @@
+<div class="body-wrap" [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Project Title</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
+</div>
+<div class="actions-wrap">
+  <button mat-raised-button disableRipple class="cancel" (click)="cancel()">cancel</button>
+  <button mat-raised-button disableRipple class="confirm" (click)="save()">Save</button>
+</div>

@@ -1,0 +1,28 @@
+@import '../../../styles/variables';
+
+.mobile-header-container {
+  height: 110px;
+  position: fixed;
+  background-color: $light-background-color;
+  width: 100%;
+  margin-right: 16px;
+}
+
+mobile-header {
+  display: flex;
+  align-items: center;
+}
+
+.preview-message {
+  font-size: 16px;
+  font-family: $lato-font-family;
+  margin: 8px 16px;
+}
+
+.header-buttons {
+  margin-right: 8px;
+}
+
+.preview-table {
+  margin: 0 12px;
+}

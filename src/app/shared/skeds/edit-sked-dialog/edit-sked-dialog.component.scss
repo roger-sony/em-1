@@ -1,0 +1,86 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.name-input-container {
+  margin: 0 16px;
+  width: 350px;
+}
+
+.name-input {
+  all: unset;
+  box-sizing: border-box;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $bitter-font-family;
+  font-size: 20px;
+  font-weight: bold;
+  height: 32px;
+  margin: 16px 0;
+  padding: 0 8px;
+  width: 100%;
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+}
+
+.color-box {
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+  margin: 0 8px;
+}
+
+.option-container {
+  display: flex;
+  align-items: center;
+}
+
+oph-form-field {
+  width: 150px;
+  margin: 16px 0 16px 16px;
+  margin-bottom: 16px;
+
+  oph-option {
+    width: 120px;
+  }
+}
+
+.edit-sked-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.create-button {
+  margin-left: 8px;
+}
+
+.time-container {
+  margin: 32px 16px 24px 16px;
+  display: flex;
+  flex-wrap: wrap;
+
+  .time-item {
+    display: flex;
+    flex-direction: column;
+    margin-right: 24px;
+
+    .label {
+      font-family: $lato-font-family;
+      color: $black-color-light;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.error-message {
+  color: $error-color;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  margin: 0 0 16px 16px;
+}

@@ -1,0 +1,10 @@
+<mat-checkbox
+  *ngIf="multiple"
+  [checked]="selected"
+  [disabled]="disabled"
+  (click)="onCheckboxClick($event)"
+></mat-checkbox>
+
+<div #content class="oph-option-content">
+  <ng-content></ng-content>
+</div>

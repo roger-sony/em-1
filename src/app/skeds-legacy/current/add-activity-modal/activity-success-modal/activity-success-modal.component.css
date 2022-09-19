@@ -1,0 +1,21 @@
+.modal {
+  margin-top: 50px;
+}
+
+.modal-content {
+  max-width: 375px;
+  padding: 0;
+  border-radius: 20px;
+}
+
+.example-card {
+  max-width: 375px;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.closeButton {
+  width: 150px;
+}

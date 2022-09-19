@@ -1,0 +1,11 @@
+<ng-content select="oph-label"></ng-content>
+
+<div
+  [class.oph-form-field-content-errors]="errors$ | async"
+  [class.oph-form-field-content-focused]="focused$ | async"
+  class="oph-form-field-content"
+>
+  <ng-content></ng-content>
+</div>
+
+<ng-content select="oph-error"></ng-content>

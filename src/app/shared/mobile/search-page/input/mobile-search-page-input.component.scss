@@ -1,0 +1,15 @@
+@import 'src/styles/variables';
+
+input {
+  all: unset;
+  box-sizing: border-box;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $bitter-font-family;
+  font-size: 16px;
+  width: 100%;
+
+  &::placeholder {
+    color: $black-color-light;
+  }
+}

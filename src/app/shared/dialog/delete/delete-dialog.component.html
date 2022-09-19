@@ -1,0 +1,15 @@
+<div class="container" [style.width.px]="width || 364">
+  <dialog-header *ngIf="!hideHeader" [iconName]="'delete'" [title]="title"></dialog-header>
+
+  <dialog-content class="dialog-content">
+    <ng-content></ng-content>
+  </dialog-content>
+
+  <dialog-footer>
+    <dialog-cancel-button></dialog-cancel-button>
+
+    <button mat-flat-button color="primary" type="button" (click)="onDeleteClick()">
+      {{ title }}
+    </button>
+  </dialog-footer>
+</div>

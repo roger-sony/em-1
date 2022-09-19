@@ -1,0 +1,117 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="togglePreviewModal()">&times;</span>
+    <h2>Preview</h2>
+    <div *ngIf="preview && itemMeasurementSettings; else loading">
+      <h4>
+        <em
+          >This is a preview of the outcome if you ran this rule now. If the rule condition is met, the row is
+          highlighted <span class="text-success">green</span>.</em
+        >
+      </h4>
+      <mat-card class="preview-title-card">
+        <h3>Decision Table: {{ preview.display_name }}</h3>
+        <h4>
+          Evaluates&nbsp;
+          <span *ngFor="let r of preview.ref_fact">{{ r.display_name | replace: 'Inventory':'Nouns' }}</span>
+          <ng-container *ngFor="let r of preview.ref_fact; let first = first">
+            <span *ngIf="!r.display_name && !first">&nbsp;and&nbsp;</span>
+            <span *ngIf="!r.display_name">
+              where
+              {{ r.name | replace: '_':' ' | replace: 'qty':'Measured Value' | replace: 'item':'noun' | titlecase }}
+              {{ r.operation | displayFormat: r.operation }} {{ r.value }}
+            </span>
+          </ng-container>
+        </h4>
+      </mat-card>
+      <table class="styled-table mt">
+        <tr>
+          <th>Noun</th>
+          <th>Rule Condition(s)</th>
+          <th>Measurement</th>
+          <th>Measured Value</th>
+          <th>Oldest Updated</th>
+          <th>Action(s) Triggered by Rule</th>
+        </tr>
+        <tr *ngFor="let t of preview.table_rules" [ngClass]="{'bg-success': t.conditionMet}">
+          <!--***************** Noun Subcategory **********************-->
+          <td>{{ t.config_name || 'no name' }}</td>
+          <!--***************** Rule Conditions **********************-->
+          <td>
+            <span *ngFor="let f of t.fact_filter">
+              {{ f.name | replace: 'qty':'Measured Value' | titlecase }}
+              {{ f.operation | displayFormat: f.operation }}
+              <span *ngIf="f.name !== 'qty'; else qtyDisplay">{{ f.value }}</span>
+              <ng-template #qtyDisplay>
+                <ng-container
+                  *ngIf="
+                    !itemMeasurementSettings[t.config_name] || itemMeasurementSettings[t.config_name].type === 'number';
+                    else rangeUOMRuleCondition
+                  "
+                >
+                  {{ f.value }}
+                </ng-container>
+                <ng-template #rangeUOMRuleCondition>
+                  {{ getRangeMeasurementValue(t.config_name, f.value) }}
+                </ng-template>
+              </ng-template>
+              <br />
+            </span>
+          </td>
+          <!--***************** Measurement **********************-->
+          <td>
+            <ng-container *ngIf="itemMeasurementSettings[t.config_name]; else noUOMConfig">
+              {{ itemMeasurementSettings[t.config_name]?.display_name }}
+            </ng-container>
+            <!-- TODO: Delete this code once the switch to new unit of measure configs is complete -->
+            <ng-template #noUOMConfig>
+              <span *ngIf="t.ruleResults.unit_of_measure && t.ruleResults.unit_of_measure.length === 1">
+                {{ t.ruleResults.unit_of_measure[0] }}
+              </span>
+              <em
+                *ngIf="t.ruleResults.unit_of_measure && t.ruleResults.unit_of_measure.length > 1"
+                class="error-msg"
+                style="font-size: 0.7rem"
+              >
+                Warning
+                <mat-icon matTooltip="Multiple units of measure returned for this noun." color="warn">info</mat-icon>
+              </em>
+            </ng-template>
+          </td>
+          <!--***************** Measured Value **********************-->
+          <td>
+            <ng-container
+              *ngIf="
+                !itemMeasurementSettings[t.config_name] || itemMeasurementSettings[t.config_name].type === 'number';
+                else rangeUOMRuleResult
+              "
+            >
+              {{ t.ruleResults.qty.$numberDecimal | displayFormat: 'qty' }}
+            </ng-container>
+            <ng-template #rangeUOMRuleResult>
+              {{ getRangeMeasurementValue(t.config_name, t.ruleResults.qty) }}
+            </ng-template>
+          </td>
+          <!--***************** Oldest Updated **********************-->
+          <td>{{ t.ruleResults?.last_updated | date: 'short' }}</td>
+          <!--***************** Consequence/Action **********************-->
+          <td>{{ (tasks && tasks[t.consequence]?.displayName) || 'n/a' }}</td>
+        </tr>
+      </table>
+
+      <p>
+        <button class="mr" color="primary" mat-raised-button (click)="runRuleOnDemand(preview); togglePreviewModal()">
+          Run This Rule
+        </button>
+        <button class="mr" color="accent" mat-raised-button (click)="saveReport()">Save Report</button>
+        <button class="mr" color="warn" mat-raised-button (click)="togglePreviewModal()">Close</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="matSpinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

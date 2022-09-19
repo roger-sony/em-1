@@ -1,0 +1,45 @@
+<div
+  *ngIf="{
+    loadingPlans: loadingPlans$ | async,
+    loadingNounRuleTriggers: loadingNounRuleTriggers$ | async,
+    loadingTaskRuleTriggers: loadingTaskRuleTriggers$ | async,
+    loadingRuleSchedules: loadingRuleSchedules$ | async
+  } as loading"
+>
+  <ng-container
+    *ngIf="
+      loading.loadingPlans ||
+        loading.loadingNounRuleTriggers ||
+        loading.loadingTaskRuleTriggers ||
+        loading.loadingRuleSchedules;
+      else loadedCard
+    "
+  >
+    <div class="plans-card-container">
+      <ng-container *ngFor="let x of emptyCards">
+        <plan-card-loading class="plan-card"></plan-card-loading>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #loadedCard>
+  <plans-empty *ngIf="(plans$ | async).length === 0; else plansExist"></plans-empty>
+</ng-template>
+
+<ng-template #plansExist>
+  <div class="plans-card-container">
+    <ng-container *ngFor="let p of filteredPlans$ | async; trackBy: trackByItems">
+      <plan-card
+        [plan]="p"
+        class="plan-card"
+        [nounTriggers]="nounRuleTriggers$ | async"
+        [taskTriggers]="taskRuleTriggers$ | async"
+        [ruleSchedules]="ruleSchedules$ | async"
+        [unitOfMeasures]="unitOfMeasures$ | async"
+        [tasks]="tasks$ | async"
+        [chapters]="chapters$ | async"
+      ></plan-card>
+    </ng-container>
+  </div>
+</ng-template>

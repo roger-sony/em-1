@@ -1,0 +1,9 @@
+<ng-container *ngFor="let nounRuleTrigger of filteredNounRuleTriggers$ | async">
+  <plans-search-result [iconName]="'noun-trigger'" [displayName]="nounRuleTrigger.displayName"> </plans-search-result>
+</ng-container>
+<ng-container *ngFor="let taskRuleTrigger of filteredTaskRuleTriggers$ | async">
+  <plans-search-result [iconName]="'tasks'" [displayName]="taskRuleTrigger.displayName"> </plans-search-result>
+</ng-container>
+<ng-container *ngFor="let task of filteredTasks$ | async">
+  <plans-search-result [iconName]="'tasks'" [displayName]="task.shortTask"> </plans-search-result>
+</ng-container>

@@ -1,0 +1,224 @@
+<table mat-table matSort multiTemplateDataRows [dataSource]="dataSource">
+  <ng-container matColumnDef="shortTask">
+    <th mat-header-cell *matHeaderCellDef>
+      <span mat-sort-header>TASK NAME</span>
+      <mat-form-field class="long-filter-width" appearance="outline" class="long-filter-width">
+        <input
+          class="filter-input"
+          matInput
+          (keyup)="updateFilters('shortTask', $event.target.value)"
+          [value]="filterFields.shortTask"
+          placeholder="Filter"
+        />
+      </mat-form-field>
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let task"
+      (click)="expandedTask[task.id] = !expandedTask[task.id]"
+      (mouseenter)="onMouseEnter(task.id)"
+      (mouseleave)="onMouseLeave(task.id)"
+    >
+      <span class="ophanello icon-tasks"></span>{{ task.shortTask }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef>
+      <span mat-sort-header>CATEGORY</span>
+      <mat-form-field appearance="outline" class="long-filter-width">
+        <input
+          class="filter-input"
+          matInput
+          (keyup)="updateFilters('category', $event.target.value)"
+          [value]="filterFields.category"
+          placeholder="Filter"
+        />
+      </mat-form-field>
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let task"
+      (click)="expandedTask[task.id] = !expandedTask[task.id]"
+      (mouseenter)="onMouseEnter(task.id)"
+      (mouseleave)="onMouseLeave(task.id)"
+    >
+      {{ task.category }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="effort">
+    <th mat-header-cell *matHeaderCellDef>
+      <span mat-sort-header>DURATION</span>
+      <mat-form-field appearance="outline" class="short-filter-width">
+        <input
+          class="filter-input"
+          matInput
+          (keyup)="updateFilters('effort', $event.target.value)"
+          [value]="filterFields.effort"
+          placeholder="Filter"
+        />
+      </mat-form-field>
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let task"
+      (click)="expandedTask[task.id] = !expandedTask[task.id]"
+      (mouseenter)="onMouseEnter(task.id)"
+      (mouseleave)="onMouseLeave(task.id)"
+    >
+      {{ task.effort }} min
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef>
+      <span mat-sort-header>LOCATION</span>
+      <mat-form-field appearance="outline" class="long-filter-width">
+        <mat-select [(value)]="selectedLocation" (selectionChange)="updateFilters('location', $event.value)">
+          <mat-option value="All">All</mat-option>
+          <mat-option *ngFor="let location of locations" [value]="location">
+            {{ location }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let task"
+      (click)="expandedTask[task.id] = !expandedTask[task.id]"
+      (mouseenter)="onMouseEnter(task.id)"
+      (mouseleave)="onMouseLeave(task.id)"
+    >
+      {{ task.location }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="priority">
+    <th mat-header-cell *matHeaderCellDef>
+      <span mat-sort-header>PRIORITY</span>
+      <mat-form-field appearance="outline" class="short-filter-width">
+        <input
+          class="filter-input"
+          matInput
+          (keyup)="updateFilters('priority', $event.target.value)"
+          [value]="filterFields.priority"
+          placeholder="Filter"
+        />
+      </mat-form-field>
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let task"
+      (click)="expandedTask[task.id] = !expandedTask[task.id]"
+      (mouseenter)="onMouseEnter(task.id)"
+      (mouseleave)="onMouseLeave(task.id)"
+    >
+      {{ task.priority }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="movability">
+    <th mat-header-cell *matHeaderCellDef>
+      <span mat-sort-header>MOVABILITY</span>
+      <mat-form-field appearance="outline" class="short-filter-width">
+        <input
+          class="filter-input"
+          matInput
+          (keyup)="updateFilters('movability', $event.target.value)"
+          [value]="filterFields.movability"
+          placeholder="Filter"
+        />
+      </mat-form-field>
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let task"
+      (click)="expandedTask[task.id] = !expandedTask[task.id]"
+      (mouseenter)="onMouseEnter(task.id)"
+      (mouseleave)="onMouseLeave(task.id)"
+    >
+      {{ task.movability }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="abandon">
+    <th mat-header-cell *matHeaderCellDef>
+      <span mat-sort-header>ABANDON</span>
+      <mat-form-field appearance="outline" class="short-filter-width">
+        <mat-select [(value)]="selectedAbandon" (selectionChange)="updateFilters('abandon', $event.value)">
+          <mat-option value="All">All</mat-option>
+          <mat-option value="Yes">Yes</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let task"
+      (click)="expandedTask[task.id] = !expandedTask[task.id]"
+      (mouseenter)="onMouseEnter(task.id)"
+      (mouseleave)="onMouseLeave(task.id)"
+    >
+      {{ task.abandon ? 'Yes' : 'No' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="menu">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td
+      mat-cell
+      *matCellDef="let task"
+      (click)="expandedTask[task.id] = !expandedTask[task.id]"
+      (mouseenter)="onMouseEnter(task.id)"
+      (mouseleave)="onMouseLeave(task.id)"
+    >
+      <div class="{{ hideMenuButton(task.id) }}">
+        <task-menu class="oph-card-header-button" [task]="task" (clicked)="menuButtonClick(task.id)"></task-menu>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let task" [attr.colspan]="displayedColumns.length">
+      <div class="row task-element-detail" [@detailExpand]="expandedTask[task.id] ? 'expanded' : 'collapsed'">
+        <div class="detail-column">
+          <div class="detail-item">
+            <p class="detail-item-text">Up-Points: {{ task.unpleasantness || 0 }}</p>
+          </div>
+          <div class="detail-item">
+            <p class="detail-item-text">Task Instructions:</p>
+            <div *ngIf="task.instructions; else elseBlock">
+              <p class="detail-item-text">{{ task.instructions }}</p>
+            </div>
+            <ng-template #elseBlock><p class="detail-item-text">(None)</p></ng-template>
+          </div>
+          <div class="detail-item">
+            <p class="detail-item-text">Task Recipes:</p>
+            <div *ngIf="task.recipes.length > 0; else elseBlock">
+              <p class="detail-item-text">Display recipe list here</p>
+            </div>
+            <ng-template #elseBlock><p class="detail-item-text">(None)</p></ng-template>
+          </div>
+        </div>
+        <div class="detail-column">
+          <div class="detail-item">
+            <p class="detail-item-text">Assigned To Role: {{ task.rolesAssigned }}</p>
+          </div>
+          <div class="detail-item">
+            <p class="detail-item-text">Assigned To User: {{ task.usersAssigned }}</p>
+          </div>
+          <div class="detail-item">
+            <p class="detail-item-text">Subtasks (edit task for more details):</p>
+            <p class="detail-item-text">{{ task.subtasksString }}</p>
+          </div>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="task-detail-row"></tr>
+</table>
+<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>

@@ -1,0 +1,38 @@
+<nav mat-tab-nav-bar>
+  <a
+    mat-tab-link
+    [routerLink]="['./overview']"
+    routerLinkActive
+    #overviewActive="routerLinkActive"
+    [active]="overviewActive.isActive"
+  >
+    Overview
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['./plans']"
+    routerLinkActive
+    #plansActive="routerLinkActive"
+    [active]="plansActive.isActive"
+  >
+    Plans <span class="collection-count">({{ chapter['dtableCount'] || 0 }})</span>
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['./tasks']"
+    routerLinkActive
+    #tasksActive="routerLinkActive"
+    [active]="tasksActive.isActive"
+  >
+    Tasks <span class="collection-count">({{ chapter['taskCount'] || 0 }})</span>
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['./nouns']"
+    routerLinkActive
+    #nounsActive="routerLinkActive"
+    [active]="nounsActive.isActive"
+  >
+    Nouns <span class="collection-count">({{ chapter['inventoryCount'] || 0 }})</span>
+  </a>
+</nav>

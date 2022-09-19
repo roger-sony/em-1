@@ -1,0 +1,27 @@
+<dialog-header [title]="'New Condition'"></dialog-header>
+
+<dialog-content>
+  <condition-form
+    [fieldValues]="fieldValues$ | async"
+    [unitOfMeasure]="unitOfMeasures$ | async"
+    [tasks]="tasks$ | async"
+    [nouns]="nouns$ | async"
+    (valueChanges)="onConditionFormValueChange($event)"
+    (validityChange)="onValidityChange($event)"
+  >
+  </condition-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    (click)="onCreateClick()"
+    [disabled]="(valid$ | async) === false"
+  >
+    Create
+  </button>
+</dialog-footer>

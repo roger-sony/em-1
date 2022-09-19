@@ -1,0 +1,10 @@
+<div class="dialog-title">
+  <div *ngIf="iconName" [class.oph-icon-circle]="iconCircle" class="oph-icon-wrapper">
+    <oph-icon [name]="iconName" [size]="24"></oph-icon>
+  </div>
+  <div>{{ title }}</div>
+</div>
+
+<button (click)="onCloseClick()" matTooltip="Close" type="button">
+  <oph-icon [name]="'dialog/close'" [size]="24"></oph-icon>
+</button>

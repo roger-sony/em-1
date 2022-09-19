@@ -1,0 +1,22 @@
+<mat-select
+  [formControl]="daySelect"
+  disableOptionCentering="true"
+  placeholder="day..."
+  (selectionChange)="onSelectionChange($event.value, null)"
+>
+  <mat-option *ngFor="let day of daysOfWeek" [value]="day">
+    {{ day }}
+  </mat-option>
+</mat-select>
+
+<mat-select
+  *ngIf="daySelect.value"
+  [formControl]="timeSelect"
+  disableOptionCentering="true"
+  placeholder="time..."
+  (selectionChange)="onSelectionChange(null, $event.value)"
+>
+  <mat-option *ngFor="let time of times" [value]="time">
+    {{ time }}
+  </mat-option>
+</mat-select>

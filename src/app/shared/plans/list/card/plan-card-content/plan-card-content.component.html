@@ -1,0 +1,16 @@
+<chapter-chips [allChapters]="chapters" [chapterIds]="plan?.chapterIds" [readonly]="true"></chapter-chips>
+
+<div class="plan-chips">
+  <oph-card-chip [iconName]="'plan-noun'" [tooltip]="'Nouns'">
+    {{ plan.nounCount || 0 }}
+  </oph-card-chip>
+  <oph-card-chip [iconName]="'plan-conditions'" [tooltip]="'Conditions'">
+    {{ plan.conditionCount || 0 }}
+  </oph-card-chip>
+  <oph-card-chip [iconName]="'plan-triggers'" [tooltip]="'Triggers'">
+    {{ plan.triggerCount || 0 }}
+  </oph-card-chip>
+  <oph-card-chip *ngFor="let cadence of cadences" [iconName]="cadence.type" [tooltip]="'Cadence'">
+    {{ cadence.display }}
+  </oph-card-chip>
+</div>

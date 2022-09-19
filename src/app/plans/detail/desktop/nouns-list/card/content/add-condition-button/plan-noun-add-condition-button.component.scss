@@ -1,0 +1,36 @@
+@import 'src/styles/variables';
+
+.add-condition-button {
+  display: flex;
+  align-items: center;
+  margin: 0px 0px 10px 6px;
+  cursor: pointer;
+  height: 50px;
+}
+
+.add-condition-button:hover {
+  background-color: $primary-color-lightest;
+}
+
+.add-condition-button:hover .icon {
+  opacity: 1;
+}
+
+.add-condition-button:hover .add-condition-text {
+  color: $black-color;
+}
+
+.icon {
+  margin-left: 11px;
+  margin-top: -1px;
+  opacity: 0.5;
+}
+
+.add-condition-text {
+  -webkit-font-smoothing: antialiased;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  color: $black-color-light;
+  margin-left: 5px;
+  margin-top: 1px;
+}

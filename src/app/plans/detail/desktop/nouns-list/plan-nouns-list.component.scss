@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 350px));
+  grid-column-gap: 16px;
+}
+
+.masonry-layout {
+  columns: 6 320px;
+  column-gap: 16px;
+  width: 100%;
+}
+
+.noun-card {
+  display: inline-block;
+  margin-bottom: 16px;
+  width: 100%;
+}

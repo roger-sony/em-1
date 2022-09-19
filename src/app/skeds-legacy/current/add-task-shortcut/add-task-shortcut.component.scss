@@ -1,0 +1,67 @@
+@import 'src/styles/variables';
+
+.create-task-button {
+  width: 130px;
+  height: 40px;
+  border-radius: 3px;
+  background-color: $primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  border: $primary-color;
+  margin: 5px 16px 0px 8px;
+  cursor: pointer;
+}
+
+span {
+  margin-right: 6px;
+}
+
+.task-create-button-icon {
+  margin-right: 7px;
+}
+
+.search {
+  width: 91%;
+  margin: 0px 8px;
+}
+
+.task-title {
+  margin: 5px 8px;
+  font-size: 12px;
+  color: $black-color-light;
+  font-family: $lato-font-family;
+}
+
+.menu-item {
+  font-family: $lato-font-family;
+  display: flex;
+  align-items: center;
+  color: $black-color;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0px 12px;
+  height: 40px;
+  width: 256px;
+}
+
+.menu-item:hover {
+  background-color: rgba(#ff7900, 0.05); // TODO use variable
+}
+
+.task-list {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.oph-line-long {
+  margin-top: 8px;
+}
+
+.icon {
+  margin-top: 1px;
+  margin-right: 5px;
+}

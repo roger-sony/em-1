@@ -1,0 +1,18 @@
+.noun-card {
+  width: 100%;
+}
+
+.focus-overlay {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(black, 0.25);
+}
+
+.focused-card {
+  z-index: 2;
+  position: relative;
+}

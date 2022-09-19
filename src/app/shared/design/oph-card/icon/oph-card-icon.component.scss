@@ -1,0 +1,9 @@
+@import 'src/styles/variables';
+
+:host {
+  background-color: $black-color-lightest;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,61 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  border-bottom: 1px solid $black-color-lightest;
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+  margin-left: 60px;
+  width: 75%;
+
+  .icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+    background-color: $black-color-lightest;
+    border-radius: 50px;
+    margin-right: 8px;
+  }
+
+  .name {
+    -webkit-font-smoothing: antialiased;
+    font-family: $bitter-font-family;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .name-input {
+    all: unset;
+    box-sizing: border-box;
+    caret-color: $primary-color;
+    color: $black-color;
+    font-family: $bitter-font-family;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 16px 0;
+    padding: 0 8px;
+    min-width: 1px;
+    width: 100%;
+
+    &::placeholder {
+      color: $black-color-lighter;
+    }
+  }
+}
+
+.button-container {
+  margin-right: 40px;
+
+  .cancel-button {
+    margin-right: 8px;
+    background-color: $black-color-lightest;
+  }
+}

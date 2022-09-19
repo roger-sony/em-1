@@ -1,0 +1,19 @@
+<oph-icon [name]="'search'" [size]="28" class="mobile-search-icon"></oph-icon>
+
+<mobile-search-input
+  [value]="search"
+  [disabled]="disabled"
+  (valueChange)="onInputValueChange($event)"
+  (typing)="onInputTyping($event)"
+  class="mobile-search-input"
+></mobile-search-input>
+
+<mobile-search-clear-button
+  *ngIf="typing$ | async; else mobileMenu"
+  (mousedown)="onClearButtonMouseDown()"
+></mobile-search-clear-button>
+
+<ng-template #mobileMenu>
+  <notifications-button [mobile]="true"></notifications-button>
+  <user-menu [mobile]="true"></user-menu>
+</ng-template>

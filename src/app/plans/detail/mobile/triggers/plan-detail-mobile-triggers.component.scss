@@ -1,0 +1,54 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  padding: 0 8px;
+}
+
+.no-triggers {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid $black-color-lightest;
+}
+
+.trigger-title {
+  font-family: $bitter-font-family;
+  font-size: 12px;
+  color: $black-color-light;
+}
+
+.triggers-container {
+  border-bottom: 1px solid $black-color-lightest;
+}
+
+.triggers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.trigger-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-family: $lato-font-family;
+  padding: 8px 12px;
+}
+
+.icon-text {
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  padding: 8px;
+}
+
+.caret-down {
+  transform: rotate(180deg);
+}

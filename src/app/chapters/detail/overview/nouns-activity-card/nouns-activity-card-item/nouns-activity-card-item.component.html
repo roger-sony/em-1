@@ -1,0 +1,21 @@
+<!-- <div class="avatar">
+    <span>{{item.user | userAvatar}}</span>
+</div> -->
+<div class="circle-container">
+  <div class="line" [class.white-line]="index === 0"></div>
+  <div class="circle">
+    <div *ngIf="index === 0 || index === length - 1; else icon" class="bullet"></div>
+  </div>
+  <ng-template #icon>
+    <oph-icon [name]="'refresh'" [size]="10"></oph-icon>
+  </ng-template>
+  <div class="line" [class.white-line]="index === length - 1"></div>
+</div>
+
+<div>
+  <span class="noun">{{ item.subcategory }}</span>
+  <span>&nbsp;updated</span>
+  <div class="lower-text">
+    <span>{{ item.lastUpdated | timeAgo }}</span>
+  </div>
+</div>

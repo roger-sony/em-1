@@ -1,0 +1,13 @@
+<ng-container *ngIf="cadences$ | async as cadences">
+  <div *ngIf="!cadences?.length" class="schedule-item">There are no instances scheduled for this Task.</div>
+  <ng-container *ngFor="let cadence of cadences; let i = index">
+    <div class="schedule-item">
+      <div class="title">
+        {{ cadence | taskCadenceStart }}. {{ cadence | cadenceRepetition }}, {{ cadence | taskCadenceEnd }}.
+      </div>
+      <button class="delete-button" (click)="onDelete(i)">
+        <span class="ophanello icon-delete"></span>
+      </button>
+    </div>
+  </ng-container>
+</ng-container>

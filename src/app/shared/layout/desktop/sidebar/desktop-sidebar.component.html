@@ -1,0 +1,128 @@
+<div class="left-side-bar" *ngIf="{user: activeUser$ | async, privileges: activeUserPrivileges$ | async} as state">
+  <mat-selection-list [multiple]="false">
+    <mat-list-option
+      *ngIf="hasExecutionInterfacePermissions()"
+      [value]="'current-sked'"
+      [selected]="isSelected('current-sked')"
+      routerLink="/current-sked"
+    >
+      <sidebar-item
+        [routerUrl]="routerUrl"
+        [icon]="'skeds'"
+        [url]="'/current-sked'"
+        [text]="'Current Sked'"
+      ></sidebar-item>
+    </mat-list-option>
+
+    <mat-list-option
+      [value]="'current-chapter'"
+      [selected]="isSelected('current-chapter')"
+      *ngIf="hasCurrentChapterPermissions()"
+      routerLink="/current-chapter"
+    >
+      <sidebar-item
+        [routerUrl]="routerUrl"
+        [icon]="'skeds'"
+        [url]="'/current-chapter'"
+        [text]="'Current Chapter'"
+      ></sidebar-item>
+    </mat-list-option>
+
+    <mat-list-option
+      *ngIf="hasLexiconPermissions()"
+      [value]="'lexicon'"
+      [selected]="isSelected('lexicon')"
+      routerLink="/lexicon"
+    >
+      <sidebar-item [routerUrl]="routerUrl" [icon]="'lexicon'" [url]="'/lexicon'" [text]="'Lexicon'"></sidebar-item>
+    </mat-list-option>
+
+    <mat-divider
+      *ngIf="hasExecutionInterfacePermissions() || hasCurrentChapterPermissions() || hasLexiconPermissions()"
+    ></mat-divider>
+
+    <div class="section-header" *ngIf="hasParagraphPermissions()">Plots</div>
+    <mat-list-option
+      *ngIf="hasParagraphPermissions()"
+      [value]="'paragraphs'"
+      [selected]="isSelected('paragraphs')"
+      routerLink="/paragraphs"
+    >
+      <sidebar-item
+        [routerUrl]="routerUrl"
+        [icon]="'paragraphs'"
+        [url]="'/paragraphs'"
+        [text]="'Default Subplot'"
+      ></sidebar-item>
+    </mat-list-option>
+
+    <mat-divider *ngIf="hasParagraphPermissions()"></mat-divider>
+
+    <mat-list-option
+      *ngIf="hasChapterPermissions()"
+      [value]="'chapters'"
+      [selected]="isSelected('chapters')"
+      routerLink="/chapters"
+    >
+      <sidebar-item [routerUrl]="routerUrl" [icon]="'skeds'" [url]="'/chapters'" [text]="'Chapters'"></sidebar-item>
+    </mat-list-option>
+
+    <mat-divider *ngIf="hasChapterPermissions()"></mat-divider>
+
+    <div *ngIf="hasUsersPermissions() || hasRolesPermissions() || hasPrivilegesPermissions()" class="section-header">
+      Users
+    </div>
+
+    <mat-list-option
+      [value]="'users'"
+      [selected]="isSelected('users')"
+      routerLink="/users"
+      *ngIf="hasUsersPermissions()"
+    >
+      <sidebar-item [routerUrl]="routerUrl" [icon]="'users'" [url]="'/users'" [text]="'Users'"></sidebar-item>
+    </mat-list-option>
+
+    <mat-list-option
+      [value]="'roles'"
+      [selected]="isSelected('roles')"
+      routerLink="/roles"
+      *ngIf="hasRolesPermissions()"
+    >
+      <sidebar-item [routerUrl]="routerUrl" [icon]="'users'" [url]="'/roles'" [text]="'Roles'"></sidebar-item>
+    </mat-list-option>
+
+    <mat-list-option
+      [value]="'privileges'"
+      [selected]="isSelected('privileges')"
+      routerLink="/privileges"
+      *ngIf="hasPrivilegesPermissions()"
+    >
+      <sidebar-item [routerUrl]="routerUrl" [icon]="'users'" [url]="'/privileges'" [text]="'Privileges'"></sidebar-item>
+    </mat-list-option>
+
+    <mat-divider *ngIf="hasUsersPermissions() || hasRolesPermissions() || hasPrivilegesPermissions()"></mat-divider>
+
+    <div class="section-header" *ngIf="hasParagraphPermissions()">Builder</div>
+    <mat-list-option
+      [value]="'project-builder'"
+      [selected]="isSelected('project-builder')"
+      routerLink="/project-builder"
+    >
+      <sidebar-item
+        [routerUrl]="routerUrl"
+        [icon]="'builder'"
+        [url]="'/project-builder'"
+        [text]="'Project'"
+      ></sidebar-item>
+    </mat-list-option>
+
+    <mat-list-option
+      *ngIf="hasChapterPermissions()"
+      [value]="'scheduler'"
+      [selected]="isSelected('scheduler')"
+      routerLink="/scheduler"
+    >
+      <sidebar-item [routerUrl]="routerUrl" [icon]="'builder'" [url]="'/scheduler'" [text]="'Scheduler'"></sidebar-item>
+    </mat-list-option>
+  </mat-selection-list>
+</div>

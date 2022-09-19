@@ -1,0 +1,34 @@
+<dialog-header
+  [iconCircle]="true"
+  [iconName]="'tasks'"
+  [title]="'Edit Paragraph'"
+  (close)="onClose()"
+  class="header"
+></dialog-header>
+
+<dialog-content class="edit-task-dialog-content">
+  <task-form
+    [fieldValues]="taskFieldValues$ | async"
+    [roles]="roles$ | async"
+    [skedTemplates]="skedTemplates$ | async"
+    [users]="users$ | async"
+    [value]="taskForm$ | async"
+    [paragraph]="true"
+    (valueChange)="onValueChange($event)"
+    (validityChange)="onValidityChange($event)"
+  ></task-form>
+</dialog-content>
+
+<dialog-footer>
+  <button mat-stroked-button color="primary" type="button" (click)="onMoreOptionsClick()">More Options</button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    [disabled]="!(valid$ | async) || saving"
+    (click)="onSaveTaskClick()"
+  >
+    Save
+  </button>
+</dialog-footer>

@@ -1,0 +1,5 @@
+<mat-select [formControl]="control" placeholder="Condition...">
+  <mat-option *ngFor="let operator of operators" [value]="operator">
+    {{ operator | inventoryFieldOperatorName }}
+  </mat-option>
+</mat-select>

@@ -1,0 +1,158 @@
+:host {
+  display: block;
+
+  .sked-main-wrap {
+    min-height: calc(100vh - 32px - 56px);
+    font-style: normal;
+    font-size: 15px;
+    line-height: 24px;
+    background: #faf7ed;
+    border-radius: 8px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px 4px;
+
+      .date-container {
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .user-container {
+        display: flex;
+
+        .coins-container {
+          display: flex;
+          align-items: center;
+          font-size: 12px;
+          line-height: 20px;
+
+          img {
+            margin-right: 8px;
+          }
+
+          .total-coins {
+            color: #94928f;
+          }
+        }
+
+        .user-icon {
+          margin-left: 16px;
+          height: 40px;
+        }
+      }
+    }
+
+    .body {
+      min-height: calc(100% - 58px - 42px); // 58px - header height, 42px - routing block height
+      padding: 16px 11px 70px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-content: flex-start;
+
+      .search-field {
+        &::ng-deep {
+          .mat-form-field-wrapper {
+            .mat-form-field-flex {
+              .mat-form-field-prefix {
+                top: 2px;
+              }
+
+              .mat-form-field-infix {
+                padding: 8px 0 1em;
+
+                input {
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 16px;
+                  line-height: 24px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .main-blocks {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .main-block-item {
+          flex: 0 1 calc(50% - 8px);
+          min-width: 168px;
+          display: flex;
+          height: 128px;
+          background: linear-gradient(121.61deg, rgba(203, 190, 172, 0.5) 0%, rgba(218, 204, 191, 0) 100%);
+          border: 1px solid #dad4c2;
+          border-radius: 4px;
+          position: relative;
+          margin-bottom: 12px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .item-flag {
+            position: absolute;
+            top: -2px;
+            left: 4px;
+
+            &.chapters {
+              top: 10px;
+              left: 10px;
+            }
+          }
+
+          .label {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 32px;
+            text-shadow: 0 4px 6px rgba(26, 32, 44, 0.1), 0 2px 4px rgba(26, 32, 44, 0.06);
+          }
+        }
+      }
+
+      .subplots-wrap {
+        width: 100%;
+        padding-left: 24px;
+        margin-top: 20px;
+
+        .subplot-item {
+          display: flex;
+          margin-bottom: 24px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .subplot-label {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 24px;
+            margin-left: 24px;
+            width: 100%;
+            height: 36px;
+            border-bottom: 1px solid rgba(47, 39, 35, 0.12);
+          }
+        }
+      }
+    }
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}

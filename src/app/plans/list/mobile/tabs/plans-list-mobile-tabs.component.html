@@ -1,0 +1,19 @@
+<div class="mat-tab-group-container">
+  <mat-tab-group (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex" class="oph-mat-tab-group">
+    <mat-tab label="Plans"></mat-tab>
+    <ng-container
+      *ngIf="{
+        filteredNounRuleTriggers: filteredNounRuleTriggers$ | async,
+        filteredTaskRuleTriggers: filteredTaskRuleTriggers$ | async,
+        filteredTasks: filteredTasks$ | async
+      } as data"
+    >
+      <mat-tab
+        *ngIf="(activatedRoute.queryParams | async | keyvalue)?.length"
+        label="Other Results ({{
+          data.filteredNounRuleTriggers.length + data.filteredTaskRuleTriggers.length + data.filteredTasks.length || 0
+        }})"
+      ></mat-tab>
+    </ng-container>
+  </mat-tab-group>
+</div>

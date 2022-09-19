@@ -1,0 +1,12 @@
+<mobile-header [borderShown]="true" (back)="onBack()">
+  {{ title }}
+</mobile-header>
+
+<div *ngIf="{selectedValues: selectedValues$ | async} as state" class="select-options">
+  <mobile-select-option
+    *ngFor="let option of options; trackBy: trackByOptionValue"
+    [option]="option"
+    [selected]="state.selectedValues | arrayIncludes: option.value"
+    (click)="onOptionClick(option)"
+  ></mobile-select-option>
+</div>

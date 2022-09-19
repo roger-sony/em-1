@@ -1,0 +1,25 @@
+@import '../../../../../styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+input {
+  all: unset;
+  box-sizing: border-box;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $bitter-font-family;
+  font-size: 36px;
+  font-weight: bold;
+  height: 48px;
+  margin: 16px 0;
+  padding: 0 16px;
+  width: 100%;
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+}

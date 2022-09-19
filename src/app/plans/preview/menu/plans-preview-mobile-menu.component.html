@@ -1,0 +1,8 @@
+<button #menuButton (click)="onMenuClick()">
+  <oph-icon [name]="'ellipsis-dark'"></oph-icon>
+</button>
+
+<oph-menu [origin]="menuButton" [minWidth]="168">
+  <oph-menu-item [iconName]="'play-dark'" [text]="'Run Plan'" (click)="onRunPlanClick()"></oph-menu-item>
+  <oph-menu-item [iconName]="'report'" [text]="'Save Report'" (click)="onSaveReportClick()"></oph-menu-item>
+</oph-menu>

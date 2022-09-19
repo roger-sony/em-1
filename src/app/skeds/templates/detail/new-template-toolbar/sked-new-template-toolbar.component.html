@@ -1,0 +1,17 @@
+<div class="name-container">
+  <div class="icon-circle">
+    <oph-icon [name]="'skeds'" [size]="24"></oph-icon>
+  </div>
+  <input
+    class="name-input"
+    #templateNameInput
+    (change)="onNameChange($event.target.value)"
+    [value]="name || ''"
+    [placeholder]="'Template Name'"
+  />
+</div>
+
+<div class="button-container">
+  <button class="cancel-button" mat-flat-button type="button" (click)="cancel.next()">Cancel</button>
+  <button mat-flat-button color="primary" type="button" (click)="onSaveClick()" [disabled]="!name">Save</button>
+</div>

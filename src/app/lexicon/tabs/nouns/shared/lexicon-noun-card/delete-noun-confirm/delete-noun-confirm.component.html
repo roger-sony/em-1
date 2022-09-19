@@ -1,0 +1,18 @@
+<div class="container">
+  <dialog-header title="Delete noun?"></dialog-header>
+
+  <dialog-content class="dialog-content">
+    <div>By deleting the Noun all related information will be lost. You can always set this Noun as inactive.</div>
+    <div [style.margin-top.px]="10" *ngIf="data?.batchDelete">
+      <div>This noun in a batch.</div>
+
+      <mat-slide-toggle class="adjective-updatable" [(ngModel)]="removeBatch"> remove whole batch </mat-slide-toggle>
+    </div>
+  </dialog-content>
+
+  <dialog-footer>
+    <dialog-cancel-button></dialog-cancel-button>
+
+    <button mat-flat-button color="primary" type="button" (click)="onConfirmClick()">Yes, delete</button>
+  </dialog-footer>
+</div>

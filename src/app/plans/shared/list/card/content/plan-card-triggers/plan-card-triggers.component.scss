@@ -1,0 +1,31 @@
+@import 'src/styles/variables';
+
+.triggers-container {
+  min-width: 37px;
+  height: 24px;
+  border-radius: 3px;
+  background-color: $black-color-lightest;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.triggers-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 2px;
+}
+
+.count {
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  font-family: $lato-font-family;
+  text-align: center;
+  padding-right: 2px;
+}
+
+.grey {
+  opacity: 0.25;
+}

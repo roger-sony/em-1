@@ -1,0 +1,11 @@
+<div class="mobile-subpage-link-icon">
+  <oph-icon *ngIf="iconName" [name]="iconName" [size]="24"></oph-icon>
+</div>
+
+<div class="mobile-subpage-link-content">
+  <ng-content></ng-content>
+</div>
+
+<div *ngIf="!arrowHidden" class="mobile-subpage-link-arrow">
+  <oph-icon [name]="'arrow-right'" [size]="24"></oph-icon>
+</div>

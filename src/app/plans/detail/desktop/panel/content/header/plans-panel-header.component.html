@@ -1,0 +1,15 @@
+<div class="plans-panel-header-container">
+  <div class="plans-title-container">
+    <p class="plans-title">Plans</p>
+    <create-plan-small-button class="create-button"></create-plan-small-button>
+    <plans-panel-collapse-button
+      class="collapse-button"
+      (panelStateClicked)="changePanelState.next('')"
+    ></plans-panel-collapse-button>
+  </div>
+  <hr class="plans-panel-header-line" />
+  <div class="plans-detail-search-container">
+    <plans-search-input class="plans-detail-search"></plans-search-input>
+  </div>
+  <hr class="plans-panel-header-line" />
+</div>

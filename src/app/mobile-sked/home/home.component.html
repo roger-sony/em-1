@@ -1,0 +1,53 @@
+<div class="sked-main-wrap">
+  <div class="header">
+    <div class="date-container">{{ now | date: 'EEEE' }} | {{ now | date: 'MMM d' }}</div>
+    <div class="user-container">
+      <div class="coins-container">
+        <img src="/assets/img/icons/mobile-sked/coin.png" [width]="24" [height]="24" alt="coin" />
+        <div class="actual-coins">394</div>
+        <div class="total-coins">/1000</div>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <mat-form-field class="search-field full-width" appearance="outline">
+      <span matPrefix>
+        <oph-icon class="search-icon" name="/mobile-sked/search" [size]="24"></oph-icon>
+        &nbsp;
+      </span>
+      <input type="text" placeholder="Search Ophanim" matInput [formControl]="searchControl" [matAutocomplete]="auto" />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of searchResult | async" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <div class="main-blocks">
+      <div class="main-block-item" routerLink="/current-sked">
+        <div class="item-flag current-sked">
+          <oph-icon name="/mobile-sked/game-theme/flag-current-sked" [size]="52"></oph-icon>
+        </div>
+        <div class="label">Current sked</div>
+      </div>
+      <div class="main-block-item">
+        <div class="item-flag scheduled">
+          <oph-icon name="/mobile-sked/game-theme/flag-scheduled" [size]="52"></oph-icon>
+        </div>
+        <div class="label">Scheduled</div>
+      </div>
+      <div class="main-block-item" routerLink="/paragraphs">
+        <div class="item-flag subplots">
+          <oph-icon name="/mobile-sked/game-theme/flag-subplots" [size]="52"></oph-icon>
+        </div>
+        <div class="label">Subplots</div>
+      </div>
+      <div class="main-block-item" routerLink="/chapters">
+        <div class="item-flag chapters">
+          <oph-icon name="/mobile-sked/game-theme/flag-chapters" [size]="24"></oph-icon>
+        </div>
+        <div class="label">Chapters</div>
+      </div>
+    </div>
+  </div>
+</div>

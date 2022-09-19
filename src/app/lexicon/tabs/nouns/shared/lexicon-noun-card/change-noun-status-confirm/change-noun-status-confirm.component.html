@@ -1,0 +1,16 @@
+<div class="container">
+  <dialog-header title="Activate noun?" *ngIf="isActivate"></dialog-header>
+  <dialog-header title="Disable noun?" *ngIf="isDisabling"></dialog-header>
+
+  <dialog-content class="dialog-content">
+    Noun <b>{{ noun?.name }}</b> will be {{ isActivate ? 'activated' : 'disabled' }}. Do you want to continue?
+  </dialog-content>
+
+  <dialog-footer>
+    <dialog-cancel-button></dialog-cancel-button>
+
+    <button mat-flat-button color="primary" type="button" (click)="onConfirmClick()">
+      Yes, {{ isActivate ? 'activate' : 'disable' }}
+    </button>
+  </dialog-footer>
+</div>

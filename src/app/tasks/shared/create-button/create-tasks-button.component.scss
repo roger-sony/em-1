@@ -1,0 +1,9 @@
+@import 'src/styles/variables';
+
+button {
+  padding-left: 8px;
+
+  & .oph-icon {
+    margin-right: 8px;
+  }
+}

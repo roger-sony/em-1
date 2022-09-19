@@ -1,0 +1,30 @@
+<ng-container *ngIf="{adjectives: adjectives$ | async} as state">
+  <ng-container *ngIf="!(loaded$ | async); else loaded">
+    <loading-screen></loading-screen>
+  </ng-container>
+
+  <ng-template #loaded>
+    <adjectives-toolbar
+      [hideDisabledToggle]="hideDisabled"
+      [searchText]="searchText"
+      (search)="onSearch($event)"
+      (hideDisabled)="onHideDisabled($event)"
+      (createNew)="onCreateNew()"
+    ></adjectives-toolbar>
+
+    <ng-container *ngIf="state.adjectives?.length; else empty">
+      <div class="table-container">
+        <adjective-table
+          [adjectives]="state.adjectives"
+          [initialSort]="sort"
+          (menu)="onMenu($event)"
+          (sortOutput)="onSort($event)"
+        ></adjective-table>
+      </div>
+    </ng-container>
+
+    <ng-template #empty>
+      <adjectives-empty (create)="onCreateNew()"></adjectives-empty>
+    </ng-template>
+  </ng-template>
+</ng-container>

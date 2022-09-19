@@ -1,0 +1,24 @@
+<ng-container *ngIf="{valid: valid$ | async} as state">
+  <span class="dialog-title">{{ title }}&nbsp;&nbsp;</span>
+
+  <div *ngIf="cloning" class="unique-name">Please give unique name for new Paragraph</div>
+
+  <div class="input-container">
+    <input
+      #input
+      placeholder="Enter new name"
+      autocomplete="off"
+      (input)="onInput($event.target.value)"
+      [value]="value || ''"
+    />
+  </div>
+
+  <span [class.show]="!state.valid && input$ | async" class="error">This name is already taken</span>
+
+  <div class="footer">
+    <dialog-cancel-button class="button"></dialog-cancel-button>
+    <button mat-flat-button color="primary" type="button" (click)="onSave()" class="button" [disabled]="!state.valid">
+      Save
+    </button>
+  </div>
+</ng-container>

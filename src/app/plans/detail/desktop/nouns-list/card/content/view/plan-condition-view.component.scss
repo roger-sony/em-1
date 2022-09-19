@@ -1,0 +1,63 @@
+@import 'src/styles/variables';
+
+.noun-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 16px 10px 16px;
+  margin-top: 10px;
+}
+
+.noun-item:hover {
+  background-color: $primary-color-lightest;
+}
+
+.noun-item:hover .text-light-underline {
+  color: $black-color;
+  text-decoration: underline;
+}
+
+.noun-item:hover .text-light {
+  color: $black-color;
+}
+
+.noun-item:hover .text-lighter {
+  color: $black-color;
+}
+
+.noun-item:hover .icon {
+  opacity: 1;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.icon {
+  margin-top: -1px;
+  opacity: 0.5;
+}
+
+.text-container {
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  padding: 0px 13px 0px 8px;
+  font-family: $lato-font-family;
+  font-size: 14px;
+}
+
+.text-lighter {
+  color: $black-color-light;
+}
+
+.text-light {
+  color: $black-color-light;
+}
+
+.text-light-underline {
+  color: $black-color-light;
+}
+
+.empty-box {
+  height: 24px;
+  width: 24px;
+}

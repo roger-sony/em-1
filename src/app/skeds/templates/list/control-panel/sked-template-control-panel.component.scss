@@ -1,0 +1,35 @@
+@import 'src/styles/variables';
+
+:host {
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0;
+  padding: 8px 24px 12px 24px;
+
+  .menu-items {
+    display: flex;
+    align-items: center;
+  }
+
+  mat-divider {
+    height: 28px;
+    border-right-color: rgba(35, 35, 47, 0.08);
+    margin-right: 8px;
+  }
+
+  .empty-toggle {
+    margin-right: 16px;
+
+    &::ng-deep {
+      .mat-slide-toggle-content {
+        color: rgba(35, 35, 47, 0.64);
+        font-size: 14px;
+      }
+    }
+  }
+
+  .sort-select {
+    margin-right: 8px;
+  }
+}

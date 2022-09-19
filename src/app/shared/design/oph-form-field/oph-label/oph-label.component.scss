@@ -1,0 +1,21 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+label {
+  color: $black-color-light;
+  font-family: $lato-font-family;
+  font-size: 12px;
+  height: 16px;
+  line-height: 16px;
+
+  &.oph-label-disabled {
+    color: $black-color-lighter;
+  }
+
+  &.oph-label-highlighted {
+    color: $primary-color;
+  }
+}

@@ -1,0 +1,32 @@
+@import 'src/styles/variables';
+
+:host {
+  cursor: pointer;
+  display: flex;
+  line-height: 1.5;
+  min-height: 48px;
+  width: 100%;
+}
+
+.mobile-subpage-link-icon,
+.mobile-subpage-link-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  height: 48px;
+  min-width: 40px;
+  width: 40px;
+}
+
+.mobile-subpage-link-arrow {
+  margin-right: 8px;
+}
+
+.mobile-subpage-link-content {
+  color: $black-color;
+  flex-grow: 1;
+  font-family: $lato-font-family;
+  font-size: 16px;
+  margin: auto 8px;
+}

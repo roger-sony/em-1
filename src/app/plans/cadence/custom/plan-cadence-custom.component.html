@@ -1,0 +1,41 @@
+<mobile-header [borderShown]="true" (back)="onBack()"> Custom </mobile-header>
+
+<form
+  *ngIf="{
+    cadenceForm: cadenceForm$ | async,
+    intervalNumber: intervalNumber$ | async,
+    intervalType: intervalType$ | async
+  } as state"
+  [formGroup]="form"
+  class="plan-cadence-custom-form"
+>
+  <div class="plan-cadence-custom-repetition">
+    <oph-icon [name]="'clock-v-2'" [size]="24"></oph-icon>
+    <div>
+      Every {{ state.intervalNumber }} {{ state.intervalType | lowercase }}{{ state.intervalNumber > 1 ? 's' : '' }}
+    </div>
+  </div>
+  <div class="plan-cadence-custom-pickers">
+    <mobile-list-picker
+      [formControlName]="controls.IntervalNumber"
+      [items]="intervalNumberOptions"
+      class="interval-number-picker"
+    ></mobile-list-picker>
+    <mobile-list-picker
+      [formControlName]="controls.IntervalType"
+      [items]="intervalTypeOptions"
+      class="interval-type-picker"
+    ></mobile-list-picker>
+  </div>
+
+  <div *ngIf="state.intervalType === intervalTypes.Week" class="plan-cadence-custom-link">
+    <mobile-subpage-link matRipple (click)="onWeeklyDaysClick()">
+      {{ state.cadenceForm | cadenceWeeklyDays }}
+    </mobile-subpage-link>
+  </div>
+  <div *ngIf="state.intervalType === intervalTypes.Month" class="plan-cadence-custom-link">
+    <mobile-subpage-link matRipple (click)="onMonthlyTypeClick()">
+      {{ state.cadenceForm | cadenceMonthlyType }}
+    </mobile-subpage-link>
+  </div>
+</form>

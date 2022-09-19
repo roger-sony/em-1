@@ -1,0 +1,40 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  height: 40px;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  color: $black-color-light;
+  font-family: Bitter, serif;
+  font-size: 13px;
+  text-decoration: none;
+  width: 100%;
+
+  &:hover {
+    background-color: $primary-color-lightest;
+    color: $black-color;
+  }
+
+  &.active {
+    color: $black-color;
+    font-weight: bold;
+  }
+}
+
+.sidebar-group-item-indicator {
+  border-radius: 0 3px 3px 0;
+  height: 16px;
+  width: 3px;
+
+  &.active {
+    background-color: $primary-color;
+  }
+}
+
+.sidebar-group-item-text {
+  margin: 0 4px 0 41px;
+}

@@ -1,0 +1,20 @@
+@import 'src/styles/variables';
+
+.create-plan-button {
+  height: 36px;
+  border-radius: 3px;
+  background-color: $primary-color;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  border: $primary-color;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.plans-create-button-icon {
+  margin-right: 10px;
+  margin-left: 5px;
+}

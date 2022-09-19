@@ -1,0 +1,23 @@
+@import '../../../../node_modules/@angular/material/theming';
+@import '../../variables';
+
+@mixin rule-form-select($config) {
+  .mat-select {
+    background-color: $black-color-lightest;
+    border-radius: 3px;
+    height: 32px;
+    line-height: 32px;
+    width: auto;
+
+    & .mat-select-value {
+      padding: 0 4px;
+      width: auto;
+      max-width: unset;
+    }
+
+    & .mat-select-arrow {
+      border: 0;
+      margin: 0;
+    }
+  }
+}

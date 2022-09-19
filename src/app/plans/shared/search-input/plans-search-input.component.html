@@ -1,0 +1,10 @@
+<div class="input-container">
+  <oph-icon class="icon" [name]="'search'" [size]="24"></oph-icon>
+  <input
+    [(ngModel)]="searchInput"
+    (input)="onInput($event)"
+    class="plan-search-input"
+    type="text"
+    placeholder="Search for Plans"
+  />
+</div>

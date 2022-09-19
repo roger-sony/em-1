@@ -1,0 +1,19 @@
+<button #addTaskButton (click)="onMenuOpen()" class="create-task-button">
+  <oph-icon [name]="'plus_white'" [size]="17" class="task-create-button-icon"></oph-icon>
+  <span>Add Task</span>
+</button>
+
+<oph-menu [origin]="addTaskButton" [minWidth]="264" [minHeight]="210">
+  <span class="task-title">Tasks</span>
+  <search-box
+    (valueChange)="searchInput($event)"
+    class="search"
+    [(ngModel)]="searchText"
+    name="fieldName"
+    ngDefaultControl
+  ></search-box>
+  <oph-menu-separator class="oph-line-long"></oph-menu-separator>
+  <div class="task-list">
+    <div *ngFor="let task of filteredTasks" class="menu-item" (click)="setInputClick(task)">{{ task.shortTask }}</div>
+  </div>
+</oph-menu>

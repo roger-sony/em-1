@@ -1,0 +1,7 @@
+<!-- <noun-search (nounClick)="onNounClick($event)" (back)="onBackClick()"></noun-search> -->
+<mobile-search-page
+  [items]="nounNames$ | async"
+  [placeholder]="'Select Noun'"
+  (save)="onNounClick($event)"
+  (cancel)="onBackClick()"
+></mobile-search-page>

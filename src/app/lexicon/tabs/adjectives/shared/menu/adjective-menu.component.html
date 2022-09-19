@@ -1,0 +1,17 @@
+<button #menuButton (click)="onMenuClick()">
+  <oph-icon [name]="'ellipsis-dark'"></oph-icon>
+</button>
+
+<oph-menu [origin]="menuButton">
+  <oph-menu-item-new
+    [iconName]="'icon-abandon'"
+    [text]="disabled ? 'Enable' : 'Disable'"
+    (click)="onMenuAction('disable')"
+  ></oph-menu-item-new>
+  <div class="separator"></div>
+  <oph-menu-item [iconName]="'edit_2'" [text]="'Edit'" (click)="onMenuAction('edit')"></oph-menu-item>
+  <oph-menu-item-new [iconName]="'icon-pencil'" [text]="'Rename'" (click)="onMenuAction('rename')"></oph-menu-item-new>
+  <oph-menu-item [iconName]="'duplicate_2'" [text]="'Clone'" (click)="onMenuAction('clone')"></oph-menu-item>
+  <div class="separator"></div>
+  <oph-menu-item [iconName]="'delete_2'" [text]="'Delete'" (click)="onMenuAction('delete')"></oph-menu-item>
+</oph-menu>

@@ -1,0 +1,39 @@
+@import 'src/styles/variables';
+
+.container {
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  height: 44px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $primary-color-lightest;
+  }
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.icon-container {
+  width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+span {
+  margin-left: 16px;
+  color: rgba($black-color, 0.8);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.no-margin {
+  margin-left: 0px;
+}
+
+.selected {
+  background-color: $black-color-lightest;
+}

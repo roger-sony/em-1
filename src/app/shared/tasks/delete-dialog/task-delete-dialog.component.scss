@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.title {
+  font-size: 20px;
+  font-family: $bitter-font-family;
+  color: rgba($black-color, 0.8);
+  margin-bottom: 8px;
+}
+
+.text {
+  font-size: 14px;
+  color: rgba($black-color, 0.8);
+}

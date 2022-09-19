@@ -1,0 +1,30 @@
+<mobile-header [borderShown]="true" (back)="onBack()">
+  <span>Cadence</span>
+  <mobile-save-button
+    [disabled]="saveDisabled$ | async"
+    [soft]="!(planId$ | async)"
+    (save)="onSave()"
+    class="header-buttons"
+  ></mobile-save-button>
+</mobile-header>
+
+<form *ngIf="{cadenceForm: cadenceForm$ | async} as state" [formGroup]="form">
+  <plan-cadence-start [form]="form" class="plan-cadence-start"></plan-cadence-start>
+
+  <div class="plan-cadence-repetition">
+    <mobile-subpage-link matRipple [iconName]="'clock-v-2'" (click)="onRepetitionClick()">
+      {{ state.cadenceForm | cadenceRepetition }}
+    </mobile-subpage-link>
+  </div>
+
+  <div class="plan-cadence-end">
+    <mobile-subpage-link matRipple (click)="onEndClick()">
+      {{ state.cadenceForm | cadenceEnd }}
+    </mobile-subpage-link>
+  </div>
+
+  <div class="plan-cadence-checkboxes">
+    <mat-checkbox [formControlName]="controls.SaveReport">Save a Report</mat-checkbox>
+    <mat-checkbox [formControlName]="controls.TriggerConsequences">Trigger Consequences</mat-checkbox>
+  </div>
+</form>

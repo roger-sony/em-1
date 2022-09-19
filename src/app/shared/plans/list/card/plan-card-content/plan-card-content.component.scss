@@ -1,0 +1,21 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  padding: 8px 16px 16px 16px;
+}
+
+.plan-chips {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.oph-card-chip {
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+.horizontal-divider {
+  border-left: 1px solid $border-color;
+  margin: 0 12px 0 4px;
+}

@@ -1,0 +1,14 @@
+<div class="left-container">
+  <desktop-search-input
+    [placeholder]="'Search for adjectives...'"
+    [value]="searchText"
+    (valueChange)="search.next($event)"
+    class="desktop-search-panel-shrinkable"
+  ></desktop-search-input>
+
+  <mat-slide-toggle [checked]="hideDisabledToggle" (change)="onHideDisabled($event)">
+    <span class="toggle-text">Hide disabled</span>
+  </mat-slide-toggle>
+</div>
+
+<add-button [buttonText]="'Create new'" [orangeColor]="true" (click)="createNew.next()"></add-button>

@@ -1,0 +1,12 @@
+<div class="desktop-header-left">
+  <back-button (back)="onBack()" class="back-button"></back-button>
+  <div *ngIf="iconName" class="round-icon">
+    <oph-icon [name]="iconName" [size]="24"></oph-icon>
+  </div>
+  <h2 *ngIf="title">{{ title }}</h2>
+  <ng-content select=".desktop-header-title-suffix"></ng-content>
+</div>
+
+<div class="desktop-header-right">
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,48 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.oph-form-field-content {
+  background-color: $white-color;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  line-height: 36px;
+
+  &.oph-form-field-content-errors {
+    border: 1px solid $error-color;
+  }
+
+  &.oph-form-field-content-focused {
+    border: 1px solid $primary-color;
+  }
+
+  &::ng-deep {
+    &:first-child.oph-icon {
+      margin-left: 4px;
+      flex-grow: 0;
+    }
+
+    &:last-child.oph-icon {
+      margin-right: 4px;
+      flex-grow: 0;
+    }
+
+    & > .oph-input {
+      border: none;
+      flex-grow: 1;
+      min-width: 1px;
+    }
+
+    & > .oph-select {
+      border: none;
+      flex-grow: 1;
+      min-width: 1px;
+    }
+  }
+}

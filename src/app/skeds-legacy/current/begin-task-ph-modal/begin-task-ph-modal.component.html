@@ -1,0 +1,206 @@
+<div class="modal">
+  <div class="modal-content">
+    <div class="colorBar"></div>
+    <div class="modalPadding">
+      <div class="header">
+        <h2>{{ activeTask.shortTask }}</h2>
+        <i *ngIf="activeTask.instructions">{{ activeTask.instructions }}</i>
+      </div>
+      <div *ngIf="itemMeasurementSettings; else loading">
+        <mat-form-field>
+          <mat-label>Filter by location:</mat-label>
+          <mat-select [(value)]="selected" (selectionChange)="handleSelectionChange()">
+            <mat-option value="All">All</mat-option>
+            <mat-option *ngFor="let location of locations" [value]="location">
+              {{ location }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-list *ngIf="activeTask.checkList?.length > 0" class="mat-elevation-z2">
+          <h3 mat-subheader>Task Checklist</h3>
+          <div *ngFor="let c of activeTask.checkList" class="checkbox-container">
+            <mat-checkbox [(ngModel)]="c.value">{{ c.displayValue }}</mat-checkbox>
+          </div>
+          <div class="checkbox-container">
+            <mat-checkbox (change)="$event ? masterCheckListToggle() : null" [checked]="areAllCheckListItemsSelected()">
+              {{ areAllCheckListItemsSelected() ? 'Uncheck' : 'Check' }} All
+            </mat-checkbox>
+          </div>
+        </mat-list>
+        <mat-accordion multi="true">
+          <div *ngFor="let subtask of filteredSubtasks; index as i">
+            <div>
+              <div class="taskTitleContainer">
+                <div class="titleBox">
+                  <div class="subtaskTitle">{{ subtask.verb | titlecase }} {{ subtask.noun.subcategory }}</div>
+                  <mat-icon class="expand" aria-hidden="false" aria-label="dropdown icon" (click)="togglePanel(i)">{{
+                    icon[i]
+                  }}</mat-icon>
+                </div>
+                <i *ngIf="!subtask.uom" class="error attribute"
+                  >Error: This noun does not have a unit of measure. Please add one.</i
+                >
+                <i *ngIf="subtask.uom && subtask.uom.type === 'range'" class="attribute">{{
+                  subtask.uom.display_name
+                }}</i>
+                <div *ngIf="subtask.uom" [class]="subtask.updated ? 'updated attribute' : 'attribute'">
+                  {{ subtask.noun.last_updated | date: 'short' }}
+                </div>
+                <div
+                  *ngIf="subtask.uom && subtask.uom.type === 'number' && subtask.noun.unit_of_measure !== 'PH'"
+                  class="attribute"
+                >
+                  Current Value: {{ subtask.noun.qty.$numberDecimal | displayFormat: 'qty' }} ({{
+                    subtask.noun.unit_of_measure
+                  }})
+                </div>
+                <div
+                  *ngIf="subtask.uom && subtask.uom.type === 'number' && subtask.noun.unit_of_measure === 'PH'"
+                  class="attribute"
+                >
+                  Current Value: pH {{ subtask.noun.qty.$numberDecimal | displayFormat: 'qty' }}
+                </div>
+                <div *ngIf="subtask.uom && subtask.uom.type === 'range'" class="attribute">
+                  Current Value:
+                  {{ subtask.noun.qty.$numberDecimal | displayFormat: 'rangeValue':subtask.uom.range_config }}
+                </div>
+                <i *ngIf="subtask.noun.expiry_date && subtask.noun.expiry_date.length > 0" class="smallAttribute"
+                  >Expiry Date: {{ subtask.noun.expiry_date | date: 'shortDate' }}</i
+                >
+                <i *ngIf="subtask.noun.location && subtask.noun.location.length > 0" class="smallAttribute"
+                  >Location: {{ subtask.noun.location }}</i
+                >
+                <div class="inputBox">
+                  <ng-container
+                    *ngIf="subtask.uom && subtask.uom.type === 'number' && subtask.noun.unit_of_measure !== 'PH'"
+                  >
+                    <mat-form-field class="updateInput" appearance="outline">
+                      <mat-label>Update</mat-label>
+                      <input
+                        matInput
+                        placeholder="Current Value"
+                        type="number"
+                        (change)="subtaskUpdate(subtask.noun._id, $event.target.value)"
+                      />
+                    </mat-form-field>
+                    <button
+                      class="okButton"
+                      mat-stroked-button
+                      (click)="handleChangeCurrentValue(subtask.noun._id, i, 'Current Value')"
+                    >
+                      OK
+                    </button>
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="subtask.uom && subtask.uom.type === 'number' && subtask.noun.unit_of_measure === 'PH'"
+                  >
+                    <mat-form-field class="updateInput" appearance="outline">
+                      <mat-label>Update</mat-label>
+                      <input
+                        matInput
+                        placeholder="pH"
+                        type="number"
+                        (change)="subtaskUpdate(subtask.noun._id, $event.target.value)"
+                      />
+                    </mat-form-field>
+                    <button
+                      class="okButton"
+                      mat-stroked-button
+                      (click)="handleChangeCurrentValue(subtask.noun._id, i, 'pH')"
+                    >
+                      OK
+                    </button>
+                  </ng-container>
+
+                  <div *ngIf="subtask.uom && subtask.uom.type === 'range'" class="header">
+                    <mat-radio-group aria-label="Select an option" class="radioButtonBox" #radioGroup="matRadioGroup">
+                      <mat-radio-button
+                        *ngFor="let r of subtask.uom.range_config; let ir = index"
+                        class="radioButton"
+                        [checked]="r.checked"
+                        [value]="r.value"
+                        (click)="handleChangeRangeValue(r.value, r.display_value, subtask.noun._id)"
+                        >{{ r.display_value }}</mat-radio-button
+                      >
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+              <mat-expansion-panel class="mat-elevation-z0" [expanded]="panelOpenState[i]">
+                <ng-template matExpansionPanelContent>
+                  <ng-container *ngFor="let a of subtask.noun | keyvalue">
+                    <i
+                      *ngIf="
+                        a.key[0] !== '_' &&
+                        a.key !== 'qty' &&
+                        a.value !== true &&
+                        a.value !== false &&
+                        a.key !== 'last_updated' &&
+                        a.key !== 'subcategory' &&
+                        a.key !== expiry_date &&
+                        a.key !== 'location'
+                      "
+                      class="subtaskDetail"
+                      ><b>{{ a.key | replace: '_':' ' | titlecase }}</b
+                      >: {{ a.value | titlecase }}<br
+                    /></i>
+                  </ng-container>
+                  <div class="editCloneButtonContainer">
+                    <button
+                      class="mr small lightBlue"
+                      mat-raised-button
+                      [routerLink]="['/nouns', subtask.noun._id, {edit: true}]"
+                      [queryParams]="{modalOpen: true}"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="mr small blue"
+                      mat-raised-button
+                      routerLink="/nouns/{{ subtask.noun._id }}"
+                      [queryParams]="{modalOpen: true}"
+                    >
+                      Clone
+                    </button>
+                  </div>
+                </ng-template>
+              </mat-expansion-panel>
+            </div>
+            <hr />
+          </div>
+        </mat-accordion>
+        <mat-form-field class="observationTextArea" appearance="outline">
+          <mat-label>Observation (Optional)</mat-label>
+          <textarea
+            [(ngModel)]="task.observations"
+            name="observations"
+            matInput
+            #observation
+            aria-label="Observations"
+            (keyup)="observationUpdate()"
+            placeholder="Please tell us more..."
+          ></textarea>
+        </mat-form-field>
+        <div class="buttonBox">
+          <button class="mr green" mat-raised-button (click)="submitTask()">Submit</button>
+          <button (click)="handlePauseTaskClick()" class="mr lightBlue" mat-raised-button>Pause</button>
+          <button class="mr red" mat-raised-button (click)="handleCancelModalClick()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="matSpinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+<sked-submit-task-modal
+  *ngIf="viewingSubmitModal"
+  [valueUpdated]="valueUpdated"
+  (closeSubmitModalOnlyClick)="closeSubmitModalOnly()"
+  (closeSubmitModalClick)="closeSubmitModal()"
+></sked-submit-task-modal>

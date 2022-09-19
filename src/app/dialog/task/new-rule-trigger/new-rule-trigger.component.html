@@ -1,0 +1,15 @@
+<dialog-header [iconCircle]="true" [iconName]="'tasks'" [title]="'New Plan trigger'"></dialog-header>
+
+<dialog-content class="edit-task-dialog-content">
+  <rule-trigger-form
+    [plans]="plans$ | async"
+    [plansMap]="plansMap$ | async"
+    (valueChange)="onValueChange($event)"
+    (validityChange)="onValidityChange($event)"
+  ></rule-trigger-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+  <button mat-flat-button color="primary" type="button" (click)="onSave()" [disabled]="!(valid$ | async)">Save</button>
+</dialog-footer>

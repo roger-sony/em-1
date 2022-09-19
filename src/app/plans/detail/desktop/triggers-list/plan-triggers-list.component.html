@@ -1,0 +1,66 @@
+<ng-container *ngIf="!emptyTriggers && !isOpened">
+  <plan-triggers-list-collapsed (changePanelState)="changePanel()"></plan-triggers-list-collapsed>
+  <div class="line"></div>
+</ng-container>
+
+<ng-container *ngIf="!emptyTriggers && isOpened && nouns">
+  <div class="triggers-list-container" (click)="changePanel()">
+    <span class="triggers-title">Triggers</span>
+    <oph-icon class="caret-icon" [name]="'caret-down-2'" [size]="24"></oph-icon>
+
+    <!-- TODO: make into reusable component -->
+    <ng-container *ngFor="let n of planNounTriggers; trackBy: trackByDisplayName">
+      <div
+        class="trigger-item"
+        (mouseenter)="hoverEnter(n)"
+        (mouseleave)="hoverLeave()"
+        (click)="triggerItemClick($event)"
+      >
+        <div class="icon-background">
+          <oph-icon class="icon" [name]="'noun-trigger'" [size]="24"></oph-icon>
+        </div>
+        <div class="text">
+          <span class="text-lighter">When &nbsp;</span>
+          <span class="text-light">{{
+            nounsMap[n.nounSubcategory] ? nounsMap[n.nounSubcategory].subcategory : '(Display name not defined)'
+          }}</span>
+        </div>
+        <plan-triggers-menu
+          *ngIf="hoveredItem === n.id"
+          [planId]="activePlan?.id"
+          [trigger]="n"
+          class="trigger-menu"
+          type="noun"
+        ></plan-triggers-menu>
+      </div>
+    </ng-container>
+
+    <ng-container *ngFor="let t of planTaskTriggers; trackBy: trackById">
+      <div
+        class="trigger-item"
+        (mouseenter)="hoverEnter(t)"
+        (mouseleave)="hoverLeave()"
+        (click)="triggerItemClick($event)"
+      >
+        <div class="icon-background">
+          <oph-icon class="icon" [name]="'tasks-trigger'" [size]="24"></oph-icon>
+        </div>
+        <div class="text">
+          <span class="text-lighter">When &nbsp;</span>
+          <span class="text-light"
+            >{{ tasksMap[t.taskId] ? tasksMap[t.taskId].shortTask : '(Display name not defined)' }} is
+            {{ t.taskEvent }}</span
+          >
+        </div>
+        <plan-triggers-menu
+          *ngIf="hoveredItem === t.id"
+          [planId]="activePlan.id"
+          [trigger]="t"
+          class="trigger-menu"
+          type="task"
+        ></plan-triggers-menu>
+      </div>
+    </ng-container>
+  </div>
+  <div class="line"></div>
+</ng-container>

@@ -1,0 +1,22 @@
+.plans-card-container {
+  padding: 0px 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.plan-card {
+  margin-bottom: 16px;
+  width: 95%;
+}
+
+@media screen and (max-width: 1678px) {
+  .plans-card-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 1262px) {
+  .plans-card-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,14 @@
+<ng-container *ngIf="{chapterId: chapterId$ | async, plans: chapterPlans$ | async} as data">
+  <chapter-plans-control-panel [chapterId]="data.chapterId" class="plans-control-panel"></chapter-plans-control-panel>
+
+  <plans-list
+    *ngIf="data.plans?.length > 0; else emptyPlans"
+    [chapterId]="data.chapterId"
+    [chapters]="chapters$ | async"
+    [plans]="data.plans"
+    class="plans-list"
+  ></plans-list>
+  <ng-template #emptyPlans>
+    <chapter-plans-empty class="plans-empty"></chapter-plans-empty>
+  </ng-template>
+</ng-container>

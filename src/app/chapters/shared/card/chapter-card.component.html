@@ -1,0 +1,47 @@
+<oph-card [iconName]="'chapter'" [title]="chapter.name" [hideHeader]="overview">
+  <div class="oph-card-additional-info info-container">
+    <div *ngIf="chapter.status !== 'live'; else live" class="chapter-status draft">
+      <oph-icon [name]="'edit'" [size]="14"></oph-icon>
+      <span class="light text">Draft</span>
+    </div>
+    <ng-template #live>
+      <div class="chapter-status live">
+        <oph-icon [name]="'live-2'" [size]="14"></oph-icon>
+        <span class="text">Live</span>
+      </div>
+    </ng-template>
+    <div class="updated light">Updated {{ chapter.lastUpdated | timeAgo }}</div>
+  </div>
+  <div *ngIf="overview" class="overview-header">
+    <oph-icon [name]="'info-2'"></oph-icon>
+    <span class="info">Info</span>
+  </div>
+  <chapters-card-item *ngIf="!overview" class="chapters-card-item" [iconName]="'calendar-single-event'">
+    <div class="content-container">
+      <span class="title-text">Date range</span>
+      <span class="date-text"
+        >{{ chapter.startDate | moment: 'ddd D, MMM YYYY' }} - {{ chapter.endDate | moment: 'ddd D, MMM YYYY' }}</span
+      >
+    </div>
+  </chapters-card-item>
+  <chapters-card-progress [progress]="chapter.progress"></chapters-card-progress>
+  <chapters-card-item *ngIf="chapter.plot" class="chapters-card-item" [iconName]="'text'">
+    <div class="content-container">
+      <span class="title-text">Plot</span>
+      <span class="paragraph">{{ chapter.plot }}</span>
+    </div>
+  </chapters-card-item>
+  <chapters-card-item *ngIf="chapter.description" class="chapters-card-item" [iconName]="'text'">
+    <div class="content-container">
+      <span class="title-text">Description</span>
+      <span class="paragraph">{{ chapter.description }}</span>
+    </div>
+  </chapters-card-item>
+  <div class="chip-container">
+    <chapters-card-chip [iconName]="'rules'" [count]="chapter.dtableCount || 0"></chapters-card-chip>
+    <chapters-card-chip [iconName]="'tasks'" [count]="chapter.taskCount || 0"></chapters-card-chip>
+    <chapters-card-chip [iconName]="'plan-noun'" [count]="chapter.inventoryCount || 0"></chapters-card-chip>
+    <chapters-card-chip [iconName]="'plan-conditions'" [count]="chapter.conditionCount || 0"></chapters-card-chip>
+    <chapters-card-chip [iconName]="'plan-triggers'" [count]="chapter.triggerCount || 0"></chapters-card-chip>
+  </div>
+</oph-card>

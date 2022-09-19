@@ -1,0 +1,20 @@
+<button #toggleButton (click)="onToggleClick()">
+  <oph-icon [name]="'ellipsis'" [size]="24"></oph-icon>
+</button>
+
+<oph-menu [origin]="toggleButton">
+  <oph-menu-item [iconName]="'edit_2'" [text]="'Edit'" (click)="onEditClick()"></oph-menu-item>
+  <oph-menu-item
+    *ngIf="template.status !== 'next'"
+    [iconName]="'play-dark'"
+    [text]="'Use This Template'"
+    (click)="onUseTemplateClick()"
+  ></oph-menu-item>
+  <oph-menu-item [iconName]="'duplicate_2'" [text]="'Duplicate'" (click)="onDuplicateClick()"></oph-menu-item>
+  <oph-menu-item
+    *ngIf="!template.live"
+    [iconName]="'delete_2'"
+    [text]="'Delete'"
+    (click)="onDeleteClick()"
+  ></oph-menu-item>
+</oph-menu>

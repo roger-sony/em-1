@@ -1,0 +1,26 @@
+<div *ngIf="data">
+  <mat-label>{{ data.adjective?.name }}</mat-label>
+  <mat-divider></mat-divider>
+  <mat-action-list>
+    <div
+      class="option-wrap"
+      [class.selected]="option === data.adjective?.value"
+      *ngFor="let option of data.adjective?.options"
+      (click)="selectOption(option)"
+    >
+      <div class="selected-wrap">
+        <oph-icon
+          *ngIf="!data.multiselect && option === data.adjective?.value"
+          name="/mobile-sked/details/selected"
+          [size]="20"
+        ></oph-icon>
+        <mat-checkbox
+          *ngIf="data.multiselect"
+          (change)="onSelectionChange(option)"
+          [checked]="isOptionSelected(option)"
+        ></mat-checkbox>
+      </div>
+      <div class="option-label">{{ option }}</div>
+    </div>
+  </mat-action-list>
+</div>

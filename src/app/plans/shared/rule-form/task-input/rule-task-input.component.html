@@ -1,0 +1,13 @@
+<input
+  matInput
+  [formControl]="nameControl"
+  [matAutocomplete]="taskAutocomplete"
+  [style.width.ch]="(nameControl.value || 'Task...').length"
+  placeholder="Task..."
+/>
+
+<mat-autocomplete #taskAutocomplete="matAutocomplete">
+  <mat-option *ngFor="let task of filteredTasks$ | async; trackBy: trackByTaskId" [value]="task.shortTask">
+    {{ task.shortTask }}
+  </mat-option>
+</mat-autocomplete>

@@ -1,0 +1,59 @@
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.mat-table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  display: table;
+  border-collapse: collapse;
+  margin: 0px;
+}
+
+.mat-row,
+.mat-header-row {
+  display: table-row;
+}
+
+.apply-btn {
+  margin-left: 10px;
+}
+
+.mat-chip-list-wrapper {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.valueInput {
+  position: relative;
+}
+
+.valueInputError {
+  position: absolute;
+  top: 46px;
+}
+.save-modal .modal-content {
+  width: 375px;
+  height: 150px;
+  margin-top: 10px;
+}
+.saveModalButtons {
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.daySelect {
+  width: 130px;
+}
+
+.timeSelect {
+  width: 80px;
+}
+
+.currentSkedCheckbox {
+  margin-left: 15px;
+  margin-top: 20px;
+}

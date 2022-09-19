@@ -1,0 +1,165 @@
+<div class="legacy-content">
+  <mat-card *ngIf="sked && tasks" class="example-card">
+    <form #form="ngForm" autocomplete="off">
+      <mat-card-content>
+        <h1>Editing Sked Template</h1>
+        <h2>
+          {{ sked.displayName | formatWeekday }} {{ sked._StartTime | convert24To12 }} -
+          {{ sked._EndTime | convert24To12 }}
+        </h2>
+        <div class="form-container">
+          <h3 class="warning"><em>Note: Edits to this template will affect all future instances of this sked.</em></h3>
+          <br />
+          <h2>Workers</h2>
+          <mat-form-field appearance="outline">
+            <mat-label>Number of Employees</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="sked.assignedEmployees"
+              name="assignedEmployees"
+              placeholder="0"
+              required
+              min="0"
+            />
+          </mat-form-field>
+          <br /><br />
+          <h2>Tasks</h2>
+          <div *ngFor="let s of sked.tasks; let i = index">
+            <mat-icon *ngIf="s._id" class="clicky" color="accent" (click)="viewTaskDetail(s)">search</mat-icon>
+            <mat-form-field appearance="outline">
+              <mat-label>Task</mat-label>
+              <mat-select
+                [(ngModel)]="s._id"
+                name="taskId{{ i }}"
+                placeholder="Task"
+                required
+                (selectionChange)="calculateWeightedDuration(i)"
+              >
+                <mat-option *ngFor="let t of tasks" [value]="t._id">{{ t.shortTask }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="ml" appearance="outline">
+              <mat-label>Weight</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="s.weight"
+                name="taskWeight{{ i }}"
+                placeholder="0"
+                required
+                min="0"
+                required
+                (change)="calculateWeightedDuration(i)"
+              />
+            </mat-form-field>
+            <span *ngIf="s.weightedDuration" class="ml">Weighted Duration: {{ s.weightedDuration }} minutes</span>
+            <button class="ml" type="button" mat-mini-fab color="warn" (click)="deleteTask(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <button type="button" mat-mini-fab color="primary" (click)="addTask()"><mat-icon>add</mat-icon></button>
+          <br /><br />
+          <mat-card id="sked-balance-card" [ngStyle]="{'bottom.px': hideSkedBalanceCard ? -200 : 0}">
+            <button id="sked-balance-card-btn" type="button" (click)="toggleSkedBalanceCard()">
+              {{ hideSkedBalanceCard ? 'Show' : 'Hide' }}
+            </button>
+            <div *ngIf="remainingEmployeeTime - totalSkedEffort >= 0; else unbalanced">
+              <h3 class="success">Sked Template is balanced.</h3>
+              <p>
+                Task Duration: <span class="success">{{ totalSkedEffort | number: '1.0-0' }}</span> minutes.
+              </p>
+              <p>
+                Employee Time: <span class="success">{{ remainingEmployeeTime | number: '1.0-0' }}</span> minutes
+              </p>
+              <p>
+                <strong
+                  >You can still add
+                  <span class="success">{{ remainingEmployeeTime - totalSkedEffort | number: '1.0-0' }}</span> minutes
+                  of tasks to this sked.</strong
+                >
+              </p>
+            </div>
+            <ng-template #unbalanced>
+              <h3 class="warning">Sked Template is unbalanced.</h3>
+              <p>
+                Task Duration: <span class="warning">{{ totalSkedEffort | number: '1.0-0' }}</span> minutes
+              </p>
+              <p>
+                Employee Time: <span class="warning">{{ remainingEmployeeTime | number: '1.0-0' }}</span> minutes
+              </p>
+              <p>
+                <strong
+                  >To balance this sked, you can add <span class="warning">{{ employeesToAdd }}</span> workers or remove
+                  <span class="warning">{{ totalSkedEffort - remainingEmployeeTime }}</span> minutes of tasks.</strong
+                >
+              </p>
+            </ng-template>
+          </mat-card>
+        </div>
+      </mat-card-content>
+      <!--============= Submit/Cancel =============-->
+      <mat-card-actions>
+        <button
+          type="submit"
+          class="mr"
+          mat-raised-button
+          color="primary"
+          (click)="submitForm()"
+          [disabled]="form.form.invalid"
+        >
+          Save Sked Template
+        </button>
+        <button type="button" mat-raised-button color="warn" (click)="goBack()">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+  <!--=============== Task Detail Modal ====================-->
+  <div *ngIf="viewingTaskDetail" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeTaskDetail()">&times;</span>
+      <h2>{{ activeTask.shortTask }}</h2>
+      <mat-list>
+        <ng-container *ngFor="let f of objectKeys(activeTask)">
+          <mat-list-item *ngIf="f.charAt(0) !== '_' && f !== 'recipes' && f !== 'subtasks' && f !== 'shortTask'">
+            <h3 matLine>
+              <strong>{{ f | unCamelCase }}: </strong>
+              <span>{{ activeTask[f] | displayFormat: f }}</span>
+            </h3>
+          </mat-list-item>
+        </ng-container>
+      </mat-list>
+      <div *ngIf="activeTask['recipes'].length > 0">
+        <h3>
+          <strong>Associated Recipes:</strong><br />
+          <mat-expansion-panel *ngFor="let r of activeTask.recipes">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h4>{{ recipes[r].displayName }}</h4>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <h4 *ngIf="recipes[r].ingredients">Ingredients:</h4>
+            <ul>
+              <li *ngFor="let i of recipes[r].ingredients">{{ i.item }} ({{ i.qty }})</li>
+            </ul>
+            <h4 *ngIf="recipes[r].consumes">Consumes From Inventory:</h4>
+            <ul>
+              <li *ngFor="let c of recipes[r].consumes">{{ c.item }} ({{ c.qty }})</li>
+            </ul>
+            <h4 *ngIf="recipes[r].instructions">Instructions:</h4>
+            <ol>
+              <li *ngFor="let i of recipes[r].instructions">{{ i }}</li>
+            </ol>
+          </mat-expansion-panel>
+        </h3>
+      </div>
+      <p><button class="mr" mat-raised-button color="primary" (click)="closeTaskDetail()">Close</button></p>
+    </div>
+  </div>
+</div>
+
+<div class="debug">
+  <h2>Debug</h2>
+  <pre>{{ sked | json }}</pre>
+</div>

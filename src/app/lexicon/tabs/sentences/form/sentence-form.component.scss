@@ -1,0 +1,34 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+input {
+  margin-right: 16px;
+}
+
+button {
+  background-color: $primary-color;
+  color: $white-color;
+}
+
+.select-container {
+  margin: 24px 0;
+  display: flex;
+
+  .select-item {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    margin-right: 16px;
+    border: 1px solid $black-color-lightest;
+    border-radius: 4px;
+    height: 36px;
+    padding: 0 8px;
+
+    mat-label {
+      margin-right: 24px;
+    }
+  }
+}

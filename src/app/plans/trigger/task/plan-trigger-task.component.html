@@ -1,0 +1,5 @@
+<mobile-header [borderShown]="true" (back)="onBackClick()">
+  <input #searchInput [placeholder]="'Select Task'" [value]="search$ | async" (input)="onInput($event)" />
+</mobile-header>
+
+<div *ngFor="let task of filteredTasks$ | async" (click)="onTaskClick(task)">{{ task.shortTask }}</div>

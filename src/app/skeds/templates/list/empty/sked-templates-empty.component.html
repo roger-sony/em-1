@@ -1,0 +1,10 @@
+<div class="templates-empty-container">
+  <div class="icon-circle">
+    <oph-icon [name]="'rules'" [size]="40" class="templates-empty-icon"></oph-icon>
+  </div>
+  <p class="no-templates">No Sked Templates have been found!</p>
+  <button class="create-templates-empty-button" (click)="createNewTemplate()" *ngIf="canEdit">
+    <oph-icon [name]="'plus'" [size]="17" class="templates-empty-create-button-icon"></oph-icon>
+    Create Template
+  </button>
+</div>

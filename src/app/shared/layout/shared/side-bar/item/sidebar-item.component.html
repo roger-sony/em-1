@@ -1,0 +1,5 @@
+<a (click)="onItemClick()" [class.active]="active">
+  <div [class.active]="active" class="sidebar-item-indicator"></div>
+  <oph-icon [name]="'sidebar/' + icon + iconSuffix" [size]="24" class="sidebar-item-icon"></oph-icon>
+  <div class="sidebar-item-text">{{ text }}</div>
+</a>

@@ -1,0 +1,25 @@
+<ng-container *ngIf="!loadingPlans; else loading">
+  <div class="panel-content-container" #panelContent>
+    <ng-container *ngFor="let f of filteredPlans; trackBy: trackById">
+      <plan-card
+        [plan]="f"
+        class="plan-card"
+        [nounTriggers]="nounRuleTriggers"
+        [taskTriggers]="taskRuleTriggers"
+        [ruleSchedules]="ruleSchedules"
+        [activePlan]="activePlan"
+        [unitOfMeasures]="unitOfMeasures"
+        [tasks]="tasks"
+        [chapters]="chapters"
+      ></plan-card>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="panel-content-container">
+    <ng-container *ngFor="let x of emptyCards">
+      <plan-card-loading class="plan-card"></plan-card-loading>
+    </ng-container>
+  </div>
+</ng-template>

@@ -1,0 +1,314 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+@import './variables';
+
+.light-mode {
+  &.mat-app-background {
+    font-family: 'Asap', serif;
+    background-color: $background-color;
+    color: rgba(47, 39, 35, 0.87);
+
+    .mat-drawer-container {
+      background-color: #faf7ed;
+    }
+  }
+
+  .mat-checkbox-checked.mat-accent {
+    .mat-checkbox-background {
+      background-color: #fb8b41;
+
+      .mat-checkbox-checkmark-path {
+        stroke: white !important;
+      }
+    }
+
+    &:not(.mat-checkbox-disabled),
+    &:active:not(.mat-checkbox-disabled) {
+      .mat-ripple-element {
+        background: #fb8b41;
+      }
+    }
+  }
+
+  .mat-toolbar {
+    width: 100%;
+    height: 56px;
+    background: #5d4037 !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  /*-----------Buttons----------*/
+
+  .mat-fab {
+    right: 3vh;
+    bottom: 3vh;
+    position: sticky !important;
+    color: mat-color($Oph-primary, 800) !important;
+  }
+
+  .extended-fab {
+    min-width: 88px !important;
+    width: auto !important;
+    position: fixed !important;
+    padding-left: 12px !important;
+    padding-right: 20px !important;
+    font-size: 16px;
+    box-shadow: 0 4px 0 mat-color($Oph-primary, 800) !important;
+    border-radius: 24px !important;
+    border-style: solid !important;
+    border-width: 2px !important;
+    padding-bottom: 20px !important;
+    z-index: 999;
+  }
+
+  .extended-fab:active {
+    bottom: 2.7vh;
+    box-shadow: none !important;
+  }
+
+  .bold-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: mat-color($Oph-primary, 500) !important;
+    box-shadow: 0 4px 0 mat-color($Oph-primary, 500) !important;
+    border-radius: 16px !important;
+    border: 2px solid mat-color($Oph-primary, 500) !important;
+    background-color: mat-color($Oph-primary, 50) !important;
+
+    svg {
+      stroke: mat-color($Oph-primary, 500);
+    }
+
+    &[disabled] {
+      pointer-events: none;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  .bold-button:active {
+    cursor: pointer;
+    top: 4px;
+    color: mat-color($Oph-accent, 400) !important;
+    box-shadow: 0 4px 0 mat-color($Oph-accent, 400) !important;
+    border-radius: 16px !important;
+    border: 2px solid mat-color($Oph-accent, 400) !important;
+    background-color: mat-color($Oph-primary, 50) !important;
+
+    svg {
+      stroke: mat-color($Oph-accent, 400);
+    }
+
+    &[disabled] {
+      pointer-events: none;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  /*-----------Form field----------*/
+
+  .mat-form-field {
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    font-size: 14px;
+
+    &.mat-paginator-page-size-select {
+      min-width: 65px;
+
+      .mat-form-field-flex {
+        padding: 0 8px 0;
+      }
+    }
+
+    .mat-form-field-underline {
+      background-color: rgba(47, 39, 35, 0.64) !important;
+    }
+  }
+
+  .mat-form-field-outline-start {
+    border-radius: 12px 0 0 12px !important;
+    min-width: 12px !important;
+  }
+
+  .mat-form-field-outline-gap {
+    border-radius: 0;
+    border: 1px solid currentColor;
+    border-left-style: none;
+    border-right-style: none;
+  }
+
+  .mat-form-field-outline-end {
+    border-radius: 0 12px 12px 0 !important;
+  }
+
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+  .mat-form-field-appearance-outline.mat-form-field-can-float
+    .mat-input-server:focus
+    + .mat-form-field-label-wrapper
+    .mat-form-field-label {
+    transform: translateY(-0.75em) scale(0.75);
+    width: 133.3333733333%;
+  }
+
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap {
+    border-top-color: currentcolor !important;
+  }
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  .mat-overline {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .mat-slider {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .host {
+    display: flex;
+
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 16px;
+  }
+
+  .host-gap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 16px;
+  }
+
+  .type {
+    display: flex;
+    gap: 24px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    overflow: hidden;
+    padding: 24px 16px;
+  }
+
+  .last {
+    margin: 24px 16px 15vh;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 8px;
+    margin: 24px 0 24px 0;
+
+    .item {
+      justify-self: start;
+    }
+  }
+
+  .bullet-icon-input {
+    display: inline-flex;
+  }
+
+  .bullet-icon {
+    margin-top: 16px;
+    margin-right: 8px;
+    color: mat-color($Oph-foreground, icon);
+  }
+
+  .oph-text {
+    color: mat-color($Oph-foreground, text);
+  }
+
+  .oph-secondary-text {
+    color: mat-color($Oph-foreground, secondary-text);
+  }
+
+  .oph-disabled {
+    color: mat-color($Oph-foreground, disabled);
+  }
+
+  .oph-icon {
+    color: mat-color($Oph-foreground, icon);
+  }
+
+  .space {
+    margin: 16px 0 0 16px;
+  }
+
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  .mat-select-panel {
+    background-color: (mat-color($Oph-primary, 50)) !important;
+  }
+
+  mat-divider.mat-divider {
+    border-top-color: rgba(35, 35, 47, 0.24);
+  }
+
+  .mat-chip.mat-standard-chip {
+    background-color: (mat-color($Oph-primary, 100));
+  }
+
+  /*.condensed
+      font-family: "Asap"!important
+      font-size: 14px
+      line-height: 120%!important
+      font-weight: 600*/
+
+  .mat-tab-group,
+  .mat-tab-nav-bar {
+    &.mat-primary {
+      .mat-ink-bar {
+        background-color: mat-color($Oph-accent, 500);
+      }
+    }
+  }
+
+  .mat-grid-tile {
+    border-radius: 8px;
+    background: linear-gradient(90deg, (mat-color($Oph-accent, 50, 0.5)), (mat-color($Oph-accent, A200, 0.5)));
+    border: 1px solid (mat-color($Oph-foreground, divider));
+  }
+
+  .mat-grid-list {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .mat-grid-tile-header {
+    display: inline-flex !important;
+    align-content: center !important;
+  }
+
+  .bottom-1 {
+    margin-bottom: 1em !important;
+  }
+
+  .mr-8 {
+    margin-right: 8px;
+  }
+
+  .ml-8 {
+    margin-left: 8px;
+  }
+
+  .mt-8 {
+    margin-top: 8px;
+  }
+
+  .mb-8 {
+    margin-bottom: 8px;
+  }
+}

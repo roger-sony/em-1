@@ -1,0 +1,19 @@
+<dialog-header [title]="'Set Cadence'" (close)="onClose()"></dialog-header>
+
+<dialog-content>
+  <cadence-form
+    [required]="true"
+    [value]="cadenceForm$ | async"
+    (valueChange)="onFormValueChange($event)"
+    (validityChange)="onFormValidityChange($event)"
+    class="cadence-form"
+  ></cadence-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button (close)="onClose()"></dialog-cancel-button>
+
+  <button mat-flat-button color="primary" type="button" [disabled]="doneDisabled$ | async" (click)="onDoneClick()">
+    Done
+  </button>
+</dialog-footer>

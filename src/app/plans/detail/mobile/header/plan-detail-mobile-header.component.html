@@ -1,0 +1,10 @@
+<mobile-header [borderShown]="true" (back)="onBack()" class="header">
+  <plan-name-input [plan]="plan" class="plan-name-input"></plan-name-input>
+
+  <plan-card-menu
+    class="header-buttons icon-margin"
+    [plan]="plan"
+    [tasks]="tasks"
+    [unitOfMeasures]="unitOfMeasures"
+  ></plan-card-menu>
+</mobile-header>

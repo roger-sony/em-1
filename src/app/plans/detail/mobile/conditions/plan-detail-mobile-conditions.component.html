@@ -1,0 +1,12 @@
+<div *ngIf="plan" class="conditions-container">
+  <ng-container *ngIf="plan.facts.length || plan.rules.length; else noConditions">
+    <div class="title-container">
+      <span class="conditions-title">CONDITIONS</span>
+    </div>
+    <plan-nouns-list [plan]="plan" [search]="search" class="nouns-list"></plan-nouns-list>
+  </ng-container>
+
+  <ng-template #noConditions>
+    <span class="conditions-title">NO CONDITIONS</span>
+  </ng-template>
+</div>

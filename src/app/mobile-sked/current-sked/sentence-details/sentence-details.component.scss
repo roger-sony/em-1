@@ -1,0 +1,130 @@
+:host {
+  display: block;
+
+  .details-wrap {
+    height: calc(100vh - 32px - 56px);
+    padding: 20px;
+    background: #faf7ed;
+    box-sizing: border-box;
+    border-radius: 8px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .back-wrap {
+        display: flex;
+        align-items: center;
+
+        oph-icon {
+          margin-right: 20px;
+          margin-top: 2px;
+        }
+
+        .title {
+          font-size: 20px;
+          line-height: 32px;
+        }
+      }
+
+      .coins {
+        height: 20px;
+        display: flex;
+        align-items: center;
+
+        .coins-count {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 15px;
+          letter-spacing: 0.4px;
+          margin-left: 8px;
+        }
+      }
+    }
+
+    .body {
+      margin-top: 15px;
+
+      .title {
+        font-size: 20px;
+        line-height: 32px;
+        letter-spacing: 0.15px;
+      }
+
+      .pre-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .time-left {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-family: Asap;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 15px;
+          line-height: 24px;
+          margin-right: 4px;
+
+          svg {
+            margin-right: 4px;
+          }
+        }
+
+        .effort {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-size: 12px;
+          line-height: 16px;
+          color: rgba(35, 35, 47, 0.8);
+        }
+      }
+
+      .content {
+        margin-top: 16px;
+
+        mat-form-field {
+          width: 100%;
+        }
+
+        .actions {
+          margin-top: 8px;
+          width: 100%;
+          text-align: end;
+        }
+
+        .expand-more-icon {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+
+  .control-panel {
+    width: calc(100vw - 32px);
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+
+    @media (min-width: 960px) {
+      width: calc(100vw - 32px - 256px - 32px);
+      bottom: 32px;
+      right: 32px;
+    }
+
+    .bold-button {
+      min-height: 40px;
+      padding-left: 18px;
+      padding-right: 18px;
+
+      paragraph-details-svg {
+        margin-right: 6px;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import 'src/styles/variables';
+
+:host {
+  display: inline;
+  color: rgba($black-color, 0.8);
+}
+
+.name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bold {
+  font-weight: bold;
+}

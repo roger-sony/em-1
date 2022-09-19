@@ -1,0 +1,30 @@
+<div class="modal taskSubmitModal">
+  <div class="modal-content">
+    <mat-card class="example-card">
+      <img mat-card-image src="../assets/img/success_banner.png" alt="Success" />
+      <mat-card-content class="textCenter">
+        <h2>Thank You!</h2>
+        <div *ngFor="let f of valueUpdated">
+          <h3>{{ f.subtask }}</h3>
+          <i>{{ f.value }}</i>
+        </div>
+        <div
+          *ngIf="
+            valueUpdated &&
+            valueUpdated[valueUpdated.length - 1] &&
+            valueUpdated[valueUpdated.length - 1].observations &&
+            valueUpdated[valueUpdated.length - 1].observations.length > 0
+          "
+        >
+          <h3>Observation</h3>
+          <i>{{ valueUpdated[valueUpdated.length - 1].observations }}</i>
+        </div>
+      </mat-card-content>
+      <br />
+      <div class="buttonBox">
+        <button class="mr green" mat-raised-button (click)="handleCloseSubmitModalClick()">Done</button>
+        <button class="mr orange" mat-raised-button (click)="handleCloseSubmitModalOnlyClick()">Go Back</button>
+      </div>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<form [formGroup]="form">
+  <div class="name-input-container">
+    <input
+      class="name-input"
+      #nameInput
+      formControlName="name"
+      [placeholder]="'Enter name...'"
+      (keydown)="onNameKeydown($event)"
+    />
+  </div>
+
+  <chapters-card-item class="date-picker-container" [iconName]="'calendar-single-event'">
+    <mat-form-field class="date-picker" appearance="fill" style="margin-bottom: -1.25em">
+      <mat-label class="date-range">Date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker" [min]="today">
+        <input matStartDate formControlName="startDate" placeholder="Start date" />
+        <input matEndDate formControlName="endDate" placeholder="End date" />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>arrow_drop_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </chapters-card-item>
+
+  <div class="progress-container">
+    <div class="header-text">
+      <oph-icon [name]="'vector'" [size]="18"></oph-icon>
+      <span class="progress-text">Progress</span>
+    </div>
+    <div class="slider-container">
+      <mat-slider
+        formControlName="progress"
+        thumbLabel
+        [displayWith]="formatLabel"
+        tickInterval="1"
+        min="0"
+        step="25"
+        max="100"
+      >
+      </mat-slider>
+    </div>
+  </div>
+
+  <div class="text-container plot-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Plot</mat-label>
+      <oph-icon matPrefix name="text" size="24"></oph-icon>
+      <textarea
+        formControlName="plot"
+        matInput
+        (keydown)="onPlotKeydown($event)"
+        [matTextareaAutosize]="true"
+        maxlength="400"
+        (focus)="this.showPlotHint = true"
+        (blur)="this.showPlotHint = false"
+      >
+      </textarea>
+    </mat-form-field>
+    <div class="hint-container">
+      <mat-hint *ngIf="showPlotHint">Max. 400 characters</mat-hint>
+      <mat-hint *ngIf="showPlotHint">{{ (form.value.plot | split: '').length }} / 400</mat-hint>
+    </div>
+  </div>
+
+  <div class="text-container description-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <oph-icon matPrefix name="text" size="24"></oph-icon>
+      <textarea
+        formControlName="description"
+        matInput
+        (keydown)="onDescriptionKeydown($event)"
+        [matTextareaAutosize]="true"
+        maxlength="400"
+        (focus)="this.showDescriptionHint = true"
+        (blur)="this.showDescriptionHint = false"
+      >
+      </textarea>
+    </mat-form-field>
+    <div class="hint-container">
+      <mat-hint *ngIf="showDescriptionHint">Max. 400 characters</mat-hint>
+      <mat-hint *ngIf="showDescriptionHint">{{ (form.value.description | split: '').length }} / 400</mat-hint>
+    </div>
+  </div>
+</form>

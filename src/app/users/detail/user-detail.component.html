@@ -1,0 +1,94 @@
+<div class="users-details-wrap">
+  <mat-card *ngIf="user && roles">
+    <form #form="ngForm" (ngSubmit)="submitForm()" autocomplete="off">
+      <mat-card-content>
+        <h2>{{ user['_id'] ? 'Edit' : 'Create New' }} User</h2>
+        <!--============ Basic User Info ==================-->
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput [(ngModel)]="user.username" name="username" placeholder="Username" required />
+        </mat-form-field>
+        <br />
+        <!--============= Change Password (Existing User) =============-->
+        <div *ngIf="user['_id']">
+          <h3>Change Password</h3>
+          <!-- <p>This feature is coming soon!</p> -->
+          <mat-form-field appearance="outline">
+            <mat-label>New Password</mat-label>
+            <input type="password" matInput [(ngModel)]="user.password" name="password" placeholder="Password" />
+          </mat-form-field>
+          <mat-form-field *ngIf="user.password" appearance="outline" class="ml">
+            <mat-label>Confirm New Password</mat-label>
+            <input
+              type="password"
+              matInput
+              [(ngModel)]="user.passwordConfirm"
+              name="password confirm"
+              placeholder="Password"
+              autocomplete="new-password"
+            />
+            <mat-hint color="warn" *ngIf="user.password !== user.passwordConfirm">Passwords do not match.</mat-hint>
+          </mat-form-field>
+        </div>
+        <!--============= Create Password (New User) =============-->
+        <mat-form-field *ngIf="!user['_id']" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            type="password"
+            matInput
+            [(ngModel)]="user.password"
+            name="password"
+            placeholder="Password"
+            required
+            autocomplete="new-password"
+          />
+        </mat-form-field>
+        <mat-form-field *ngIf="!user['_id']" appearance="outline" class="ml">
+          <mat-label>Confirm Password</mat-label>
+          <input
+            type="password"
+            matInput
+            [(ngModel)]="user.passwordConfirm"
+            name="password confirm"
+            placeholder="Password"
+            required
+          />
+          <mat-error color="warn" *ngIf="user.password !== user.passwordConfirm">Passwords do not match.</mat-error>
+        </mat-form-field>
+        <br />
+        <div class="form-group">
+          <h3>Assign User Roles</h3>
+          <mat-chip-list *ngIf="user.roles">
+            <mat-chip *ngFor="let r of user.roles">
+              {{ getRoleDisplayName(r) }} &nbsp;&nbsp;
+              <mat-icon (click)="deleteRole(r)">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+          <mat-form-field appearance="outline" class="mr">
+            <mat-select [(ngModel)]="user.role" placeholder="Add Role" (ngModelChange)="addRole()" name="role">
+              <mat-option *ngFor="let r of roles" [value]="r['_id']">{{ r.displayName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <!--============= Submit/Cancel =============-->
+      <mat-card-actions>
+        <button
+          type="submit"
+          class="ml mr"
+          mat-raised-button
+          color="primary"
+          [disabled]="form.form.invalid || !userInputsValid()"
+        >
+          Save User
+        </button>
+        <button type="button" mat-raised-button color="warn" (click)="goBack()">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
+
+<div class="debug">
+  <h2>Debug</h2>
+  <pre>{{ user | json }}</pre>
+</div>

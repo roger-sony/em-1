@@ -1,0 +1,26 @@
+<form
+  *ngIf="{intervalNumberValue: intervalNumberValue$ | async, intervalTypeValue: intervalTypeValue$ | async} as state"
+  [formGroup]="form"
+>
+  <number-input-field [formControlName]="control.IntervalNumber" [min]="1"></number-input-field>
+
+  <oph-select [formControlName]="control.IntervalType" (valueChange)="onIntervalTypeChange($event)">
+    <ng-container *ngFor="let value of intervalTypes">
+      <oph-option [value]="value">
+        {{ value + (state.intervalNumberValue > 1 ? 's' : '') }}
+      </oph-option>
+    </ng-container>
+  </oph-select>
+
+  <oph-select *ngIf="state.intervalTypeValue === intervalType.Month" [formControlName]="control.MonthlyType">
+    <oph-option [value]="monthlyType.DayOfMonth"> On day {{ date | moment: 'D' }} </oph-option>
+    <oph-option [value]="monthlyType.DayOfWeek">
+      On the {{ date | dayOfWeekInMonth | ordinal }} {{ date | moment: 'dddd' }}
+    </oph-option>
+  </oph-select>
+
+  <days-of-week-select
+    *ngIf="state.intervalTypeValue === intervalType.Week"
+    [formControlName]="control.WeeklyDays"
+  ></days-of-week-select>
+</form>

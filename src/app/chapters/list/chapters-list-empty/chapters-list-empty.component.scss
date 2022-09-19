@@ -1,0 +1,54 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.chapter-empty-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chapter-empty-icon {
+  opacity: 0.5;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 100px;
+  background-color: $black-color-lightest;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-chapter {
+  opacity: 0.5;
+  font-family: $lato-font-family;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $black-color;
+  margin-top: 20px;
+}
+
+.create-chapter-empty-button {
+  width: 140px;
+  height: 36px;
+  border-radius: 3px;
+  background-color: $white-color;
+  display: flex;
+  align-items: center;
+  color: $primary-color;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  border: 1px solid $black-color-lightest;
+  cursor: pointer;
+}
+
+.chapter-empty-create-button-icon {
+  margin-right: 5px;
+  margin-left: 1px;
+}

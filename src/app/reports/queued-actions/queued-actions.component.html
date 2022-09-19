@@ -1,0 +1,119 @@
+<div class="legacy-content">
+  <!--***************************************************************************
+                                Action Header
+****************************************************************************-->
+  <header>
+    <h2>Queued Actions</h2>
+  </header>
+  <!--***************************************************************************
+                                Queued Actions
+****************************************************************************-->
+  <mat-accordion *ngIf="actions && actions.length > 0; else noActions">
+    <mat-expansion-panel *ngFor="let a of actions">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="bold"
+          >{{ a.shortTask }}
+          <span class="sked">{{ a.sked === 'Current Sked' ? 'Current Sked' : skedDisplay(a.sked) }}</span>
+          <button mat-icon-button color="warn" (click)="deleteActionClick($event, a._id)" class="deleteButton">
+            <mat-icon class="pointer">remove_circle</mat-icon>
+          </button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p class="bold inline">Category:</p>
+      <span>{{ a.category }}</span
+      ><br />
+      <p class="bold inline">Location:</p>
+      <span>{{ a.location }}</span
+      ><br />
+      <p class="bold inline">Effort:</p>
+      <span>{{ a.effort }}</span
+      ><br />
+      <p class="bold inline">Priority:</p>
+      <span>{{ a.priority }}</span
+      ><br />
+      <p class="bold inline">Movability:</p>
+      <span>{{ a.movability }}</span
+      ><br />
+      <p class="bold inline">Unpleasantness:</p>
+      <span>{{ a.unpleasantness }}</span
+      ><br />
+      <p class="bold inline">Abandon:</p>
+      <span>{{ a.abandon }}</span
+      ><br />
+      <p class="bold inline">Instructions:</p>
+      <span>{{ a.instructions }}</span
+      ><br />
+      <p class="bold inline">Sked:</p>
+      <span>{{ a.sked === 'Current Sked' ? 'Current Sked' : skedDisplay(a.sked) }}</span
+      ><br />
+      <div class="subtaskContainer">
+        <div class="bold inline">Subtasks:</div>
+        <div>
+          <span *ngFor="let s of a.subtasks">{{ s.verb }} {{ s.config_name }}<br /></span>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <ng-template #noActions>
+    <p class="noActions">There are no queued actions.</p>
+  </ng-template>
+
+  <!--***************************************************************************
+                            Queued Actions History
+****************************************************************************-->
+
+  <button mat-raised-button class="actionHistoryButton" (click)="showActionHistory()" type="button" color="primary">
+    {{ viewActionHistory ? 'Hide Action History' : 'Show Action History' }}
+  </button>
+
+  <ng-container *ngIf="viewActionHistory">
+    <header>
+      <h2>Action History</h2>
+    </header>
+    <mat-accordion *ngIf="historicalActions && historicalActions.length > 0; else noHistoricalActions">
+      <mat-expansion-panel *ngFor="let a of historicalActions">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="bold">{{ a.shortTask }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="bold inline">Category:</p>
+        <span>{{ a.category }}</span
+        ><br />
+        <p class="bold inline">Location:</p>
+        <span>{{ a.location }}</span
+        ><br />
+        <p class="bold inline">Effort:</p>
+        <span>{{ a.effort }}</span
+        ><br />
+        <p class="bold inline">Priority:</p>
+        <span>{{ a.priority }}</span
+        ><br />
+        <p class="bold inline">Movability:</p>
+        <span>{{ a.movability }}</span
+        ><br />
+        <p class="bold inline">Unpleasantness:</p>
+        <span>{{ a.unpleasantness }}</span
+        ><br />
+        <p class="bold inline">Abandon:</p>
+        <span>{{ a.abandon }}</span
+        ><br />
+        <p class="bold inline">Instructions:</p>
+        <span>{{ a.instructions }}</span
+        ><br />
+        <p class="bold inline">Sked:</p>
+        <span>{{ a.sked === 'Current Sked' ? 'Current Sked' : skedDisplay(a.sked) }}</span
+        ><br />
+        <div class="subtaskContainer">
+          <div class="bold inline">Subtasks:</div>
+          <div>
+            <span *ngFor="let s of a.subtasks">{{ s.verb }} {{ s.config_name }}<br /></span>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
+
+  <ng-template #noHistoricalActions>
+    <p class="noHistoricalActions">There are no historical actions.</p>
+  </ng-template>
+</div>

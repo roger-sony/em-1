@@ -1,0 +1,100 @@
+@import 'src/styles/variables';
+
+:host {
+  width: 756px;
+  max-width: 100%;
+  border: 1px solid $black-color-lightest;
+  background: white;
+  border-radius: 4px;
+}
+
+table {
+  width: 724px;
+  max-width: 100%;
+  box-shadow: none;
+}
+
+th.mat-header-cell {
+  border-bottom: none;
+  font-family: $bitter-font-family;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 8px;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 0;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+td {
+  vertical-align: top;
+  padding-top: 14px !important;
+}
+
+td.mat-cell {
+  border-bottom: none;
+  border-top: 1px solid $black-color-lightest;
+  color: rgba($black-color, 0.8);
+  font-weight: 400;
+}
+
+.type-container {
+  display: flex;
+  align-items: center;
+
+  .icon-container {
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    oph-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.name-cell {
+  width: 147px;
+}
+
+.source-cell {
+  width: 64px;
+}
+
+.type-cell {
+  width: 128px;
+}
+
+.values-cell {
+  width: 230px;
+}
+
+.menu-cell {
+  width: 24px;
+  vertical-align: baseline;
+}
+
+.menu {
+  visibility: hidden;
+}
+
+.showMenu {
+  visibility: visible;
+}
+
+.red {
+  background-color: transparent;
+  color: red;
+}

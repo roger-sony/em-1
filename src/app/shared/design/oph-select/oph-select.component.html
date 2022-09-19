@@ -1,0 +1,30 @@
+<div
+  class="container"
+  [class.disabled]="disabled"
+  [style.minWidth]="minWidth || '100px'"
+  [class.border]="!hideBorder"
+  [class.chip]="chip"
+  [class.chip-selected]="chip && value"
+>
+  <div
+    #trigger
+    (click)="onTriggerClick()"
+    class="{{ darkBackground ? 'oph-select-trigger background-color-dark' : 'oph-select-trigger' }}"
+  >
+    <div
+      class="oph-select-value black-select-text"
+      [class.black-light-select-text]="staticDisplay"
+      [class.black-select-text]="!staticDisplay"
+      [class.chip-display]="chip"
+      [class.oph-select-placeholder]="!(displayValue$ | async)"
+      [innerHTML]="(displayValue$ | async) || placeholder"
+    ></div>
+    <oph-icon *ngIf="!chip && !hideIcons" [name]="'caret-down_grey'" [size]="24" class="oph-select-icon"></oph-icon>
+  </div>
+
+  <ng-template #dropdown>
+    <div class="oph-select-dropdown" [class.chip-dropdown]="chip">
+      <ng-content></ng-content>
+    </div>
+  </ng-template>
+</div>

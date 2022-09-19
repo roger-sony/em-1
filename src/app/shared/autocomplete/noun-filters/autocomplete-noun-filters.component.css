@@ -1,0 +1,16 @@
+#valueInputAuto2 {
+  position: relative;
+}
+
+#valueInputErrorAuto {
+  position: absolute;
+  top: 46px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}

@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  padding-bottom: 64px;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  overflow-x: auto;
+}

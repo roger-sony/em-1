@@ -1,0 +1,20 @@
+<div
+  *ngFor="let fact of facts; let i = index"
+  class="fact-item"
+  (mouseenter)="hoveredIndex = i"
+  (mouseleave)="hoveredIndex = null"
+>
+  <span class="text">If&nbsp;</span>
+  <condition-statement [fact]="fact"></condition-statement>
+
+  <div class="menu-container">
+    <div *ngIf="hoveredIndex === i" class="control-items">
+      <button class="control-button" (click)="edit.next(i)">
+        <span class="ophanello icon-edit icon"></span>
+      </button>
+      <button class="control-button" (click)="delete.next(i)">
+        <span class="ophanello icon-delete icon"></span>
+      </button>
+    </div>
+  </div>
+</div>

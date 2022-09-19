@@ -1,0 +1,21 @@
+<mobile-header [borderShown]="true" (back)="onBackClick()">
+  <span>New Chapter</span>
+  <button
+    class="header-buttons"
+    mat-flat-button
+    color="primary"
+    type="button"
+    [disabled]="!(valid$ | async)"
+    (click)="onSaveClick()"
+  >
+    Save
+  </button>
+</mobile-header>
+
+<chapter-form
+  [value]="chapterForm$ | async"
+  [usedColors]="usedColors$ | async"
+  (valueChange)="onValueChange($event)"
+  (validityChange)="onValidityChange($event)"
+>
+</chapter-form>

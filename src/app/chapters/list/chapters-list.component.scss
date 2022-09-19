@@ -1,0 +1,26 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  padding: 0 16px 80px 16px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 360px));
+  grid-column-gap: 16px;
+}
+
+.chapter-card {
+  cursor: pointer;
+}
+
+chapter-card {
+  padding: 24px 16px 0 10px;
+}
+
+@media (max-width: $mobile-breakpoint) {
+  .card-container {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,30 @@
+@import '../../../../../../../styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.indicator-label {
+  color: $black-color-light;
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.indicator-total {
+  background-color: $black-color-lightest;
+  border-radius: 3px;
+  height: 4px;
+  position: relative;
+  width: 148px;
+}
+
+.indicator-completed {
+  background-color: $success-color;
+  border-radius: 3px;
+  height: 4px;
+  left: 0;
+  position: absolute;
+  top: 0;
+}

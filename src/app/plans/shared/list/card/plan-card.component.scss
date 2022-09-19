@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+:host {
+  padding: 1px;
+  scroll-margin: 64px;
+}
+
+.card-container {
+  cursor: pointer;
+}
+
+.plan-card-selected {
+  border: solid 1px $primary-color;
+}
+
+.card {
+  width: 100%;
+  cursor: pointer;
+}

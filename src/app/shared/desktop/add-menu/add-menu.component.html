@@ -1,0 +1,16 @@
+<button #button mat-flat-button color="primary" (click)="onToggleClick()">
+  <oph-icon [name]="'plus_white'" [size]="16"></oph-icon>
+  <span>{{ addButtonText }}</span>
+  <oph-icon [name]="'caret-down-white'" [size]="16"></oph-icon>
+</button>
+
+<add-menu-dropdown
+  [createOptionText]="createOptionText"
+  [inputPlaceholder]="inputPlaceholder"
+  [options]="options"
+  [origin]="button._elementRef"
+  (add)="onAdd($event)"
+  (create)="onCreate()"
+>
+  <ng-content></ng-content>
+</add-menu-dropdown>

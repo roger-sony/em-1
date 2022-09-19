@@ -1,0 +1,8 @@
+<noun-card
+  *ngFor="let noun of nouns; trackBy: trackByNoun"
+  [chapterId]="chapterId"
+  [chaptersMap]="chaptersMap"
+  [selected]="noun?.id === selectedNounId"
+  [noun]="noun"
+  (click)="onCardClick(noun)"
+></noun-card>

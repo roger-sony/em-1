@@ -1,0 +1,74 @@
+<sidebar-item
+  *ngIf="hasExecutionInterfacePermissions()"
+  [routerUrl]="routerUrl"
+  [icon]="'skeds'"
+  [url]="'/current-sked'"
+  [text]="'Current Sked'"
+  (click)="onClick()"
+></sidebar-item>
+
+<sidebar-item
+  [routerUrl]="routerUrl"
+  [icon]="'skeds'"
+  [url]="'/current-chapter'"
+  [text]="'Current Chapter'"
+  (click)="onClick()"
+></sidebar-item>
+
+<sidebar-item
+  *ngIf="hasLexiconPermissions()"
+  [routerUrl]="routerUrl"
+  [icon]="'lexicon'"
+  [url]="'/lexicon'"
+  [text]="'Lexicon'"
+  (click)="onClick()"
+></sidebar-item>
+
+<sidebar-group
+  *ngIf="hasParagraphPermissions()"
+  [active]="routerUrl | plotGroupActive"
+  [icon]="'paragraphs'"
+  [text]="'Plots'"
+  (expand)="onGroupExpand(0)"
+>
+  <sidebar-group-item [routerUrl]="routerUrl" [url]="'/paragraphs'" [text]="'Default Subplot'"></sidebar-group-item>
+</sidebar-group>
+
+<sidebar-item
+  *ngIf="hasChapterPermissions()"
+  [routerUrl]="routerUrl"
+  [icon]="'skeds'"
+  [url]="'/chapters'"
+  [text]="'Chapters'"
+  (click)="onClick()"
+></sidebar-item>
+
+<sidebar-group
+  [active]="routerUrl | userGroupActive"
+  [icon]="'users'"
+  [text]="'Users'"
+  (expand)="onGroupExpand(1)"
+  *ngIf="hasAccessToUsers()"
+>
+  <sidebar-group-item
+    *ngIf="hasUsersPermissions()"
+    [routerUrl]="routerUrl"
+    [url]="'/users'"
+    [text]="'Users'"
+    (click)="onClick()"
+  ></sidebar-group-item>
+  <sidebar-group-item
+    *ngIf="hasRolesPermissions()"
+    [routerUrl]="routerUrl"
+    [url]="'/roles'"
+    [text]="'Roles'"
+    (click)="onClick()"
+  ></sidebar-group-item>
+  <sidebar-group-item
+    *ngIf="hasPrivilegesPermissions()"
+    [routerUrl]="routerUrl"
+    [url]="'/privileges'"
+    [text]="'Privileges'"
+    (click)="onClick()"
+  ></sidebar-group-item>
+</sidebar-group>

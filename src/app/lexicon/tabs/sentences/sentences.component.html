@@ -1,0 +1,3 @@
+<sentence-form [verbs]="verbs$ | async" [nouns]="nouns$ | async" (valueChange)="onValueChange($event)"></sentence-form>
+
+<sentence-list [sentences]="sentences$ | async" (delete)="onSentenceDelete($event)"></sentence-list>

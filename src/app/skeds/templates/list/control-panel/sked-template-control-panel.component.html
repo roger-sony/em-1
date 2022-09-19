@@ -1,0 +1,25 @@
+<ng-container>
+  <div class="menu-items">
+    <mat-divider vertical></mat-divider>
+
+    <mat-slide-toggle class="empty-toggle" [(ngModel)]="showEmpty" (ngModelChange)="onShowEmptyChange($event)">
+      Empty
+    </mat-slide-toggle>
+
+    <mat-divider vertical></mat-divider>
+
+    <sort-field-select
+      class="sort-select"
+      [options]="sortOptions"
+      [value]="sortField"
+      (valueChange)="onSortFieldChange($event)"
+    ></sort-field-select>
+
+    <sort-direction-button
+      [value]="sortDirection"
+      (valueChange)="onSortDirectionChange($event)"
+    ></sort-direction-button>
+  </div>
+
+  <create-template-button *ngIf="canEdit" (click)="onCreateClick()"></create-template-button>
+</ng-container>

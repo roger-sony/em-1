@@ -1,0 +1,40 @@
+.bold {
+  font-weight: bold;
+}
+
+.sked {
+  font-weight: 400;
+  font-style: italic;
+  margin-left: 70px;
+}
+
+.inline {
+  display: inline;
+  margin-right: 10px;
+}
+
+.subtaskContainer {
+  display: flex;
+}
+
+.mat-expansion-panel-header-description,
+.mat-expansion-panel-header-title {
+  display: block;
+}
+
+.deleteButton {
+  margin-left: 70px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.noActions {
+  margin-top: 40px;
+}
+
+.actionHistoryButton {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}

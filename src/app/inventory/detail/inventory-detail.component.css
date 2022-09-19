@@ -1,0 +1,82 @@
+:host {
+  display: block;
+  padding-top: 24px;
+}
+
+.pr {
+  padding-right: 15px;
+}
+
+.mt-lg {
+  margin-top: 3rem;
+}
+
+.error-message {
+  color: #f45c54;
+}
+
+.header {
+  width: 100%;
+}
+
+.inventory-form-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1024px;
+  flex-direction: column; /* put everything in 1 col--check w/ client */
+}
+
+.form-container {
+  max-width: 750px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 25px 0 0;
+}
+
+.mobile-flex {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 500px;
+}
+
+.mobile-flex-rule-trigger {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 600px;
+}
+
+@media only screen and (min-width: 700px) {
+  .mobile-flex {
+    margin-right: 65px;
+  }
+}
+
+.mat-icon {
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  text-align: center;
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+  padding-left: 0px;
+}

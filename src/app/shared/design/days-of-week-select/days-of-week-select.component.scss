@@ -1,0 +1,27 @@
+@import 'src/styles/variables';
+
+:host {
+  display: inline-grid;
+  grid-gap: 8px;
+  grid-template-columns: repeat(7, max-content);
+  height: 24px;
+}
+
+button {
+  all: unset;
+  background-color: $black-color-lightest;
+  border-radius: 3px;
+  color: $black-color;
+  cursor: pointer;
+  display: block;
+  font-family: $bitter-font-family;
+  font-size: 12px;
+  height: 24px;
+  line-height: 24px;
+  width: 24px;
+  text-align: center;
+
+  &.selected {
+    background-color: $primary-color-lighter;
+  }
+}

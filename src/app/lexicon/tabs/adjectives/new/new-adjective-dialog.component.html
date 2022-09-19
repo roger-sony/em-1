@@ -1,0 +1,23 @@
+<dialog-header [title]="'New Adjective'"></dialog-header>
+
+<dialog-content class="content">
+  <new-adjective-form
+    [formValue]="formValue$ | async"
+    (valueChange)="onFormChange($event)"
+    [new]="true"
+  ></new-adjective-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    class="save-button"
+    (click)="onSave()"
+    [disabled]="!(valid$ | async)"
+  >
+    Save
+  </button>
+</dialog-footer>

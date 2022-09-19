@@ -1,0 +1,16 @@
+<div *ngIf="{value: value$ | async} as state" (click)="onTriggerClick()" class="oph-date-picker-trigger">
+  <input
+    ophInput
+    [disabled]="disabled"
+    [matDatepicker]="picker"
+    [placeholder]="placeholder"
+    [min]="minValue"
+    [max]="maxValue"
+    [value]="state.value"
+    (dateChange)="onDateChange($event)"
+    readonly
+  />
+  <oph-icon [name]="state.value ? 'calendar-single-event' : 'calendar-empty'" [size]="24"></oph-icon>
+</div>
+
+<mat-datepicker #picker></mat-datepicker>

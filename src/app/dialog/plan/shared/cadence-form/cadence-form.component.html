@@ -1,0 +1,61 @@
+<form
+  *ngIf="{date: date$ | async, customShown: customShown$ | async, endShown: endShown$ | async} as state"
+  [formGroup]="form"
+>
+  <label>Start Date</label>
+
+  <div class="start-date-row">
+    <oph-date-picker [formControlName]="controls.Date" [minValue]="today"></oph-date-picker>
+
+    <oph-time-picker *ngIf="timeShown$ | async" [formControlName]="controls.Time"></oph-time-picker>
+
+    <oph-select *ngIf="repetitionShown$ | async" [formControlName]="controls.Repetition">
+      <oph-option *ngFor="let repetition of task ? taskRepetitions : repetitions" [value]="repetition">{{
+        repetition
+      }}</oph-option>
+    </oph-select>
+  </div>
+
+  <ng-container *ngIf="state.customShown">
+    <label>Repeats Every</label>
+    <custom-cadence-form
+      [date]="state.date"
+      [form]="form | childFormGroup: controls.Custom"
+      class="custom-cadence"
+    ></custom-cadence-form>
+  </ng-container>
+
+  <ng-container *ngIf="state.endShown">
+    <label>Ends</label>
+    <cadence-end-form
+      [startDate]="state.date"
+      [form]="form | childFormGroup: controls.End"
+      [disabled]="disableEndRepeatOptions"
+    ></cadence-end-form>
+  </ng-container>
+
+  <div *ngIf="task" class="button-container">
+    <button
+      mat-flat-button
+      type="button"
+      class="button"
+      [class.margin-top-16]="state.customShown || state.endShown"
+      [class.disabled]="!form.value.date"
+      (click)="reset.next()"
+      [disabled]="!form.value.date"
+    >
+      Reset
+    </button>
+    <button
+      mat-flat-button
+      type="button"
+      class="button"
+      [class.margin-top-16]="state.customShown || state.endShown"
+      [class.disabled]="!form.value.date"
+      (click)="add.next()"
+      [disabled]="!form.value.date"
+    >
+      Add
+    </button>
+  </div>
+</form>

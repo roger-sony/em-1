@@ -1,0 +1,22 @@
+<page-title title="Chapters"></page-title>
+<sked-template-control-panel
+  [sortField]="(queries$ | async).sortField || 'displayName'"
+  [sortDirection]="(queries$ | async).sortDirection"
+  [showEmpty]="(queries$ | async).empty"
+  [canEdit]="canEditChapters"
+></sked-template-control-panel>
+
+<ng-container *ngIf="{templates: skedTemplates$ | async} as state">
+  <div *ngIf="state.templates.length; else empty" class="template-list-container">
+    <sked-template-item
+      *ngFor="let template of state.templates; trackBy: trackById"
+      [template]="template"
+      [canEdit]="canEditChapters"
+      (click)="onTemplateClick(template.id)"
+    ></sked-template-item>
+  </div>
+
+  <ng-template #empty>
+    <sked-templates-empty [canEdit]="canEditChapters"></sked-templates-empty>
+  </ng-template>
+</ng-container>

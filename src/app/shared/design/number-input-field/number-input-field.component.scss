@@ -1,0 +1,17 @@
+:host {
+  display: inline-block;
+  width: 64px;
+}
+
+input[type='number'] {
+  appearance: textfield;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+.number-input-icon {
+  cursor: pointer;
+}

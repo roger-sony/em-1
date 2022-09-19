@@ -1,0 +1,27 @@
+<div
+  *ngIf="{selectedName: selectedName$ | async} as state"
+  class="container black-border"
+  [class.orange-border]="orangeBorder$ | async"
+  [style.width.px]="width || 160"
+>
+  <div #trigger (click)="onTriggerClick()" class="select-trigger">
+    <div class="left-container">
+      <oph-icon
+        *ngIf="!hidePlaceholderIcon"
+        [name]="state.selectedName ? 'adjectives/' + state.selectedName : '/adjectives/question-mark'"
+        [size]="state.selectedName === 'Selection' ? 10 : 16"
+        class="select-prefix-icon"
+      ></oph-icon>
+      <div class="select-value-text" [class.select-text]="state.selectedName" [class.name-margin]="hidePlaceholderIcon">
+        {{ state.selectedName || 'Pick type' | multiWordTitlecase }}
+      </div>
+    </div>
+    <oph-icon [name]="'caret-down_grey'" [size]="24" class="caret-icon"></oph-icon>
+  </div>
+
+  <ng-template #adjDropdown>
+    <div class="dropdown">
+      <ng-content></ng-content>
+    </div>
+  </ng-template>
+</div>

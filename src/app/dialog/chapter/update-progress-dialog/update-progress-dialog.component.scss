@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  width: 320px;
+  height: 250px;
+}
+
+.done-button {
+  margin-left: 8px;
+}
+
+.progress-container {
+  margin: 16px 16px 0 16px;
+  padding: 0 12px;
+  display: flex;
+  justify-content: center;
+
+  mat-slider {
+    margin-top: 48px;
+    min-width: 270px;
+  }
+}

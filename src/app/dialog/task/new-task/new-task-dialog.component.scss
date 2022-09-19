@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  max-height: 80vh;
+}
+
+.header {
+  padding: 8px;
+}
+
+.new-task-dialog-content {
+  padding-bottom: 0;
+}
+
+button {
+  margin-left: 8px;
+}
+
+.new-task-dialog-content {
+  overflow: auto;
+}

@@ -1,0 +1,23 @@
+:host {
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+}
+
+button {
+  background-color: #ffffff;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    background-color: rgba(#23232f, 0.05);
+  }
+}

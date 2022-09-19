@@ -1,0 +1,7 @@
+<mobile-select-page
+  [multiple]="true"
+  [options]="options"
+  [selectedValues]="weeklyDays$ | async"
+  [title]="'Repeat on'"
+  (save)="onSave($event)"
+></mobile-select-page>

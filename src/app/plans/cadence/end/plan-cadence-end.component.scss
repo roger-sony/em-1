@@ -1,0 +1,18 @@
+@import 'src/styles/variables';
+
+.plan-cadence-end-options {
+  padding: 8px;
+}
+
+.sked-number-input {
+  all: unset;
+  background-color: $black-color-lightest;
+  border-radius: 3px;
+  box-sizing: border-box;
+  caret-color: $primary-color;
+  height: 32px;
+  width: 32px;
+  margin: 0 4px;
+  padding: 0 4px;
+  text-align: center;
+}

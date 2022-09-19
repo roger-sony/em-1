@@ -1,0 +1,10 @@
+<oph-card [iconName]="'noun'" [title]="'Nouns Activity'" hideHeader="true">
+  <div class="header">
+    <div class="title">
+      <oph-icon [name]="iconName"></oph-icon>
+      <span class="text">{{ text }}</span>
+    </div>
+    <ng-content select=".activity-card-header-buttons"></ng-content>
+  </div>
+  <ng-content></ng-content>
+</oph-card>

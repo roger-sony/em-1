@@ -1,0 +1,77 @@
+@import './variables';
+@import './light-mode-styling';
+@import './dark-mode-styling';
+@import '../mat-autocomplete';
+@import '../mat-checkbox';
+@import '../mat-datepicker';
+@import '../mat-form-field';
+@import '../mat-tab-nav-bar';
+@import '../mat-select';
+@import '../custom/rule-form-input';
+@import '../custom/rule-form-select';
+// Plus imports for other components in your app.
+@import '../../../app/shared/navbar/toolbar.component';
+@import '../../../app/shared/navbar/matmenu.component';
+@import '../../../app/skeds-legacy/current/begin-task-ph-modal/mat-checkbox.component';
+
+// Define a custom typography config that overrides the font-family as well as the
+// `headlines` and `body-1` levels.
+$custom-typography: mat-typography-config(
+  $font-family: 'Asap',
+  $display-4: mat-typography-level(112px, 112px, 400, $letter-spacing: -0.02em),
+  $headline: mat-typography-level(32px, 48px, 400, $letter-spacing: 0em),
+  $body-1: mat-typography-level(16px, 24px, 400, $letter-spacing: 0em),
+  $body-2: mat-typography-level(14px, 24px, 400, $letter-spacing: 0em),
+  $subheading-1: mat-typography-level(16px, 28px, 600, $letter-spacing: 0em),
+  $subheading-2: mat-typography-level(15px, 24px, 600, $letter-spacing: 0em),
+);
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core($custom-typography);
+
+.dark-mode {
+  @include angular-material-theme($Oph-dark-theme);
+}
+
+@include angular-material-theme($Oph-theme);
+
+@include angular-material-typography($custom-typography);
+@include oph-mat-autocomplete-theme($Oph-theme);
+@include oph-mat-checkbox-theme($Oph-theme);
+@include oph-mat-datepicker-theme($Oph-theme);
+@include oph-mat-form-field-theme($Oph-theme);
+@include oph-mat-tab-nav-bar-theme($Oph-theme);
+@include oph-mat-select-theme($Oph-theme);
+
+// Custom components
+
+.rule-form {
+  @include rule-form-input($Oph-theme);
+  @include rule-form-select($Oph-theme);
+}
+
+// Legacy theme
+
+$legacy-primary: mat-palette($mat-ophanimblue, 500);
+$legacy-accent: mat-palette($mat-ophanimblue, 500);
+$legacy-warn: mat-palette($mat-red);
+$legacy-theme: mat-light-theme($legacy-primary, $legacy-accent, $legacy-warn);
+
+$legacy-typography: mat-typography-config();
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
+.legacy-content,
+.legacy-navbar,
+.legacy-login,
+.legacy-spinner {
+  @include angular-material-theme($legacy-theme);
+  @include angular-material-typography($legacy-typography);
+  @include candy-checkbox-typography($legacy-theme);
+  @include candy-toolbar-theme($legacy-theme);
+  @include candy-matmenu-theme($legacy-theme);
+}

@@ -1,0 +1,17 @@
+:host {
+  background-color: rgba(#23232f, 0.05);
+  border-radius: 3px;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 440px;
+  padding: 0 8px;
+}
+
+.temporary-search-placeholder {
+  color: rgba(#23232f, 0.25);
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  margin: 0 16px;
+}

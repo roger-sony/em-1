@@ -1,0 +1,21 @@
+<dialog-header [iconCircle]="true" [iconName]="'skeds'" [title]="'New Chapter'"></dialog-header>
+
+<div class="hint">Write down a name for your Chapter so it's easy to remember.</div>
+
+<div class="name-input-container">
+  <input class="name-input" #templateNameInput [formControl]="name" [placeholder]="'Enter name...'" />
+</div>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+  <button
+    class="create-button"
+    mat-flat-button
+    color="primary"
+    type="button"
+    [disabled]="!name.value.length"
+    (click)="onSaveClick()"
+  >
+    Create
+  </button>
+</dialog-footer>

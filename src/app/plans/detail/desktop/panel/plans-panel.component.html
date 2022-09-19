@@ -1,0 +1,15 @@
+<div class="plans-panel-container">
+  <plans-panel-header (changePanelState)="changePanelStateMain.next('')"></plans-panel-header>
+  <plans-panel-content
+    [filteredPlans]="filteredPlans"
+    [activePlan]="activePlan"
+    [nounRuleTriggers]="nounRuleTriggers"
+    [taskRuleTriggers]="taskRuleTriggers"
+    [ruleSchedules]="ruleSchedules"
+    [unitOfMeasures]="unitOfMeasures"
+    [tasks]="tasks"
+    [loadingPlans]="loadingPlans"
+    [chapters]="chapters"
+  >
+  </plans-panel-content>
+</div>

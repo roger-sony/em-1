@@ -1,0 +1,17 @@
+<div
+  #expandedMenu
+  *ngIf="open$ | async; else defaultButton"
+  (click)="onExpandedMenuClick($event)"
+  class="floating-menu-expanded"
+>
+  <ng-content></ng-content>
+</div>
+
+<ng-template #defaultButton>
+  <floating-menu-button
+    [default]="true"
+    [iconName]="'plus-medium'"
+    (click)="onDefaultButtonClick()"
+    class="default-floating-button"
+  ></floating-menu-button>
+</ng-template>

@@ -1,0 +1,39 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.hint {
+  font-family: $lato-font-family;
+  padding: 16px 8px;
+  margin: 0 16px;
+  color: $black-color-light;
+  border-bottom: 1px solid $black-color-lightest;
+}
+
+.name-input-container {
+  margin: 0 16px;
+}
+
+.name-input {
+  all: unset;
+  box-sizing: border-box;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $bitter-font-family;
+  font-size: 20px;
+  font-weight: bold;
+  height: 32px;
+  margin: 16px 0;
+  padding: 0 8px;
+  width: 100%;
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+}
+
+.create-button {
+  margin-left: 8px;
+}

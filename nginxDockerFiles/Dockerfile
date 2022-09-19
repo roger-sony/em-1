@@ -1,0 +1,22 @@
+FROM alpine:latest
+LABEL maintainer="Shashank Chitnis "
+LABEL description="This Dockerfile installs NGINX on alpine."
+RUN apk add --update nginx && \
+	rm -rf /var/cache/apk/* && \
+	mkdir -p /tmp/nginx/
+
+COPY files/nginx.conf /etc/nginx/nginx.conf
+COPY files/default.conf /etc/nginx/conf.d/default.conf
+#ADD files/html.tar.gz /usr/share/nginx/html
+COPY files/dist/* /usr/share/nginx/html
+COPY files/env1.txt /usr/share/nginx/html/assets/config/
+
+EXPOSE 80/tcp
+
+ENTRYPOINT ["nginx"]
+# ENTRYPOINT ["/bin/sh"]
+CMD ["-g", "daemon off;"]
+
+#Expose ports
+EXPOSE 80
+EXPOSE 443

@@ -1,0 +1,9 @@
+<oph-icon
+  *ngIf="!hideIcon && iconName !== 'palette'"
+  class="oph-menu-item-icon"
+  [name]="iconName + (active ? '_active' : '')"
+  [size]="mobile ? 32 : 24"
+></oph-icon>
+<span class="material-icons palette" *ngIf="iconName === 'palette'">palette</span>
+
+<div [class.active]="active" [style.font-size.px]="fontSize" class="oph-menu-item-text">{{ text }}</div>

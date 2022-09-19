@@ -1,0 +1,65 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0 16px 16px;
+  width: 256px;
+
+  .left-side-bar {
+    min-height: 100%;
+    overflow: auto;
+    background-color: #faf7ed;
+    border-radius: 8px;
+    padding: 24px 12px;
+
+    .section-header {
+      font-size: 9px;
+      line-height: 12px;
+      letter-spacing: 0.9px;
+      text-transform: uppercase;
+      padding: 12px 16px;
+
+      &.mt-8 {
+        margin-top: 8px;
+      }
+    }
+
+    .mat-selection-list {
+      padding-top: 0;
+
+      .mat-list-option {
+        border-radius: 16px;
+        height: 56px;
+
+        &::ng-deep {
+          .mat-ripple {
+            border-radius: 16px;
+          }
+
+          .mat-list-text {
+            padding-right: 0;
+          }
+        }
+
+        &.mat-list-single-selected-option {
+          background: #ffae52;
+        }
+
+        .item-content {
+          display: flex;
+
+          .label {
+            margin-left: 12px;
+          }
+        }
+      }
+
+      mat-divider {
+        border-top-color: rgba(47, 39, 35, 0.12);
+        width: calc(100% - 32px);
+        margin: 8px auto;
+      }
+    }
+  }
+}

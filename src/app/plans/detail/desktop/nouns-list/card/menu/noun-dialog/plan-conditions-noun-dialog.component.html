@@ -1,0 +1,30 @@
+<dialog-header [iconName]="'noun'" [title]="'Change Noun'"></dialog-header>
+
+<dialog-content class="dialog-content">
+  <div>
+    You're about to modify all conditions associated with <strong>{{ data?.group?.name }}</strong
+    >. Choose which noun you want to switch them over to:
+  </div>
+
+  <input
+    ophInput
+    [matAutocomplete]="autocomplete"
+    [placeholder]="'Select new noun'"
+    (input)="onInput($event)"
+    (keyup.enter)="onSubmit()"
+  />
+
+  <mat-autocomplete #autocomplete="matAutocomplete" [panelWidth]="120" (optionSelected)="onOptionSelected($event)">
+    <mat-option *ngFor="let name of filteredNames$ | async; trackBy: trackByNounName" [title]="name" [value]="name">
+      {{ name }}
+    </mat-option>
+  </mat-autocomplete>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+
+  <button mat-flat-button color="primary" type="button" [disabled]="submitDisabled$ | async" (click)="onSubmit()">
+    Change Noun
+  </button>
+</dialog-footer>

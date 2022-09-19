@@ -1,0 +1,295 @@
+<h3>Add Subtasks</h3>
+<em>(Optional)</em> Add condition(s) to ALL subtasks in this table:
+
+<!--************** Universal Filter Form ********************-->
+<div class="universal-filter-container">
+  <br />
+  <mat-form-field appearance="outline">
+    <mat-select
+      [formControl]="universalFilterName"
+      placeholder="Attribute"
+      (selectionChange)="handleSelect()"
+      name="filterName"
+    >
+      <mat-option *ngFor="let i of inventoryFieldNames" [value]="i">{{
+        i
+          | replace: '_':' '
+          | replace: 'item':'noun'
+          | replace: 'inventory':'nouns'
+          | replace: 'qty':'Current Value'
+          | titlecase
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-select [value]="universalFilterOperation" name="filterOperation" placeholder="Operation">
+      <mat-option
+        *ngIf="
+          universalFilterName.value === 'qty' ||
+          universalFilterName.value === 'expiry_date' ||
+          universalFilterName.value === '_last_updated'
+        "
+        value="$gt"
+        >&gt;</mat-option
+      >
+      <mat-option
+        *ngIf="
+          universalFilterName.value === 'qty' ||
+          universalFilterName.value === 'expiry_date' ||
+          universalFilterName.value === '_last_updated'
+        "
+        value="$lt"
+        >&lt;</mat-option
+      >
+      <mat-option value="$eq">=</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- universalFilterValue can be a different data type depending on
+        which universalFilterName is chosen -->
+  <ng-container [ngSwitch]="universalFilterName.value">
+    <!-- Placeholder if no universalFilterName is selected yet. -->
+    <mat-form-field *ngSwitchCase="''" appearance="outline">
+      <input matInput type="number" placeholder="Value" />
+    </mat-form-field>
+    <ng-container *ngSwitchCase="'expiry_date'">
+      <mat-form-field appearance="outline">
+        <input [formControl]="universalFilterValue" name="filterValue" matInput type="number" placeholder="Value" />
+      </mat-form-field>
+      days from now
+    </ng-container>
+    <ng-container *ngSwitchCase="'_last_updated'">
+      <mat-form-field appearance="outline">
+        <input
+          [formControl]="universalFilterValue"
+          (blur)="onUniversalFilterLastUpdatedBlur($event)"
+          name="filterValue"
+          matInput
+          type="text"
+          placeholder="Value"
+        />
+      </mat-form-field>
+      minutes ago
+    </ng-container>
+    <!-- Has to be number input for qty universalFilterName -->
+    <mat-form-field *ngSwitchCase="'qty'" appearance="outline">
+      <input [formControl]="universalFilterValue" name="filterValue" matInput type="number" placeholder="Value" />
+    </mat-form-field>
+    <!-- Autocomplete for string-type universalFilterNames -->
+    <app-autocomplete
+      *ngSwitchDefault
+      [options]="inventoryFieldOptions[universalFilterName.value]"
+      placeholder="Value"
+      name="filterValue"
+      [inputValue]="universalFilterValue.value"
+      (valueChange)="onAutocompleteValueChange($event)"
+    >
+    </app-autocomplete>
+  </ng-container>
+  <button
+    class="apply-btn"
+    mat-raised-button
+    color="accent"
+    (click)="addUniversalFilter()"
+    [disabled]="!universalFilterName.value || !universalFilterOperation.value || !universalFilterValue.value"
+  >
+    Apply
+  </button>
+  <!--************** Universal Filter List ********************-->
+  <mat-chip-list>
+    <mat-chip *ngFor="let r of task?.facts">
+      {{ r.name | replace: '_':' ' | replace: 'qty':'Current Value' | titlecase }}
+      {{ r.operation | displayFormat: r.operation }} {{ r.value }} &nbsp;&nbsp;
+      <mat-icon (click)="deleteUniversalFilter(r)">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+</div>
+
+<div style="overflow: auto">
+  <table *ngIf="task?.subtasks?.length > 0" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <!--************** Verb ********************-->
+    <ng-container matColumnDef="verb">
+      <th mat-header-cell *matHeaderCellDef>Verb</th>
+      <td mat-cell *matCellDef="let element; index as i">
+        <!-- TODO: Get autocomplete working for verbs -->
+        <mat-form-field appearance="outline">
+          <mat-label>Verb</mat-label>
+          <input
+            matInput
+            [value]="element.verb"
+            placeholder="Verb"
+            name="verb{{ i }}"
+            required
+            (input)="onVerbChange($event, i)"
+          />
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <!--************** Noun (Subcategory) ********************-->
+    <ng-container matColumnDef="noun">
+      <th mat-header-cell *matHeaderCellDef>Noun Subcategory</th>
+      <td mat-cell *matCellDef="let element; index as i">
+        <app-autocomplete
+          [options]="inventoryFieldOptions?.subcategory"
+          value="element.configName"
+          [inputValue]="element.configName"
+          label="Noun Subcategory"
+          [index]="i"
+          [fieldRequired]="true"
+          (valueChange)="onNounSubcategoryChange($event, i)"
+        ></app-autocomplete>
+        <!-- name="configName{{ i }}" -->
+      </td>
+    </ng-container>
+    <!--************** Filters ********************-->
+    <ng-container matColumnDef="filters">
+      <th mat-header-cell *matHeaderCellDef>Other Noun Filters (Optional)</th>
+      <td mat-cell *matCellDef="let element; index as i">
+        <!--************** Filter Form Inputs ********************-->
+        <mat-form-field appearance="outline">
+          <mat-select
+            [value]="element.filterName"
+            placeholder="Attribute"
+            (selectionChange)="handleSelectTable($event.value, element, i)"
+          >
+            <!-- name="filterName{{ i }}" -->
+            <mat-option *ngFor="let i of inventoryFieldNames" [value]="i">{{
+              i
+                | replace: '_':' '
+                | replace: 'item':'noun'
+                | replace: 'inventory':'nouns'
+                | replace: 'qty':'Current Value'
+                | titlecase
+            }}</mat-option>
+          </mat-select>
+          <div style="color: red" *ngIf="element.selectNameError" class="valueInputError">Please select a value</div>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-select
+            [value]="element.filterOperation"
+            placeholder="Operation"
+            (selectionChange)="onOperationValueChange($event.value, element)"
+          >
+            <!-- name="filterOperation{{ i }}" -->
+            <mat-option
+              *ngIf="
+                element.filterName === 'expiry_date' ||
+                element.filterName === '_last_updated' ||
+                element.filterName === 'qty'
+              "
+              value="$gt"
+            >
+              {{ '>' }}
+            </mat-option>
+            <mat-option
+              *ngIf="
+                element.filterName === 'expiry_date' ||
+                element.filterName === '_last_updated' ||
+                element.filterName === 'qty'
+              "
+              value="$lt"
+            >
+              {{ '<' }}
+            </mat-option>
+            <mat-option value="$eq">=</mat-option>
+          </mat-select>
+          <div style="color: red" *ngIf="element.selectOperationError" class="valueInputError">
+            Please select a value
+          </div>
+        </mat-form-field>
+        <!-- NOTE: filterValue can be a different data type depending on
+              which filterName is chosen -->
+        <ng-container [ngSwitch]="element.filterName">
+          <!-- Placeholder if no filterName is selected yet. -->
+          <mat-form-field *ngSwitchCase="undefined" appearance="outline">
+            <input matInput type="number" placeholder="Value" (input)="onValueInput($event, element)" />
+          </mat-form-field>
+          <ng-container *ngSwitchCase="'expiry_date'">
+            <mat-form-field appearance="outline">
+              <input
+                [value]="element.filterValue"
+                matInput
+                type="number"
+                name="filterValue{{ i }}"
+                placeholder="Value"
+                (input)="onValueInput($event, element)"
+              />
+              <div style="color: red" *ngIf="element.selectValueError" class="valueInputError">
+                Please enter a value
+              </div>
+            </mat-form-field>
+            days from now
+          </ng-container>
+          <ng-container *ngSwitchCase="'_last_updated'">
+            <mat-form-field appearance="outline">
+              <input
+                [value]="element.filterValue"
+                (blur)="onSubtaskFilterLastUpdatedBlur($event, element)"
+                name="filterValue{{ i }}"
+                matInput
+                type="text"
+                placeholder="Value"
+                (input)="onValueInput($event, element)"
+              />
+              <div style="color: red" *ngIf="element.selectValueError" class="valueInputError">
+                Please enter a value
+              </div>
+            </mat-form-field>
+            minutes ago
+          </ng-container>
+          <!-- Autocomplete for string-type filterNames -->
+          <app-autocomplete-noun-filters
+            *ngSwitchDefault
+            [activeOptions]="element.activeOptions ? element.activeOptions : []"
+            [inactiveOptions]="element.inactiveOptions ? element.inactiveOptions : []"
+            placeholder="Value"
+            [filterName]="element.filterName ? element.filterName : ''"
+            [index]="i"
+            value="element.filterValue"
+            [inputValue]="element.filterValue || ''"
+            [inputError]="element.selectValueError"
+            name="element._id"
+            ngDefaultControl
+            (valueChange)="onNounAutocompleteChange($event, element, i)"
+          >
+          </app-autocomplete-noun-filters>
+        </ng-container>
+        &nbsp;&nbsp;
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="addFilterToSubtask(element)"
+          [disabled]="!(element.filterName && element.filterOperation && element.filterValue)"
+        >
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+        <!--************** Filters List ********************-->
+        <mat-chip-list class="mat-chip-list-stacked">
+          <mat-chip *ngFor="let f of element.factFilters" style="width: auto">
+            <span
+              >{{ f.name | replace: '_':' ' | titlecase }} {{ f.operation | displayFormat: f.operation }}
+              {{ f.value }}</span
+            >
+            &nbsp;&nbsp;
+            <mat-icon (click)="deleteFilterFromSubtask(f, element)">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+    <!--************** Delete Rule ********************-->
+    <ng-container matColumnDef="delete_subtask">
+      <th mat-header-cell *matHeaderCellDef>Delete Subtask</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon class="clicky" color="warn" (click)="deleteSubtask(element)">remove_circle</mat-icon>
+      </td>
+    </ng-container>
+  </table>
+
+  <!--************** Add A Subtask ********************-->
+  <mat-card>
+    <button mat-raised-button color="primary" (click)="addSubtask()">
+      <mat-icon>add</mat-icon> {{ task?.subtasks?.length > 0 ? 'Add Another Subtask' : 'Add a Subtask' }}
+    </button>
+  </mat-card>
+</div>

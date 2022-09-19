@@ -1,0 +1,6 @@
+<mobile-select-page
+  [options]="options"
+  [selectedValues]="[(cadenceForm$ | async)?.repetition || repetition.DoNotRepeat]"
+  [title]="'Repeat'"
+  (save)="onSave($event)"
+></mobile-select-page>

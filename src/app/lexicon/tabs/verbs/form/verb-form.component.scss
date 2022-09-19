@@ -1,0 +1,42 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: flex-start;
+}
+
+.input {
+  margin-right: 8px;
+  min-height: 36px;
+  background-color: $white-color;
+  border: 1px solid $black-color-lightest;
+  border-radius: 3px;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  padding: 0 8px;
+
+  &:focus {
+    border: 1px solid $primary-color;
+  }
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+
+  &[disabled] {
+    background-color: $black-color-lightest;
+    color: $black-color-lighter;
+  }
+}
+
+.textarea {
+  min-height: 60px;
+  padding-top: 10px;
+}
+
+button {
+  color: $white-color;
+  background-color: $primary-color;
+}

@@ -1,0 +1,40 @@
+@import 'src/styles/variables';
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  border-radius: 3px;
+  background-color: $black-color-lightest;
+  border: 1px transparent;
+  cursor: pointer;
+  min-width: 129px;
+  white-space: nowrap;
+}
+
+p {
+  font-family: $lato-font-family;
+  font-size: 14px;
+  color: $black-color-light;
+  margin: 0px;
+  padding: 0px;
+}
+
+.icon {
+  opacity: 0.5;
+  margin-right: 7px;
+  opacity: 0.5;
+}
+
+button:hover .icon {
+  opacity: 1;
+}
+
+button:hover p {
+  color: $black-color;
+}
+
+.cadence-button-container {
+  display: flex;
+}

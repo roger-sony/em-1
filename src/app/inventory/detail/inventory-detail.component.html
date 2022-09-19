@@ -1,0 +1,406 @@
+<div class="legacy-content">
+  <mat-card *ngIf="item && itemOptions">
+    <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()">
+      <mat-card-content class="inventory-form-wrapper">
+        <h1 class="header">{{ editingItem ? 'Edit' : 'Add' }} Noun</h1>
+        <div>
+          <div formGroupName="typeAndSubcategory">
+            <!--****************************************************************
+                              Type - Concrete/Abstract
+          *****************************************************************-->
+            <div class="form-container">
+              <div class="mobile-flex">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Type</mat-label>
+                    <mat-select
+                      formControlName="type"
+                      [disabled]="this.cloningItem && item.type === 'abstract'"
+                      required
+                    >
+                      <mat-option value="concrete" selected>Concrete</mat-option>
+                      <mat-option value="abstract">Abstract</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-icon
+                    matTooltip="Concrete nouns (e.g. Milk-Whole) are physical objects you can count. Abstract nouns (e.g. Growium-1 pH) are ideas."
+                    color="accent"
+                    >info</mat-icon
+                  >
+                </div>
+              </div>
+            </div>
+            <!--****************************************************************
+                                  Required Fields
+          *****************************************************************-->
+            <div class="form-container">
+              <div class="mobile-flex">
+                <em *ngIf="ts.errors?.subcategoryExists" class="text-error">
+                  <span *ngIf="typeCtrl.value === 'abstract'">An abstract noun must have a unique subcategory.</span>
+                  <span *ngIf="typeCtrl.value === 'concrete'"
+                    >This subcategory is already in use by an abstract noun. Select a different subcategory.</span
+                  >
+                </em>
+              </div>
+            </div>
+            <div class="mobile-flex">
+              <div>
+                <app-autocomplete
+                  [options]="itemOptions.subcategory"
+                  label="Subcategory"
+                  placeholder="Milk-Whole"
+                  [fieldRequired]="true"
+                  [inputValue]="item.subcategory"
+                  formControlName="subcategory"
+                  (valueChange)="onSubcategoryValueChange($event)"
+                ></app-autocomplete>
+                <mat-icon
+                  matTooltip="You can filter and group your nouns by subcategory. Tip: All nouns with the same subcategory share the same unit of measure."
+                  color="accent"
+                  >info</mat-icon
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-container">
+            <div class="mobile-flex">
+              <app-autocomplete
+                [options]="itemOptions.category"
+                label="Category"
+                placeholder="Dairy"
+                [fieldRequired]="true"
+                [inputValue]="item.category"
+                formControlName="category"
+              ></app-autocomplete>
+            </div>
+            <div class="mobile-flex">
+              <app-autocomplete
+                [options]="itemOptions.maker"
+                label="Maker"
+                placeholder="Kirkland"
+                [inputValue]="item.maker"
+                [fieldRequired]="true"
+                formControlName="maker"
+              ></app-autocomplete>
+            </div>
+            <div class="mobile-flex">
+              <app-autocomplete
+                [options]="itemOptions.source"
+                label="Source"
+                placeholder="PFG"
+                [inputValue]="item.source"
+                [fieldRequired]="true"
+                formControlName="source"
+              ></app-autocomplete>
+            </div>
+          </div>
+          <!--****************************************************************
+                              Measurement Settings
+        *****************************************************************-->
+          <div
+            class="form-container"
+            *ngIf="subcategoryCtrl.value && !ts.errors?.subcategoryExists && !cloningMeasurementConfig"
+          >
+            <div *ngIf="loadingItemMeasurementConfig; else loadingComplete">
+              <div class="loader" style="height: 50px; width: 50px"></div>
+            </div>
+            <ng-template #loadingComplete>
+              <noun-measurement-settings
+                *ngIf="showMeasurementSettings"
+                (updatedMeasurementSettings)="updateMeasurementConfig($event)"
+                [unitOfMeasureOptions]="itemOptions.unit_of_measure"
+                [nounType]="typeCtrl.value"
+                [config]="itemMeasurementConfig"
+              ></noun-measurement-settings>
+              <!--****************************************************************
+                                  Current Value
+            *****************************************************************-->
+              <div class="mobile-flex" style="margin-top: 35px">
+                <!--========= Number Value Input ==========-->
+                <mat-form-field appearance="outline" *ngIf="itemMeasurementConfig?.type === 'number'">
+                  <mat-label>Current Value</mat-label>
+                  <input matInput formControlName="qty" placeholder="1.5" type="number" required />
+                </mat-form-field>
+                <!--========= Range Value Input ==========-->
+                <mat-form-field appearance="outline" *ngIf="itemMeasurementConfig?.type === 'range'">
+                  <mat-label>Current Value</mat-label>
+                  <mat-select formControlName="qty" required>
+                    <mat-option *ngFor="let r of itemMeasurementConfig?.range_config" [value]="r.value">{{
+                      r.display_value
+                    }}</mat-option>
+                  </mat-select>
+                  <mat-error>Select a value from the dropdown</mat-error>
+                </mat-form-field>
+              </div>
+            </ng-template>
+          </div>
+          <!--****************************************************************
+                          Cloning Measurement Settings
+        *****************************************************************-->
+          <div class="form-container mb" *ngIf="cloningMeasurementConfig">
+            <div class="mobile-flex">
+              <p>
+                Clone measurement settings from <strong>{{ this.item.subcategory }}</strong> to
+                <strong>{{ subcategoryCtrl.value }}</strong
+                >?
+              </p>
+            </div>
+
+            <div class="mobile-flex">
+              <button type="button" (click)="cloneMeasurementConfig(true)" mat-raised-button color="accent">
+                Clone Measurement Settings
+              </button>
+            </div>
+            <div class="mobile-flex mt">
+              <button type="button" (click)="cloneMeasurementConfig(false)" mat-raised-button color="primary">
+                Create New Measurement Settings
+              </button>
+            </div>
+          </div>
+          <!--****************************************************************
+                                    Perishable
+        *****************************************************************-->
+          <div class="form-container">
+            <div class="mobile-flex" style="padding: 20px 0">
+              <div>
+                Perishable &nbsp;
+                <mat-checkbox formControlName="perishable"></mat-checkbox>
+              </div>
+              <div *ngIf="f.perishable.value">
+                <mat-form-field appearance="outline">
+                  <mat-label>Expiry Date*</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    placeholder="MM/DD/YYYY"
+                    label="Expiry Date"
+                    formControlName="expiry_date"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p *ngIf="f.expiry_date.value && f.expiry_date.value < today" class="error-message">
+                Warning: You have selected an expiration date in the past. This item will not show up in your available
+                inventory.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!--****************************************************************
+                            Other Attributes
+      *****************************************************************-->
+        <div class="form-container">
+          <div class="mobile-flex">
+            <app-autocomplete
+              [options]="itemOptions.location"
+              label="Location"
+              placeholder="Walk-in Cooler"
+              [inputValue]="item.location"
+              formControlName="location"
+            ></app-autocomplete>
+          </div>
+          <div class="mobile-flex">
+            <app-autocomplete
+              [options]="itemOptions.master_item"
+              label="Master Noun"
+              placeholder="Cow Milk"
+              [inputValue]="item.master_item"
+              formControlName="master_item"
+            ></app-autocomplete>
+          </div>
+          <div class="mobile-flex">
+            <app-autocomplete
+              [options]="itemOptions.color"
+              label="Color"
+              placeholder="Red"
+              [inputValue]="item.color"
+              formControlName="color"
+            ></app-autocomplete>
+          </div>
+          <div class="mobile-flex">
+            <app-autocomplete
+              [options]="itemOptions.model"
+              label="Model"
+              placeholder="Angelica"
+              [inputValue]="item.model"
+              formControlName="model"
+            ></app-autocomplete>
+          </div>
+          <div class="mobile-flex">
+            <app-autocomplete
+              [options]="itemOptions.sku"
+              label="Sku"
+              placeholder="1293-84"
+              [inputValue]="item.sku"
+              formControlName="sku"
+            ></app-autocomplete>
+          </div>
+          <div class="mobile-flex">
+            <mat-form-field appearance="outline">
+              <mat-label>Add to Chapter</mat-label>
+              <mat-select formControlName="_chapterIDs" multiple>
+                <mat-option *ngFor="let chapter of chapters$ | async" [value]="chapter.id">{{
+                  chapter.name
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!--*********** Only for Editing *******************-->
+          <div class="mobile-flex">
+            <mat-form-field *ngIf="editingItem" appearance="outline">
+              <mat-label>Edit Reason</mat-label>
+              <input matInput formControlName="edit_reason" placeholder="Correction" required />
+            </mat-form-field>
+          </div>
+        </div>
+        <!--****************************************************************
+                  Rule Triggers (Optional. Abstract Nouns Only.)
+      *****************************************************************-->
+        <div
+          class="form-container"
+          *ngIf="
+            itemMeasurementConfig?.display_name &&
+            !cloningRuleTriggers &&
+            !cloningMeasurementConfig &&
+            (f.qty.value || editingItem) &&
+            typeCtrl.value === 'abstract'
+          "
+        >
+          <div class="mobile-flex">
+            <h2>Rule Triggers</h2>
+          </div>
+          <div class="mobile-flex-rule-trigger">
+            <p>
+              Run these rules when <strong>{{ subcategoryCtrl.value }}</strong> is updated:
+            </p>
+            <ng-container *ngIf="ruleTriggerDataSource">
+              <table mat-table [dataSource]="ruleTriggerDataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="ruleId">
+                  <th mat-header-cell *matHeaderCellDef>Rule</th>
+                  <td mat-cell *matCellDef="let row" [formGroup]="row">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Rule</mat-label>
+                      <mat-select formControlName="ruleId" required>
+                        <mat-option *ngFor="let d of dTables" [value]="d._id">{{ d.display_name }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="saveReport">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Save Report<mat-icon matTooltip="If checked, a report will be saved every time this rule runs."
+                      >info</mat-icon
+                    >
+                  </th>
+                  <td mat-cell *matCellDef="let row" [formGroup]="row">
+                    <mat-checkbox formControlName="saveReport"></mat-checkbox>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="triggerActions">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Trigger Actions<mat-icon
+                      matTooltip="If unchecked, this rule will NOT trigger any actions. Uncheck this if you only want to run reports."
+                      >info</mat-icon
+                    >
+                  </th>
+                  <td mat-cell *matCellDef="let row" [formGroup]="row">
+                    <mat-checkbox formControlName="triggerActions"></mat-checkbox>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="remove">
+                  <th mat-header-cell *matHeaderCellDef>Remove</th>
+                  <td mat-cell *matCellDef="let row; let i = index">
+                    <button mat-icon-button type="button" color="warn" (click)="deleteRuleTrigger(i)">
+                      <mat-icon class="pointer">remove_circle</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </ng-container>
+          </div>
+          <div class="mobile-flex">
+            <button
+              mat-raised-button
+              type="button"
+              color="primary"
+              (click)="
+                addRuleTrigger({
+                  ruleId: '',
+                  nounSubcategory: this.subcategoryCtrl.value,
+                  saveReport: false,
+                  triggerActions: true
+                })
+              "
+            >
+              <mat-icon>add</mat-icon> Add Rule Trigger
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+      <!--****************************************************************
+                          Cloning Rule Triggers
+    *****************************************************************-->
+      <div
+        class="form-container mb"
+        *ngIf="
+          !ts.errors?.subcategoryExists &&
+          !cloningMeasurementConfig &&
+          cloningRuleTriggers &&
+          this.savedRuleTriggers &&
+          this.savedRuleTriggers.length > 0
+        "
+      >
+        <div class="mobile-flex">
+          <h2>Rule Triggers</h2>
+        </div>
+        <div class="mobile-flex">
+          <p>
+            Clone Rule Triggers from <strong>{{ this.item.subcategory }}</strong> to
+            <strong>{{ subcategoryCtrl.value }}</strong
+            >?
+          </p>
+        </div>
+
+        <div class="mobile-flex">
+          <button type="button" (click)="cloneRuleTriggers(true)" mat-raised-button color="accent">
+            Clone Rule Triggers
+          </button>
+        </div>
+        <div class="mobile-flex mt">
+          <button type="button" (click)="cloneRuleTriggers(false)" mat-raised-button color="primary">
+            Create New Rule Triggers
+          </button>
+        </div>
+      </div>
+      <!--****************************************************************
+                          Submit/Cancel
+    *****************************************************************-->
+      <mat-card-actions class="mt-lg">
+        <button
+          class="mr"
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="inventoryForm.pristine || !inventoryForm.valid || !itemMeasurementConfig?.display_name"
+        >
+          Save {{ editingItem ? 'Changes' : 'Noun' }}
+        </button>
+        <button mat-raised-button color="warn" type="button" (click)="goBack()">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+  <div class="debug">
+    <h2>Debug</h2>
+    <p>Item:</p>
+    <pre>{{ item | json }}</pre>
+    <p>form status: {{ this.inventoryForm.status }}</p>
+    <p>Form Value:</p>
+    <pre>{{ this.inventoryForm.value | json }}</pre>
+    <p>Item DTO:</p>
+    <pre>{{ itemDTO | json }}</pre>
+  </div>
+</div>

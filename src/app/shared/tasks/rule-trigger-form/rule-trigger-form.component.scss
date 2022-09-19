@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+form {
+  padding-top: 12px;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 0 8px;
+}
+
+.text {
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+input {
+  width: 100%;
+}
+
+.icon-info-2 {
+  margin-left: 8px;
+
+  &:before {
+    font-size: 24px;
+  }
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+  margin: 16px 0;
+}

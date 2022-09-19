@@ -1,0 +1,8 @@
+<oph-card-chip [iconName]="'clock'" [tooltip]="'Effort'">{{ task.effort }}m</oph-card-chip>
+<oph-card-chip [iconName]="'flag'" [tooltip]="'Priority'">{{ task.priority }}</oph-card-chip>
+<oph-card-chip [iconName]="'movability'" [tooltip]="'Movability'">{{ task.movability }}</oph-card-chip>
+
+<div class="horizontal-divider"></div>
+
+<oph-card-chip [iconName]="'plan-conditions'" [tooltip]="'Conditions'">{{ task.conditionCount || 0 }}</oph-card-chip>
+<oph-card-chip [iconName]="'plan-triggers'" [tooltip]="'Triggers'">{{ task.triggerCount || 0 }}</oph-card-chip>

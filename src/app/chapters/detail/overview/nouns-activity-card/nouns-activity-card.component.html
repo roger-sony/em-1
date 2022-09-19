@@ -1,0 +1,15 @@
+<chapter-overview-activity-card [iconName]="'noun'" [text]="'Nouns Activity'">
+  <div *ngIf="!activity?.length; else content" class="empty">No Activity</div>
+  <ng-template #content>
+    <div class="card-content">
+      <div>
+        <nouns-activity-card-item
+          *ngFor="let a of activity; index as i; trackBy: trackById"
+          [item]="a"
+          [index]="i"
+          [length]="activity.length"
+        ></nouns-activity-card-item>
+      </div>
+    </div>
+  </ng-template>
+</chapter-overview-activity-card>

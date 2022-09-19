@@ -1,0 +1,155 @@
+<div class="details-wrap" *ngIf="paragraph$ | async; let paragraph">
+  <div class="header">
+    <div class="back-arrow" routerLink="/current-sked">
+      <oph-icon class="chevron-left" name="/mobile-sked/game-theme/chevron-left" [size]="12"></oph-icon>
+    </div>
+    <div class="coins">
+      <img src="/assets/img/icons/mobile-sked/details/coin.png" [height]="20" [width]="20" alt="coin" />
+      <span class="coins-count">{{ paragraph.score }}</span>
+    </div>
+  </div>
+  <div class="body">
+    <div class="title">
+      {{ paragraph.name }}
+    </div>
+    <div class="pre-content">
+      <div class="time-left">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M9.99996 18.3334C14.6023 18.3334 18.3333 14.6025 18.3333 10.0001C18.3333 5.39771 14.6023 1.66675 9.99996 1.66675C5.39759 1.66675 1.66663 5.39771 1.66663 10.0001C1.66663 14.6025 5.39759 18.3334 9.99996 18.3334Z"
+            [style.stroke]="getClockColor() | async"
+            stroke-opacity="0.64"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M10 5V10L13.3333 11.6667"
+            [style.stroke]="getClockColor() | async"
+            stroke-opacity="0.64"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        {{ paragraph.derivedEffort }} min
+      </div>
+      <div class="assigned-users" *ngIf="assignedUsers | async; let users">
+        <div class="user-icon" *ngFor="let user of users">
+          {{ user?.name }}
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      {{ paragraph.status }}
+      <div *ngFor="let sentence of paragraph.sentences; let i = index">
+        <div class="sentence-item" [class.complete]="sentence.status === 'complete'">
+          <mat-checkbox
+            [disabled]="!(paragraph.status === 'in progress' && !hasActivePause(paragraph))"
+            [checked]="sentence.status === 'complete'"
+            (change)="updateSentenceStatus(paragraph, sentence)"
+          ></mat-checkbox>
+          <mat-label
+            [style.cursor]="sentence?.noun?.adjectives?.length ? 'pointer' : 'default'"
+            [matTooltip]="sentence?.noun?.adjectives?.length ? '' : 'Sentence has no associated nouns or adjectives'"
+            matTooltipPosition="above"
+            (click)="openSentence(sentence, i)"
+          >
+             {{ sentence.verb.name }} {{ sentence.noun.name }} 
+          </mat-label>
+        </div>
+        <mat-divider type=""></mat-divider>
+      </div>
+    </div>
+  </div>
+  <div
+    class="control-panel"
+    *ngIf="{canEdit: canEdit$ | async, paragraph: paragraph$ | async}"
+    [class.has-timer]="paragraph.status === 'in progress'"
+  >
+    <div
+      class="paragraph-details"
+      *ngIf="paragraph.status !== 'in progress' && !(showFightOverflow | async) && !(showFinishedOverflow | async)"
+    >
+      <button
+        class="bold-button"
+        [class.disabled]="hasOtherActiveParagraph$ | async"
+        (click)="onPerformClick(paragraph)"
+      >
+        <paragraph-details-svg name="play-disabled" *ngIf="hasOtherActiveParagraph$ | async"></paragraph-details-svg>
+        <paragraph-details-svg name="play" *ngIf="!(hasOtherActiveParagraph$ | async)"></paragraph-details-svg>
+        Start
+      </button>
+      <!--<button mat-raised-button (click)="onClaimClick(paragraph)">
+        <paragraph-details-svg name="/mobile-sked/details/claim"></paragraph-details-svg>
+        Claim
+      </button>-->
+      <button class="disabled bold-button" (click)="onMoveClick(paragraph)">
+        <paragraph-details-svg name="move"></paragraph-details-svg>
+        Move
+      </button>
+    </div>
+
+    <div class="timer" *ngIf="paragraph.status === 'in progress'">
+      <div class="timer-time">
+        <div>{{ timePassed$ | async }}</div>
+        <div>{{ timeLeft$ | async }}</div>
+      </div>
+      <mat-progress-bar mode="determinate" [value]="timeLeftPercent$ | async"></mat-progress-bar>
+    </div>
+    <div
+      class="paragraph-details"
+      *ngIf="paragraph.status === 'in progress' && !(showFightOverflow | async) && !(showFinishedOverflow | async)"
+    >
+      <button class="bold-button" *ngIf="!hasActivePause(paragraph)" (click)="onPauseClick(paragraph)">
+        <paragraph-details-svg name="pause"></paragraph-details-svg>
+        Pause
+      </button>
+      <button class="bold-button" *ngIf="hasActivePause(paragraph)" (click)="resumeParagraph(paragraph)">
+        <paragraph-details-svg name="play"></paragraph-details-svg>
+        Resume
+      </button>
+      <button class="bold-button" (click)="onCompleteClick(paragraph)">
+        <paragraph-details-svg name="complete" color=""></paragraph-details-svg>
+        Complete
+      </button>
+      <button (click)="onMoreClick()" class="disable-focus bold-button" tabindex="-1">
+        <paragraph-details-svg name="more"></paragraph-details-svg>
+        More
+      </button>
+      <ng-template let-bottomSheetRef="bottomSheetRef" #templateBottomSheet class="random-class">
+        <button mat-raised-button *ngIf="!hasActivePause(paragraph)" (click)="onPauseClick(paragraph)">
+          <oph-icon name="/mobile-sked/details/pause" [size]="20"></oph-icon>
+          Pause
+        </button>
+        <button mat-raised-button *ngIf="hasActivePause(paragraph)" (click)="resumeParagraph(paragraph)">
+          <oph-icon name="/mobile-sked/details/perform" [size]="20"></oph-icon>
+          Resume
+        </button>
+        <button mat-raised-button (click)="onCompleteClick(paragraph)">
+          <oph-icon name="/mobile-sked/details/complete" [size]="20"></oph-icon>
+          Complete
+        </button>
+        <button mat-raised-button class="disabled" (click)="onMoveClick(paragraph)">
+          <oph-icon name="/mobile-sked/details/move-disabled" [size]="20"></oph-icon>
+          Move
+        </button>
+        <button mat-raised-button (click)="onAbandonClick(paragraph)">
+          <oph-icon name="/mobile-sked/details/abandon" [size]="20"></oph-icon>
+          Abandon
+        </button>
+      </ng-template>
+    </div>
+  </div>
+  <div class="complete-paragraph-message" *ngIf="paragraph.status === 'complete'">
+    <div class="icon-wrap">
+      <oph-icon
+        name="/mobile-sked/details/complete-paragraph-icon"
+        [size]="44"
+        (click)="uncompleteParagraph(paragraph)"
+      ></oph-icon>
+    </div>
+    <div class="well-done-wrap">Well done!</div>
+    <div class="tip-wrap">continue with your sked</div>
+  </div>
+</div>

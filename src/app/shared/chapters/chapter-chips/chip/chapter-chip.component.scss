@@ -1,0 +1,26 @@
+@import 'src/styles/variables';
+
+:host {
+  border-radius: 4px;
+  color: $black-color-light;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: $bitter-font-family;
+  font-size: 12px;
+  font-weight: bold;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 4px;
+  white-space: nowrap;
+
+  &:hover > button {
+    display: flex;
+  }
+}
+
+button {
+  all: unset;
+  display: none;
+  margin-left: 4px;
+}

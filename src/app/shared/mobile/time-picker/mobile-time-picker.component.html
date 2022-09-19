@@ -1,0 +1,21 @@
+<mobile-list-picker
+  [config]="pickerConfig"
+  [items]="hourOptions"
+  [value]="hour$ | async"
+  (valueChange)="onHourChange($event)"
+  class="hour-picker"
+></mobile-list-picker>
+
+<mobile-list-picker
+  [config]="pickerConfig"
+  [items]="minuteOptions"
+  [value]="minute$ | async"
+  (valueChange)="onMinuteChange($event)"
+  class="minute-picker"
+></mobile-list-picker>
+
+<time-picker-period
+  [value]="period$ | async"
+  (valueChange)="onPeriodChange($event)"
+  class="period"
+></time-picker-period>

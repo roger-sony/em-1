@@ -1,0 +1,18 @@
+<button #toggleButton (click)="onToggleClick()" matTooltip="Filter">
+  <oph-icon [name]="'filter'" [size]="18"></oph-icon>
+</button>
+
+<oph-menu [origin]="toggleButton">
+  <div class="filter-container">
+    <span class="filter-by">Filter by</span>
+    <mat-checkbox [checked]="checkedMap['running']" (change)="onCheckboxClick('Running', $event.checked)"
+      >Running</mat-checkbox
+    >
+    <mat-checkbox [checked]="checkedMap['on-track']" (change)="onCheckboxClick('On Track', $event.checked)"
+      >On Track</mat-checkbox
+    >
+    <mat-checkbox [checked]="checkedMap['off-track']" (change)="onCheckboxClick('Off Track', $event.checked)"
+      >Off Track</mat-checkbox
+    >
+  </div>
+</oph-menu>

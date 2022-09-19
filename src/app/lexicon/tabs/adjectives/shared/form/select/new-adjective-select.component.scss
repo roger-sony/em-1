@@ -1,0 +1,66 @@
+@import 'src/styles/variables';
+
+.container {
+  background-color: $white-color;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  height: 34px;
+}
+
+.black-border {
+  border: 1px solid $black-color-lightest;
+}
+
+.orange-border {
+  border: 1px solid $primary-color;
+}
+
+.select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.left-container {
+  display: flex;
+  align-items: center;
+
+  .select-prefix-icon {
+    margin: 0 8px;
+  }
+
+  .name-margin {
+    margin-left: 8px;
+  }
+}
+
+.caret-icon {
+  margin-right: 8px;
+}
+
+.placeholder-text {
+  flex-grow: 1;
+  margin: 0 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-text {
+  color: rgba($black-color, 0.8);
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  box-shadow: 0 4px 10px 2px rgba(84, 84, 84, 0.08), 0 0 2px 1px rgba(0, 0, 0, 0.03);
+  background-color: $white-color;
+  padding: 8px 0;
+  width: 100%;
+}

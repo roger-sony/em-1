@@ -1,0 +1,77 @@
+<div
+  *ngIf="{fieldValues: fieldValues$ | async, tasks: tasks$ | async, unitOfMeasure: unitOfMeasure$ | async} as data"
+  class="plan-noun-card-content-container"
+>
+  <ng-container *ngIf="group.global; else nounGroup">
+    <ng-container *ngFor="let fact of group.facts; trackBy: trackByName; index as factIndex">
+      <plan-noun-condition-edit
+        *ngIf="editedIndex === group.factIndexes[factIndex]; else viewCondition"
+        [global]="group.global"
+        [index]="group.factIndexes[factIndex]"
+        [nounName]="group.name"
+        [fieldValues]="data.fieldValues"
+        [unitOfMeasure]="data.unitOfMeasure"
+        [plan]="plan"
+        (planChange)="onPlanChange($event)"
+        (close)="onCloseEditing()"
+      ></plan-noun-condition-edit>
+
+      <ng-template #viewCondition>
+        <plan-condition-view
+          [fact]="fact"
+          [id]="factIndex"
+          [unitOfMeasure]="data.unitOfMeasure"
+          (edit)="onEditCondition(group.factIndexes[factIndex])"
+          (delete)="onDeleteCondition(group.factIndexes[factIndex])"
+        ></plan-condition-view>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #nounGroup>
+    <ng-container *ngFor="let rule of group.rules; trackBy: trackByName; index as ruleIndex">
+      <plan-noun-condition-edit
+        *ngIf="editedIndex === group.ruleIndexes[ruleIndex]; else viewCondition"
+        [global]="group.global"
+        [index]="group.ruleIndexes[ruleIndex]"
+        [nounName]="group.name"
+        [fieldValues]="data.fieldValues"
+        [tasks]="data.tasks"
+        [unitOfMeasure]="data.unitOfMeasure"
+        [plan]="plan"
+        (planChange)="onPlanChange($event)"
+        (close)="onCloseEditing()"
+      ></plan-noun-condition-edit>
+
+      <ng-template #viewCondition>
+        <plan-condition-view
+          [rule]="rule"
+          [id]="ruleIndex"
+          [tasks]="data.tasks"
+          [unitOfMeasure]="data.unitOfMeasure"
+          (edit)="onEditCondition(group.ruleIndexes[ruleIndex])"
+          (delete)="onDeleteCondition(group.ruleIndexes[ruleIndex])"
+        ></plan-condition-view>
+      </ng-template>
+    </ng-container>
+  </ng-template>
+
+  <plan-noun-condition-edit
+    *ngIf="group.adding && !editedIndex && editedIndex !== 0; else addButton"
+    [global]="group.global"
+    [nounName]="group.name"
+    [fieldValues]="data.fieldValues"
+    [tasks]="data.tasks"
+    [unitOfMeasure]="data.unitOfMeasure"
+    [plan]="plan"
+    (planChange)="onPlanChange($event)"
+    (close)="onCloseEditing()"
+  ></plan-noun-condition-edit>
+  <ng-template #addButton>
+    <plan-noun-add-condition-button
+      [global]="group.global"
+      (click)="onAddCondition()"
+      class="menu-button"
+    ></plan-noun-add-condition-button>
+  </ng-template>
+</div>

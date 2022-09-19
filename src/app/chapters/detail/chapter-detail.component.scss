@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chapter-header {
+  flex-grow: 0;
+}
+
+.chapter-page {
+  display: flex;
+  flex-grow: 1;
+  min-height: 1px;
+}
+
+.chapter-sidebar {
+  flex-grow: 0;
+  width: 380px;
+}
+
+.chapter-main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 1px;
+}
+
+.chapter-navigation {
+  flex-grow: 0;
+}
+
+.chapter-content {
+  flex-grow: 1;
+  min-height: 1px;
+}

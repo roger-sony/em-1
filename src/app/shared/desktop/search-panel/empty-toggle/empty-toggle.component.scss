@@ -1,0 +1,12 @@
+@import 'src/styles/variables';
+
+:host {
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  color: rgba($black-color, 0.64);
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  height: 28px;
+  padding: 0 16px 0 8px;
+}

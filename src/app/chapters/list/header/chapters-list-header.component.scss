@@ -1,0 +1,36 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid $black-color-lightest;
+}
+
+h1 {
+  font-family: $bitter-font-family;
+  font-size: 16px;
+  padding: 12px 8px;
+}
+
+button {
+  all: unset;
+  margin-right: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  background-color: $black-color-lightest;
+}
+
+oph-icon {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}

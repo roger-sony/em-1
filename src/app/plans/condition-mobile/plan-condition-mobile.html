@@ -1,0 +1,35 @@
+<div class="content-container">
+  <div>
+    <mobile-header [borderShown]="true" (back)="onBackClick()">
+      <span>New {{ (global$ | async) ? 'Global' : '' }} Condition</span>
+      <button
+        class="header-buttons"
+        mat-flat-button
+        color="primary"
+        type="button"
+        [disabled]="!(valid$ | async)"
+        (click)="onSaveClick()"
+      >
+        Save
+      </button>
+    </mobile-header>
+
+    <div *ngIf="nounName$ | async as noun" class="noun-container">
+      <oph-icon class="noun-icon" [name]="'noun'"></oph-icon>
+      <span>{{ noun }}</span>
+    </div>
+
+    <div class="rule-form-container">
+      <oph-icon class="dot-icon" [name]="'square-dot-dark'"></oph-icon>
+      <rule-form
+        [global]="global$ | async"
+        [mobile]="true"
+        [fieldValues]="fieldValues$ | async"
+        [tasks]="tasks$ | async"
+        [unitOfMeasure]="unitOfMeasure$ | async"
+        (validityChange)="onFormValidityChange($event)"
+        (save)="onRuleFormSave($event)"
+      ></rule-form>
+    </div>
+  </div>
+</div>

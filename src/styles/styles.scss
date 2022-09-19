@@ -1,0 +1,591 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Pre-built Angular Material themes */
+/* @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; */
+/* @import '~@angular/material/prebuilt-themes/purple-green.css'; */
+/* @import '~@angular/material/prebuilt-themes/pink-bluegrey.css'; */
+/* @import '~@angular/material/prebuilt-themes/indigo-pink.css'; */
+
+@import 'variables';
+@import 'oph-input';
+@import 'oph-select';
+@import 'full-calendar';
+@import '../assets/ophanello/css/ophanello.css';
+@import '../assets/ophanello/css/animation.css';
+
+@font-face {
+  font-family: 'Asap';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 9px;
+  src: local('Asap'), url('../assets/fonts/Asap/asap-v15-latin-regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Asap/asap-v15-latin-regular.woff2') format('woff2'),
+    url('../assets/fonts/Asap/asap-v15-latin-regular.woff') format('woff'),
+    url('../assets/fonts/Asap/asap-v15-latin-regular.ttf') format('truetype'),
+    url('../assets/fonts/Asap/asap-v15-latin-regular.svg#Asap') format('svg');
+}
+
+@font-face {
+  font-family: 'Asap Condensed';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 9px;
+  src: local('Asap Condensed'), url('../assets/fonts/Asap_Condensed/AsapCondensed-Medium.ttf') format('truetype');
+}
+
+/********************************************************************
+        Comment out to show debug messages for development
+*********************************************************************/
+.debug {
+  display: none;
+}
+
+/********************************************************************
+                        Z-Index Config
+********************************************************************/
+.modal {
+  z-index: 1051;
+}
+
+// Material dropdown selects and other material overlays
+.cdk-overlay-container {
+  z-index: 1052;
+
+  .cdk-overlay-pane {
+    &.week-builder-sked-create,
+    &.week-builder-project-create {
+      .mat-dialog-container {
+        width: 410px;
+        padding: 16px;
+        border-radius: 8px;
+        background-color: #faf7ed;
+      }
+    }
+
+    &.project-builder-task-create,
+    &.project-builder-task-edit {
+      .mat-dialog-container {
+        width: 720px;
+        padding: 16px;
+        border-radius: 8px;
+        background-color: #faf7ed;
+      }
+    }
+  }
+}
+
+// The alert banner for success/error msgs
+#message-container {
+  z-index: 2000;
+}
+
+// Overlay for loading spinner that obscures the entire page
+.loading-spinner-overlay {
+  z-index: 2001;
+}
+
+// hides feedback button on mobile devices
+@media (max-width: 959px) {
+  #feedbacklabel {
+    z-index: 0 !important;
+  }
+}
+
+/********************************************************************
+                Global Styles, Frequently Used Classes
+*********************************************************************/
+body {
+  color: #555;
+  margin: 0;
+  padding: 0;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+main.content {
+  padding: 10px;
+}
+
+.legacy-content {
+  padding: 0 16px 100px;
+}
+
+@media (min-width: 960px) {
+  .legacy-content {
+    padding: 0 24px 100px;
+  }
+}
+
+.mat-select-panel {
+  &.icon-option-wrap {
+    min-width: unset !important;
+    transform: translateX(-1px) translateY(-8px) !important;
+
+    .mat-option {
+      .mat-option-text {
+        display: flex;
+        justify-content: center;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+.mat-icon {
+  cursor: default;
+}
+
+.clicky {
+  cursor: pointer;
+}
+
+.draggy {
+  cursor: all-scroll;
+}
+
+.error-msg {
+  font-weight: bold;
+  color: #f45c54;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.flex-mobile-wrap {
+  display: flex;
+}
+
+@media screen and (max-width: 700px) {
+  .flex-mobile-wrap {
+    flex-wrap: wrap;
+  }
+}
+
+.oph-backdrop {
+  background-color: $black-color-lighter;
+}
+
+.oph-dialog .mat-dialog-container {
+  border-radius: 3px;
+  padding: 0;
+}
+
+input,
+select,
+textarea,
+option,
+button {
+  outline: none; // suppress new behavior in Chromium 83
+}
+
+/*******************************************************************
+                        Semantic Colors
+********************************************************************/
+.bg-success {
+  background-color: $success-color-lightest;
+}
+
+.text-success {
+  color: $legacy-success-color;
+}
+
+.mat-success {
+  background-color: $legacy-success-color;
+  color: #fff;
+}
+
+.bg-error {
+  background-color: $error-color-faded;
+}
+
+.text-error {
+  color: $legacy-error-color;
+}
+
+.mat-error {
+  background-color: $legacy-error-color;
+  color: #fff;
+}
+
+.bg-alert {
+  background-color: $alert-color-faded;
+}
+
+.text-alert {
+  color: $alert-color;
+}
+
+.mat-alert {
+  background-color: $alert-color;
+  color: #fff;
+}
+
+.bg-inventory {
+  background-color: $inventory-selected;
+}
+
+.text-inventory {
+  color: $inventory;
+}
+
+.mat-inventory {
+  background-color: $inventory;
+  color: #fff;
+}
+
+.bg-tasks {
+  background-color: $tasks-selected;
+}
+
+.text-tasks {
+  color: $tasks;
+}
+
+.mat-tasks {
+  background-color: $tasks;
+  color: #fff;
+}
+
+.bg-rules {
+  background-color: $rules-selected;
+}
+
+.text-rules {
+  color: $rules;
+}
+
+.mat-rules {
+  background-color: $rules;
+  color: #fff;
+}
+
+.bg-skeds {
+  background-color: $skeds-selected;
+}
+
+.text-skeds {
+  color: $skeds;
+}
+
+.mat-skeds {
+  background-color: $skeds;
+  color: #fff;
+}
+
+/*******************************************************************
+                    Atomic Classes Margin/Padding
+********************************************************************/
+.mt {
+  margin-top: 0.25rem;
+}
+
+.mr {
+  margin-right: 0.25rem;
+}
+
+.ml {
+  margin-left: 0.25rem;
+}
+
+.ml-4 {
+  margin-left: 4px;
+}
+
+/*******************************************************************
+                              Modal
+********************************************************************/
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: $modal-background-color;
+  margin: 65px auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%;
+}
+
+.modal-ctrl-btns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*******************************************************************
+                        Simple Styled Table
+********************************************************************/
+.styled-table {
+  border-collapse: collapse;
+
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ccc;
+  }
+}
+
+.oph-table {
+  padding: 0px 16px;
+  width: 100%;
+  font-family: $lato-font-family;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: left;
+
+  tr:first-child {
+    font-size: 12px;
+    color: $black-color-light;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  tr {
+    height: 48px;
+  }
+
+  td,
+  th {
+    border-bottom: 1px solid $black-color-lightest;
+    padding: 8px;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ccc;
+  }
+}
+
+/*******************************************************************
+                            Mat Tabs
+********************************************************************/
+
+.oph-mat-tab-group {
+  .mat-tab-label,
+  .mat-tab-label-active {
+    padding: 0px 4px;
+    justify-content: flex-start;
+    font-size: 16px;
+    font-family: $bitter-font-family;
+    font-weight: 700;
+    color: $black-color;
+    height: 36px;
+    align-items: flex-start;
+    background-color: transparent;
+  }
+
+  .mat-ink-bar {
+    width: 24px !important;
+    margin-left: 4px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    height: 4px;
+  }
+}
+
+/*******************************************************************
+                            Buttons
+********************************************************************/
+.green {
+  height: 40px;
+  width: 112px;
+  border-radius: 2px;
+  background-color: $legacy-success-color;
+  color: white;
+}
+
+.red {
+  height: 40px;
+  width: 112px;
+  border-radius: 2px;
+  background-color: $legacy-error-color;
+  color: white;
+}
+
+.lightBlue {
+  height: 40px;
+  width: 112px;
+  border-radius: 2px;
+  background-color: $sked-current-light-blue;
+  color: white;
+}
+
+.blue {
+  height: 40px;
+  width: 112px;
+  border-radius: 2px;
+  background-color: $sked-current-dark-blue;
+  color: white;
+}
+
+.orange {
+  height: 40px;
+  width: 112px;
+  border-radius: 2px;
+  background-color: $alert-color;
+  color: white;
+}
+
+/*******************************************************************
+                        Custom Tooltip
+********************************************************************/
+
+.custom-tooltip {
+  border-radius: 2px;
+  background-color: $black-color;
+  font-family: $lato-font-family;
+  font-size: 12px;
+  color: var(--white);
+}
+
+/*******************************************************************
+                        Slider
+********************************************************************/
+
+.mat-slider-thumb-label {
+  transform: rotate(45deg) translateY(-15px) translateX(-6px) !important;
+  border-radius: 90% 90% 0 !important;
+  height: 40px !important;
+  width: 40px !important;
+}
+
+.mat-slider-thumb {
+  transform: scale(0.5) !important;
+}
+
+.mat-slider-thumb-label-text {
+  opacity: 1 !important;
+  font-size: 12px;
+}
+
+/*******************************************************************
+                        Color Palette Styles
+********************************************************************/
+.bg-primary {
+  background-color: $primary-color;
+}
+
+.bg-secondary {
+  background-color: $secondary-color;
+}
+
+.bg-success {
+  background-color: $success-color;
+}
+
+.bg-warning {
+  background-color: $warning-color;
+}
+
+.bg-error {
+  background-color: $error-color;
+}
+
+.bg-black {
+  background-color: $black-color;
+}
+
+.bg-white {
+  background-color: $white-color;
+}
+
+.border-primary {
+  border-color: $primary-color;
+}
+
+.border-secondary {
+  border-color: $secondary-color;
+}
+
+.border-success {
+  border-color: $success-color;
+}
+
+.border-warning {
+  border-color: $warning-color;
+}
+
+.border-error {
+  border-color: $error-color;
+}
+
+.border-black {
+  border-color: $black-color;
+}
+
+.border-white {
+  border-color: $white-color;
+}
+
+.task-form-select {
+  .mat-select-arrow {
+    opacity: 0;
+  }
+}
+
+.task-form-user-chip {
+  .mat-standard-chip {
+    background-color: #f9fafb;
+    color: rgba($black-color, 0.64);
+    border: 1px solid #ededee;
+    padding: 2px 8px 2px 3px !important;
+  }
+}
+
+.task-form-role-chip {
+  .mat-standard-chip {
+    background-color: #f9fafb;
+    color: rgba($black-color, 0.64);
+    border: 1px solid #ededee;
+    padding: 0 8px !important;
+  }
+}
+
+.task-form-chapter-chip {
+  .mat-standard-chip {
+    padding: 0 8px !important;
+    border-radius: 8px;
+  }
+}
+
+.oph-orange-spinner {
+  .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: $primary-color !important;
+  }
+}

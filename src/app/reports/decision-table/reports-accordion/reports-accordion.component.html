@@ -1,0 +1,84 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let r of reports">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h3>
+          {{ r._dateCreated | date: 'short' }}:
+          {{ r.display_name || '(No Name)' }}
+        </h3>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <br />
+      <button mat-raised-button (click)="toggleReportDetailModal(r)" color="primary">View Detailed Report</button>
+      <p><strong>Summary</strong></p>
+      <table class="styled-table">
+        <tr>
+          <th>Noun</th>
+          <th>Unit of Measure</th>
+          <th>Target Current Value</th>
+          <th>Actual Current Value</th>
+        </tr>
+        <tr *ngFor="let rule of r.table_rules">
+          <!--************* Noun Subcategory ***************-->
+          <td>{{ rule.config_name }}</td>
+          <!--************* Unit of Measure ***************-->
+          <td>
+            <ng-container *ngIf="itemMeasurementSettings[rule.config_name]; else noUOMConfig">
+              {{ itemMeasurementSettings[rule.config_name]?.display_name }}
+            </ng-container>
+            <!-- TODO: Delete this code once the switch to new unit of measure configs is complete -->
+            <ng-template #noUOMConfig>
+              <span *ngIf="rule.ruleResults.unit_of_measure && rule.ruleResults.unit_of_measure.length === 1">
+                {{ rule.ruleResults.unit_of_measure[0] }}
+              </span>
+              <em
+                *ngIf="rule.ruleResults.unit_of_measure && rule.ruleResults.unit_of_measure.length > 1"
+                class="error-msg"
+                style="font-size: 0.7rem"
+              >
+                Warning
+                <mat-icon matTooltip="Multiple units of measure returned for this noun." color="warn">info</mat-icon>
+              </em>
+            </ng-template>
+          </td>
+          <!--************* Target Qty/Current Value ***************-->
+          <td>
+            <ng-container *ngFor="let f of rule.fact_filter">
+              <span *ngIf="f.name === 'qty'">
+                {{ f.operation | displayFormat: f.operation }}
+                <ng-container
+                  *ngIf="
+                    !itemMeasurementSettings[rule.config_name] ||
+                      itemMeasurementSettings[rule.config_name].type === 'number';
+                    else rangeUOMRuleCondition
+                  "
+                >
+                  {{ f.value }}
+                </ng-container>
+                <ng-template #rangeUOMRuleCondition>
+                  {{ getRangeMeasurementValue(rule.config_name, f.value) }}
+                </ng-template>
+              </span>
+            </ng-container>
+          </td>
+          <!--************* Actual Qty/Current Value ***************-->
+          <td>
+            <ng-container
+              *ngIf="
+                !itemMeasurementSettings[rule.config_name] ||
+                  itemMeasurementSettings[rule.config_name].type === 'number';
+                else rangeUOMRuleResult
+              "
+            >
+              {{ rule.ruleResults.qty | displayFormat: 'qty' }}
+            </ng-container>
+            <ng-template #rangeUOMRuleResult>
+              {{ getRangeMeasurementValue(rule.config_name, rule.ruleResults.qty) }}
+            </ng-template>
+          </td>
+        </tr>
+      </table>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

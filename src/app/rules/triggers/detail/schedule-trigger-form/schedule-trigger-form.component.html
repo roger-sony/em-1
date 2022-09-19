@@ -1,0 +1,61 @@
+<div class="legacy-content">
+  <mat-card class="example-card">
+    <h1>Create Schedule Trigger</h1>
+    <mat-card-content>
+      <h2>Select A Rule</h2>
+      <div class="form-container">
+        <mat-form-field appearance="outline" class="mr" style="width: 500px">
+          <mat-select [(ngModel)]="scheduledRule.rule" placeholder="Rule / Decision Table">
+            <mat-option *ngFor="let d of dTables" [value]="d._id">{{ d.display_name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br /><br />
+        <h2>How Often Should It Run?</h2>
+        <cron-generator
+          [(ngModel)]="scheduledRule.schedule"
+          (ngModelChange)="setDisplayName()"
+          [config]="cronConfig"
+          [validate]="true"
+        ></cron-generator>
+        <h3 *ngIf="scheduledRule.schedule">Rule Runs: {{ scheduledRule.displayName }}</h3>
+        <br /><br />
+        <h2>What Should Happen Each Time It Runs?</h2>
+        <mat-checkbox [(ngModel)]="scheduledRule.saveReport">
+          Save a Report
+          <mat-icon color="accent" matTooltip="If checked, a report will be saved every time this rule runs."
+            >info</mat-icon
+          >
+        </mat-checkbox>
+        <br /><br />
+        <mat-checkbox [(ngModel)]="scheduledRule.triggerActions">
+          Trigger Actions
+          <mat-icon
+            color="accent"
+            matTooltip="If unchecked, this rule will NOT trigger any actions. Uncheck this if you only want to run reports."
+            >info</mat-icon
+          >
+        </mat-checkbox>
+      </div>
+    </mat-card-content>
+    <!--============= Submit/Cancel =============-->
+    <mat-card-actions>
+      <button
+        class="mr"
+        mat-raised-button
+        color="primary"
+        (click)="submitForm()"
+        [disabled]="
+          !scheduledRule.schedule || !scheduledRule.rule || !(scheduledRule.triggerActions || scheduledRule.saveReport)
+        "
+      >
+        Save Scheduled Rule
+      </button>
+      <button mat-raised-button color="warn" (click)="goBack()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div class="debug">
+  <h2>Debug</h2>
+  <pre>{{ scheduledRule | json }}</pre>
+</div>

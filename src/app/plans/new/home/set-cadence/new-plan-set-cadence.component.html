@@ -1,0 +1,13 @@
+<ng-container *ngIf="!cadenceForm; else cadenceSelected">
+  <mobile-subpage-link matRipple [iconName]="'calendar-single-event'" (click)="onButtonClick()">
+    <div class="title">Set Cadence</div>
+    <div class="text">Set this Plan as a periodical or a one-off event.</div>
+  </mobile-subpage-link>
+</ng-container>
+
+<ng-template #cadenceSelected>
+  <mobile-subpage-link matRipple [arrowHidden]="true" [iconName]="cadenceIcon" (click)="onButtonClick()">
+    <div class="title">{{ cadenceForm | cadenceRepetition }}</div>
+    <div class="text">{{ cadenceForm | cadenceStart }} - {{ cadenceForm | cadenceEnd }}</div>
+  </mobile-subpage-link>
+</ng-template>

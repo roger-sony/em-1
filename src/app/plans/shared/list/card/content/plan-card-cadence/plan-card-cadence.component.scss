@@ -1,0 +1,27 @@
+@import 'src/styles/variables';
+
+.cadence-container {
+  padding-right: 5px;
+  padding-left: 3px;
+  height: 24px;
+  border-radius: 3px;
+  background-color: $black-color-lightest;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cadence-info {
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  font-family: $lato-font-family;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.33;
+  text-align: center;
+  color: $black-color;
+}
+
+.grey {
+  opacity: 0.25;
+}

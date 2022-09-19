@@ -1,0 +1,11 @@
+<new-plan-home-header [valid]="valid$ | async" (save)="createDecisionTable()"></new-plan-home-header>
+
+<new-plan-name-input
+  [value]="(planForm$ | async)?.name"
+  (valueChange)="onNameValueChange($event)"
+  (validityChange)="onNameValidityChange($event)"
+></new-plan-name-input>
+
+<new-plan-set-cadence [cadenceForm]="cadenceForm$ | async"></new-plan-set-cadence>
+
+<new-plan-add-triggers [triggerForm]="triggerForm$ | async"></new-plan-add-triggers>

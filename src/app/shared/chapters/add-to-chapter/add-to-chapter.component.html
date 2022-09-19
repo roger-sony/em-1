@@ -1,0 +1,14 @@
+<button #button (click)="onButtonClick()">
+  <oph-icon [name]="'sidebar/chapter_hover'" [size]="24"></oph-icon>
+  <span>Add to Chapter</span>
+  <oph-icon [name]="'caret-down'" [size]="24"></oph-icon>
+</button>
+
+<add-menu-dropdown
+  [createOptionText]="'Create a new Chapter'"
+  [inputPlaceholder]="'Search for Chapter'"
+  [options]="options"
+  [origin]="button"
+  (add)="onAdd($event)"
+  (create)="onCreate()"
+></add-menu-dropdown>

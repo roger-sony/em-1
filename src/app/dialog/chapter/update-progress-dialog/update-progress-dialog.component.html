@@ -1,0 +1,29 @@
+<dialog-header class="progress-title" [title]="'Update Progress'"></dialog-header>
+
+<div class="progress-container">
+  <mat-slider
+    [formControl]="progress"
+    thumbLabel
+    [displayWith]="formatLabel"
+    (input)="onSliderChange()"
+    tickInterval="1"
+    min="0"
+    step="25"
+    max="100"
+  >
+  </mat-slider>
+</div>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+  <button
+    class="done-button"
+    mat-flat-button
+    color="primary"
+    [disabled]="!(valid$ | async)"
+    type="button"
+    (click)="onSaveClick()"
+  >
+    Done
+  </button>
+</dialog-footer>

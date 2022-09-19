@@ -1,0 +1,17 @@
+<ng-container *ngIf="{privileges: privileges$ | async} as state">
+  <header>
+    <desktop-top-bar></desktop-top-bar>
+  </header>
+
+  <main>
+    <desktop-sidebar
+      *ngIf="!(isSchedulerWeekView() | async)"
+      [routerUrl]="routerUrl$ | async"
+      [privileges]="privileges$ | async"
+      class="desktop-sidebar"
+    ></desktop-sidebar>
+    <div class="desktop-content">
+      <ng-content></ng-content>
+    </div>
+  </main>
+</ng-container>

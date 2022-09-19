@@ -1,0 +1,18 @@
+<ng-container *ngIf="hasInstructions">
+  <p class="paragraph-text">{{ paragraph.instructions }}</p>
+</ng-container>
+
+<div class="chip-container">
+  <div class="container">
+    <oph-card-chip [iconName]="'clock'" [tooltip]="'Effort'">{{ paragraph.derivedEffort }}m</oph-card-chip>
+    <oph-card-chip [iconName]="'flag'" [tooltip]="'Priority'">{{ paragraph.priority }}</oph-card-chip>
+    <oph-card-chip [iconName]="'movability'" [tooltip]="'Movability'">{{ paragraph.movability }}</oph-card-chip>
+
+    <!-- <div class="vertical-divider"></div> -->
+
+    <!-- <oph-card-chip [iconName]="'plan-conditions'" [tooltip]="'Conditions'">{{
+      paragraph.conditionCount || 0
+    }}</oph-card-chip>
+    <oph-card-chip [iconName]="'plan-triggers'" [tooltip]="'Triggers'">{{ paragraph.triggerCount || 0 }}</oph-card-chip> -->
+  </div>
+</div>

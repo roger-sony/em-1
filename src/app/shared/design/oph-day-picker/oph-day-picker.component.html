@@ -1,0 +1,3 @@
+<oph-select [value]="value" (valueChange)="onValueChange($event)">
+  <oph-option *ngFor="let option of options" [value]="option">{{ option }}</oph-option>
+</oph-select>

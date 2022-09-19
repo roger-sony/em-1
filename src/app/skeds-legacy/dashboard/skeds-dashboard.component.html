@@ -1,0 +1,34 @@
+<div class="legacy-content">
+  <header>
+    <h2>Sked Dashboard</h2>
+  </header>
+  <main>
+    <mat-grid-list cols="7" rowHeight="660">
+      <mat-grid-tile *ngFor="let d of days">
+        <mat-grid-tile-header
+          ><h3>{{ d }}</h3></mat-grid-tile-header
+        >
+        <mat-list style="width: 100%">
+          <mat-list-item
+            *ngFor="let s of skeds[d]"
+            [ngClass]="{completed: s.status === 'complete', active: s.status === 'in progress'}"
+          >
+            <span *ngIf="s.status !== 'in progress'"
+              >{{ d.slice(0, 3) }} {{ s._StartTime | convert24To12: 'shortTime' }}</span
+            >
+            <a *ngIf="s.status === 'in progress'" routerLink="/current-sked"
+              >{{ d.slice(0, 3) }} {{ s._StartTime | convert24To12: 'shortTime' }}</a
+            >
+            <mat-icon *ngIf="!s.balanced" [ngClass]="{info: s.status === 'complete', warning: s.status !== 'complete'}"
+              >report_problem</mat-icon
+            >
+            <span class="fill-remaining-space"></span>
+            <mat-icon class="clicky" color="primary" aria-label="edit sked" routerLink="/sked-instance/{{ s._id }}"
+              >edit</mat-icon
+            >
+          </mat-list-item>
+        </mat-list>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </main>
+</div>

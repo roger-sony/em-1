@@ -1,0 +1,13 @@
+<oph-card-menu-button #toggleButton (click)="onToggleClick($event)"></oph-card-menu-button>
+
+<oph-menu [origin]="toggleButton.element">
+  <oph-menu-item
+    *ngIf="chapterId"
+    [iconName]="'close_2'"
+    [text]="'Remove from Chapter'"
+    (click)="onRemoveFromChapterClick($event)"
+  ></oph-menu-item>
+
+  <oph-menu-item [iconName]="'edit'" [text]="'Edit'" (click)="onEditClick($event)"></oph-menu-item>
+  <oph-menu-item [iconName]="'delete'" [text]="'Delete'" (click)="onDeleteClick($event)"></oph-menu-item>
+</oph-menu>

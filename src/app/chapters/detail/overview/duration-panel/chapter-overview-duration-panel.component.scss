@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  border-bottom: 1px solid rgba($black-color, 0.05);
+  padding-bottom: 16px;
+}
+
+.margin-left {
+  margin-left: 24px;
+}

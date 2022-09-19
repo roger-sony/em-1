@@ -1,0 +1,29 @@
+<nav mat-tab-nav-bar>
+  <a
+    mat-tab-link
+    [routerLink]="['./current']"
+    routerLinkActive
+    #currentActive="routerLinkActive"
+    [active]="currentActive.isActive"
+  >
+    Current Sked
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['./calendar']"
+    routerLinkActive
+    #calendarActive="routerLinkActive"
+    [active]="calendarActive.isActive"
+  >
+    Calendar View
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['./templates']"
+    routerLinkActive
+    #templatesActive="routerLinkActive"
+    [active]="templatesActive.isActive"
+  >
+    Templates
+  </a>
+</nav>

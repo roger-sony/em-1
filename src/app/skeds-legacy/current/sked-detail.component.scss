@@ -1,0 +1,79 @@
+h2 {
+  display: inline;
+  margin-right: 0.5rem;
+}
+
+header {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  margin-right: 0.5rem;
+}
+
+input:disabled {
+  font-style: italic;
+  cursor: not-allowed;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.mat-expansion-panel-header-description {
+  justify-content: flex-end;
+  margin-right: 15px;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.mat-table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  display: table;
+  border-collapse: collapse;
+  margin: 0px;
+}
+
+.mat-row,
+.mat-header-row {
+  display: table-row;
+}
+
+.mat-cell,
+.mat-header-cell {
+  word-wrap: initial;
+  display: table-cell;
+  padding: 0px 5px;
+  line-break: unset;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.mat-header-cell {
+  vertical-align: top;
+}
+
+.mb {
+  margin-bottom: 20px;
+}
+
+.clearFilterButton {
+  height: 40px;
+  margin-top: 5px;
+  margin-right: 20px;
+}
+
+.addActivityButton {
+  height: 40px;
+  margin-top: 5px;
+  margin-left: 20px;
+}

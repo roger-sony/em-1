@@ -1,0 +1,17 @@
+<mobile-header [borderShown]="true" (back)="onBackClick()">
+  <span>{{ (triggerId$ | async) ? 'Edit Trigger' : 'New Trigger' }}</span>
+  <mobile-save-button
+    [disabled]="saveDisabled$ | async"
+    [soft]="!(planId$ | async)"
+    (save)="onSave()"
+    class="header-buttons"
+  ></mobile-save-button>
+</mobile-header>
+
+<trigger-form
+  [mobile]="true"
+  [required]="true"
+  [value]="triggerForm$ | async"
+  (valueChange)="onFormValueChange($event)"
+  (validityChange)="onFormValidityChange($event)"
+></trigger-form>

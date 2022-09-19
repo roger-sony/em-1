@@ -1,0 +1,30 @@
+<mobile-header [borderShown]="true" (back)="onBack()"> Ends </mobile-header>
+
+<form
+  *ngIf="{endType: endType$ | async, endDate: endDate$ | async} as state"
+  [formGroup]="form"
+  class="plan-cadence-end-options"
+>
+  <mobile-select-option [selected]="state.endType === endTypes.Never" (click)="onNeverClick()">
+    Does not end
+  </mobile-select-option>
+
+  <mobile-select-option [selected]="state.endType === endTypes.EndDate" (click)="onEndDateClick()">
+    {{ state.endType === endTypes.EndDate && state.endDate ? (state.endDate | moment: 'dddd, MMM D') : 'On a date' }}
+  </mobile-select-option>
+  <mat-calendar
+    *ngIf="state.endType === endTypes.EndDate"
+    [selected]="state.endDate"
+    [minDate]="(cadenceForm$ | async)?.startDateTime"
+    (selectedChange)="onDateChange($event)"
+  ></mat-calendar>
+
+  <mobile-select-option [selected]="state.endType === endTypes.MaxSkedsNumber" (click)="onMaxSkedsClick()">
+    <ng-container *ngIf="state.endType === endTypes.MaxSkedsNumber; else unknownNumberOfSkeds">
+      After
+      <input #skedNumberInput [formControlName]="controls.MaxSkedsNumber" class="sked-number-input" type="number" />
+      skeds
+    </ng-container>
+    <ng-template #unknownNumberOfSkeds> After a number of skeds </ng-template>
+  </mobile-select-option>
+</form>

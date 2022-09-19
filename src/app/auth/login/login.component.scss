@@ -1,0 +1,32 @@
+:host {
+  .mat-card {
+    background-color: #faf7ed;
+    max-width: 320px;
+    margin: 166px auto 0;
+    border-radius: 16px;
+  }
+
+  small {
+    color: #f45c54;
+  }
+
+  .password {
+    position: relative;
+  }
+
+  .login-btn {
+    background-color: #5d4037;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+}

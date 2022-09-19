@@ -1,0 +1,24 @@
+@import 'src/styles/variables';
+
+:host {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.container {
+  position: relative;
+  padding: 0 4px 0 24px;
+  background-color: #fef3ef;
+  border-radius: 4px;
+  color: rgba($black-color, 0.8);
+
+  .icon-noun-1 {
+    position: absolute;
+    left: 4px;
+
+    &:before {
+      font-size: 18px;
+    }
+  }
+}

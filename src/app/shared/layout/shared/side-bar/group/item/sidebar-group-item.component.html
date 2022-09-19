@@ -1,0 +1,4 @@
+<a (click)="onItemClick()" [class.active]="routerUrl?.startsWith(url)">
+  <div [class.active]="routerUrl?.startsWith(url)" class="sidebar-group-item-indicator"></div>
+  <div class="sidebar-group-item-text">{{ text }}</div>
+</a>

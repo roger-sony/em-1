@@ -1,0 +1,16 @@
+@import 'src/styles/variables';
+
+:host {
+  background-color: $black-color-light;
+  border-radius: 50%;
+  box-shadow: 0 0 2px 0 rgba(35, 35, 47, 0.1), 0 2px 16px 0 rgba(35, 35, 47, 0.32);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 48px;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}

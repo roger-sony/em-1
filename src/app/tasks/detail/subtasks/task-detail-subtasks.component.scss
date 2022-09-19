@@ -1,0 +1,76 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  // border-bottom: 1px solid $black-color-lightest;
+}
+
+.main-container {
+  margin: 24px 16px;
+}
+
+h2 {
+  font-size: 16px;
+  font-family: $bitter-font-family;
+  font-weight: 500;
+  padding: 0 0 16px 0;
+  margin: 0;
+}
+
+.subtask-container {
+  border-top: 1px solid $black-color-lightest;
+  padding-top: 16px;
+  margin-bottom: 4px;
+
+  .add-condition-container {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    color: rgba($black-color, 0.64);
+
+    .condition-title {
+      line-height: 24px;
+    }
+
+    .condition-text {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .add-condition-button-container {
+      display: flex;
+      flex-direction: column;
+
+      .add-condition-button {
+        margin-top: auto;
+      }
+    }
+  }
+
+  .subtask-list {
+    margin-top: 4px;
+  }
+}
+
+.add-subtask-button {
+  margin-bottom: 24px;
+  width: 123px;
+}
+
+.conjuntion-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .conjunction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 16px 0;
+    font-size: 14px;
+    height: 32px;
+    width: 64px;
+    border: 1px solid $primary-color;
+    border-radius: 16px;
+  }
+}

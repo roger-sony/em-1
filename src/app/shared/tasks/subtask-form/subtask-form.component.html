@@ -1,0 +1,64 @@
+<form [formGroup]="form" class="flex-column">
+  <div
+    *ngFor="let condition of conditionsControl; let i = index"
+    [formGroup]="condition"
+    class="condition-container flex-column"
+  >
+    <span class="if">{{ i === 0 ? 'if' : 'or' }}</span>
+    <div class="flex-row subtask-condition">
+      <div class="subtask-condition-form-container">
+        <subtask-condition-form
+          [formValue]="condition.value"
+          [fieldValues]="inventoryFieldValues$ | async"
+          [fieldNames]="inventoryFieldNames$ | async"
+          [currentNoun]="currentNoun$ | async"
+          [currentUnitOfMeasure]="currentUnitOfMeasure$ | async"
+          (valueChanges)="onConditionChange($event, i)"
+        >
+        </subtask-condition-form>
+      </div>
+
+      <button (click)="onDeleteCondition(i)">
+        <div class="ophanello icon-delete"></div>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="this.form.value.factFilters?.length" class="add-condition-container">
+    <button mat-flat-button class="add-button-plain" (click)="onAddCondition()">
+      <span class="ophanello icon-plus"></span>
+      <span>Add condition</span>
+    </button>
+    <div class="then">then</div>
+  </div>
+
+  <div class="flex-row">
+    <div class="content-item margin-right flex-column">
+      <mat-label class="label">Verb</mat-label>
+      <input ophInput formControlName="verb" class="oph-input" placeholder="Enter verb" />
+    </div>
+    <div class="content-item flex-column">
+      <mat-label class="label">Noun</mat-label>
+      <input
+        ophInput
+        (input)="nounInput$.next($event.target.value)"
+        [matAutocomplete]="autocomplete"
+        class="oph-input"
+        placeholder="Select noun"
+        formControlName="configName"
+      />
+      <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="onNounSelect($event.option.value)">
+        <mat-option *ngFor="let noun of filteredNounNames$ | async; trackBy: trackByNounName" [value]="noun">
+          {{ noun }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+</form>
+
+<add-button
+  *ngIf="!this.form.value.factFilters?.length"
+  [buttonText]="'Add condition'"
+  class="add-button"
+  (click)="onAddCondition()"
+></add-button>

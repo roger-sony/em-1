@@ -1,0 +1,80 @@
+<ng-container *ngIf="conditionDisplay && unitOfMeasuresMap">
+  <span>If&nbsp;&nbsp;</span>
+  <div class="icon-container noun">
+    <oph-icon class="icon" [name]="'noun'" [size]="16"></oph-icon>
+    <a
+      [routerLink]="conditionDisplay.nounCondition1?.nounId ? ['/nouns', conditionDisplay.nounCondition1.nounId] : []"
+      class="name"
+      title="Go to Noun"
+    >
+      {{ conditionDisplay.nounCondition1?.noun }}&nbsp;
+    </a>
+  </div>
+  <span>&nbsp;{{ conditionDisplay.nounCondition1?.name | inventoryFieldName | lowercase }}&nbsp;</span>
+  <span>{{ conditionDisplay.nounCondition1?.operation | inventoryFieldOperatorName }}&nbsp;</span>
+  <span>{{
+    conditionDisplay.nounCondition1?.value
+      | inventoryFieldValue
+        : conditionDisplay.nounCondition1?.name
+        : unitOfMeasuresMap[conditionDisplay.nounCondition1?.noun]
+  }}</span>
+
+  <ng-container *ngIf="conditionDisplay.nounCondition2?.name">
+    <span class="bold">&nbsp;{{ conditionDisplay.conjunction1 }}&nbsp;</span>
+    <div class="icon-container noun">
+      <oph-icon class="icon" [name]="'noun'" [size]="16"></oph-icon>
+      <a
+        [routerLink]="conditionDisplay.nounCondition2.nounId ? ['/nouns', conditionDisplay.nounCondition2.nounId] : []"
+        class="name"
+        title="Go to Noun"
+      >
+        {{ conditionDisplay.nounCondition2.noun }}&nbsp;
+      </a>
+    </div>
+    <span>&nbsp;{{ conditionDisplay.nounCondition2.name | inventoryFieldName | lowercase }}&nbsp;</span>
+    <span>{{ conditionDisplay.nounCondition2.operation | inventoryFieldOperatorName }}&nbsp;</span>
+    <span>{{
+      conditionDisplay.nounCondition2.value
+        | inventoryFieldValue
+          : conditionDisplay.nounCondition2.name
+          : unitOfMeasuresMap[conditionDisplay.nounCondition2?.noun]
+    }}</span>
+  </ng-container>
+
+  <ng-container *ngIf="conditionDisplay.nounCondition3?.name">
+    <span class="bold">&nbsp;{{ conditionDisplay.conjunction2 }}&nbsp;</span>
+    <div class="icon-container noun">
+      <oph-icon class="icon" [name]="'noun'" [size]="16"></oph-icon>
+      <a
+        [routerLink]="conditionDisplay.nounCondition3.nounId ? ['/nouns', conditionDisplay.nounCondition3.nounId] : []"
+        class="name"
+        title="Go to Noun"
+      >
+        {{ conditionDisplay.nounCondition3.noun }}&nbsp;
+      </a>
+    </div>
+    <span>&nbsp;{{ conditionDisplay.nounCondition3.name | inventoryFieldName | lowercase }}&nbsp;</span>
+    <span>{{ conditionDisplay.nounCondition3.operation | inventoryFieldOperatorName }}&nbsp;</span>
+    <span>{{
+      conditionDisplay.nounCondition3.value
+        | inventoryFieldValue
+          : conditionDisplay.nounCondition3.name
+          : unitOfMeasuresMap[conditionDisplay.nounCondition3?.noun]
+    }}</span>
+  </ng-container>
+
+  <span>,&nbsp;schedule&nbsp;</span>
+  <div class="icon-container task">
+    <oph-icon class="icon" [name]="'tasks'" [size]="16"></oph-icon>
+    <a [routerLink]="['/tasks', conditionDisplay.consequence]" class="name" title="Go to Task">
+      {{ taskName }}&nbsp;
+    </a>
+  </div>
+  <ng-container *ngIf="conditionDisplay.day === 'now'; else schedule">
+    <span>&nbsp;Immediately</span>
+  </ng-container>
+  <ng-template #schedule>
+    <span>&nbsp;on&nbsp;</span>
+    <span>{{ conditionDisplay.day }} {{ conditionDisplay.time }}</span>
+  </ng-template>
+</ng-container>

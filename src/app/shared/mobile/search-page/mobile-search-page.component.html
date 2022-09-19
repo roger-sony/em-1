@@ -1,0 +1,25 @@
+<ng-container *ngIf="{filteredItems: filteredItems$ | async, searchValue: searchValue$ | async} as state">
+  <mobile-header [borderShown]="true" (back)="onBack()">
+    <mobile-search-page-input
+      [placeholder]="placeholder"
+      [value]="state.searchValue"
+      (valueChange)="onInputValueChange($event)"
+    ></mobile-search-page-input>
+
+    <mobile-search-page-clear-button
+      *ngIf="state.searchValue"
+      (click)="onClearButtonClick()"
+      class="header-buttons"
+    ></mobile-search-page-clear-button>
+  </mobile-header>
+
+  <mobile-search-page-empty *ngIf="!state.filteredItems?.length; else results"></mobile-search-page-empty>
+
+  <ng-template #results>
+    <mobile-search-page-item
+      *ngFor="let item of state.filteredItems; trackBy: trackByItemValue"
+      [item]="item"
+      (click)="onItemClick(item)"
+    ></mobile-search-page-item>
+  </ng-template>
+</ng-container>

@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+oph-select {
+  margin-right: 8px;
+}
+
+form {
+  display: flex;
+}
+
+.field-wrap {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+input {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.input-text {
+  position: absolute;
+  left: 4px;
+  top: 36px;
+  font-size: 12px;
+}
+
+.add-margin {
+  margin-bottom: 8px;
+}

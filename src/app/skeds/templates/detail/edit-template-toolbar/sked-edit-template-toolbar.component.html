@@ -1,0 +1,36 @@
+<div class="name-container">
+  <back-button (click)="onBackClick()"></back-button>
+  <div class="icon-circle">
+    <oph-icon [name]="'skeds'" [size]="24"></oph-icon>
+  </div>
+  <div class="name">{{ template?.displayName }}</div>
+</div>
+
+<div class="button-container">
+  <div [matTooltip]="template?.status === 'next' ? 'This template is up next' : ''">
+    <button
+      class="button"
+      [class.disabled]="template?.status === 'next'"
+      mat-flat-button
+      type="button"
+      (click)="use.next()"
+      [disabled]="template?.status === 'next'"
+    >
+      <oph-icon class="icon" [name]="'play-alt'" [size]="24"></oph-icon>
+      <span class="button-text">Use This Template</span>
+    </button>
+  </div>
+  <div [matTooltip]="template?.live ? 'You cannot edit a live template' : ''" *ngIf="canEdit">
+    <button
+      class="button"
+      [class.disabled]="template?.live"
+      mat-flat-button
+      type="button"
+      (click)="onEditClick()"
+      [disabled]="template?.live"
+    >
+      <oph-icon class="icon" [name]="'edit'" [size]="24"></oph-icon>
+      <span class="button-text">Edit</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="header-container">
+  <div class="left-container">
+    <back-button (back)="onBack()" class="back-button"></back-button>
+
+    <div class="plan-name-chapters">
+      <oph-card-icon [name]="'rules'" [size]="36"></oph-card-icon>
+      <plan-name-input [plan]="activePlan" class="plan-name-input"></plan-name-input>
+
+      <chapter-chips
+        [allChapters]="chapters"
+        [chapterIds]="activePlan?.chapterIds"
+        (remove)="onRemoveFromChapter($event)"
+      ></chapter-chips>
+    </div>
+  </div>
+  <div class="right-container">
+    <ng-container *ngFor="let c of cadenceArray; trackBy: trackByType">
+      <set-cadence-button class="item" [activePlan]="activePlan" [cadence]="c"></set-cadence-button>
+    </ng-container>
+
+    <add-trigger-button class="item" [activePlan]="activePlan"></add-trigger-button>
+
+    <add-to-chapter
+      [chapters]="chapters"
+      [usedChapterIds]="activePlan?.chapterIds"
+      (add)="onAddToChapter($event)"
+      class="item"
+    ></add-to-chapter>
+
+    <plan-detail-menu
+      [plan]="activePlan"
+      [unitOfMeasures]="unitOfMeasures"
+      [tasks]="tasks"
+      class="item"
+    ></plan-detail-menu>
+  </div>
+</div>

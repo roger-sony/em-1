@@ -1,0 +1,15 @@
+<div class="menu-items">
+  <oph-form-field class="column-dropdown">
+    <oph-select [value]="allColumns" [multiple]="true" [staticDisplay]="'Select Column to Display'">
+      <div class="oph-select-dropdown" *ngFor="let column of allColumns; let i = index">
+        <mat-checkbox
+          class="mat-checkbox"
+          [checked]="columnsChecked[column]"
+          (change)="onCheckboxClick($event, column)"
+        >
+        </mat-checkbox>
+        <span>{{ column | columnName }}</span>
+      </div>
+    </oph-select>
+  </oph-form-field>
+</div>

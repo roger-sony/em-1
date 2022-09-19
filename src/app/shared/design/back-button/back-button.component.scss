@@ -1,0 +1,19 @@
+:host {
+  display: block;
+
+  &:hover .oph-icon {
+    opacity: 1;
+  }
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oph-icon {
+  opacity: 0.5;
+}

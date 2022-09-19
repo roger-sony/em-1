@@ -1,0 +1,28 @@
+<div
+  *ngFor="let sentence of sentences; let sentenceIndex = index"
+  class="subtask-item"
+  (mouseenter)="onMouseEnter(sentenceIndex)"
+  (mouseleave)="onMouseLeave()"
+>
+  <!-- <ng-container *ngIf="sentence?.factFilters?.length">
+    <span class="text">If&nbsp;</span>
+
+    <ng-container *ngFor="let fact of sentence.factFilters; let factFilterIndex = index">
+      <condition-statement [fact]="fact"></condition-statement>
+      <span *ngIf="factFilterIndex + 1 < sentence.factFilters.length" class="text">&nbsp;or&nbsp;</span>
+      <span *ngIf="factFilterIndex + 1 === sentence.factFilters.length" class="text">,&nbsp;</span>
+    </ng-container>
+  </ng-container> -->
+  <span class="text bold">{{ sentence.verb?.name }} </span>
+  <noun-display [name]="sentence.noun?.name || ''"></noun-display>
+  <div class="menu-container" *ngIf="canEdit">
+    <div *ngIf="hoveredIndex === sentenceIndex" class="control-items">
+      <!-- <button class="control-button" (click)="edit.next(subtaskIndex)">
+        <span class="ophanello icon-edit icon"></span>
+      </button> -->
+      <button class="control-button" (click)="delete.next(sentenceIndex)">
+        <span class="ophanello icon-delete icon"></span>
+      </button>
+    </div>
+  </div>
+</div>

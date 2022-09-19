@@ -1,0 +1,228 @@
+@import 'src/styles/variables';
+
+.fc {
+  .fc-toolbar {
+    margin-bottom: 0 !important;
+  }
+
+  .fc-scrollgrid {
+    border-top: none !important;
+    border-left: 1px solid rgba($black-color, 0.04) !important;
+  }
+
+  .fc-timegrid-slot-minor {
+    border-top-style: solid !important;
+    border-top: 1px solid rgba($black-color, 0.04);
+  }
+
+  .fc-timegrid-slot {
+    border-top: 1px solid rgba($black-color, 0.08);
+  }
+}
+
+.fc-day-today {
+  background: $light-background-color !important;
+}
+
+.fc-timegrid-event {
+  cursor: pointer;
+  border-radius: 0px !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  box-shadow: -2px 6px 6px -7px rgba(0, 0, 0, 0.34) !important;
+
+  .fc-event-main {
+    line-height: 16px;
+    -webkit-font-smoothing: antialiased;
+    font-size: 10px;
+    font-family: $lato-font-family;
+    border-radius: 0px !important;
+    overflow: hidden;
+    padding-top: 0 !important;
+    padding-left: 4px !important;
+
+    .bold {
+      font-weight: 900;
+      color: $black-color;
+    }
+
+    .see-all {
+      color: $black-color;
+      text-decoration: underline;
+    }
+
+    .text {
+      color: $black-color;
+    }
+  }
+}
+
+.Grey-task {
+  border-left: 2px solid #9e9e9e !important;
+}
+
+.Cyan-task {
+  border-left: 2px solid #00bcd4 !important;
+}
+
+.Blue-task {
+  border-left: 2px solid #2196f3 !important;
+}
+
+.Brown-task {
+  border-left: 2px solid #795548 !important;
+}
+
+.Amber-task {
+  border-left: 2px solid #ffc107 !important;
+}
+
+.Pink-task {
+  border-left: 2px solid #e91e63 !important;
+}
+
+.Lime-task {
+  border-left: 2px solid #cddc39 !important;
+}
+
+.fc-v-event .fc-event-title {
+  display: none;
+}
+
+.fc-bg-event {
+  border-radius: 4px;
+  opacity: 1 !important;
+  position: relative;
+  overflow: hidden;
+
+  .fc-event-title,
+  .sked-title {
+    display: none;
+    font-family: $bitter-font-family !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    font-style: normal !important;
+    margin: 8px;
+    position: absolute;
+    top: 0;
+    right: 90%;
+    white-space: nowrap;
+    transform: rotate(270deg);
+    transform-origin: right top;
+  }
+}
+
+.fc-col-header-cell {
+  font-size: 14px;
+  font-family: $bitter-font-family;
+  color: $black-color-light;
+  background-color: $light-background-color;
+  padding: 4px 0 !important;
+  border: 1px solid rgba($black-color, 0.08) !important;
+}
+
+.fc-timegrid-axis {
+  background-color: $light-background-color;
+}
+
+.calendar-view-calendar-container .fc-day-today {
+  .calendar-day {
+    color: #039be5;
+    font-size: 12px;
+  }
+  .calendar-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px !important;
+    background-color: #039be5;
+    color: white !important;
+    border-radius: 50px;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
+
+.fc-day-past,
+.fc-day-future {
+  .calendar-day {
+    font-size: 12px;
+  }
+
+  .calendar-date {
+    color: $black-color;
+    font-weight: 400;
+    font-size: 16px;
+    margin-top: 4px;
+  }
+}
+
+.fc th {
+  text-align: center !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.fc-timegrid-slot-label {
+  -webkit-font-smoothing: antialiased;
+  font-size: 12px;
+  font-family: $bitter-font-family;
+  font-weight: bold;
+}
+
+.Cyan {
+  border: 2px solid #00bcd4;
+
+  .fc-event-title,
+  .Cyan-text {
+    color: #00bcd4;
+  }
+}
+
+.Blue {
+  border: 2px solid #2196f3;
+
+  .fc-event-title,
+  .Blue-text {
+    color: #2196f3;
+  }
+}
+
+.Brown {
+  border: 2px solid #795548;
+
+  .fc-event-title,
+  .Brown-text {
+    color: #795548;
+  }
+}
+
+.Amber {
+  border: 2px solid #ffc107;
+
+  .fc-event-title,
+  .Amber-text {
+    color: #ffc107;
+  }
+}
+
+.Pink {
+  border: 2px solid #e91e63;
+
+  .fc-event-title,
+  .Pink-text {
+    color: #e91e63;
+  }
+}
+
+.Lime {
+  border: 2px solid #cddc39;
+
+  .fc-event-title,
+  .Lime-text {
+    color: #cddc39;
+  }
+}

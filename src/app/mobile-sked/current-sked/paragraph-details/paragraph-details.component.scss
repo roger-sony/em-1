@@ -1,0 +1,309 @@
+@import '~src/styles/material/custom-theme-v3/variables';
+@import '@angular/material/theming';
+
+:host {
+  display: block;
+
+  .details-wrap {
+    height: calc(100vh - 32px - 56px);
+    padding: 20px;
+    background: #faf7ed;
+    box-sizing: border-box;
+    border-radius: 8px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .back-arrow {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .coins {
+        height: 20px;
+        display: flex;
+        align-items: center;
+
+        .coins-count {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 16px;
+          letter-spacing: 0.4px;
+          margin-left: 8px;
+        }
+      }
+    }
+
+    .body {
+      margin-top: 15px;
+
+      .title {
+        font-size: 20px;
+        line-height: 32px;
+        letter-spacing: 0.15px;
+      }
+
+      .pre-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .time-left {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-family: Asap;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 15px;
+          line-height: 24px;
+          margin-right: 4px;
+
+          svg {
+            margin-right: 4px;
+          }
+        }
+
+        .assigned-users {
+          .user-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+
+            &.index-0 {
+              background-color: #efa81a;
+            }
+
+            &.index-1 {
+              background-color: #c3f234;
+            }
+
+            &.index-2 {
+              background-color: #c3f234;
+            }
+
+            &.index-3 {
+              background-color: #c3f234;
+            }
+
+            &.index-4 {
+              background-color: #c3f234;
+            }
+
+            &.other {
+              background-color: rgba(35, 35, 47, 0.8);
+              color: white;
+            }
+          }
+        }
+      }
+
+      .content {
+        margin-top: 20px;
+
+        .sentence-item {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 0;
+          flex-grow: 0;
+          margin: 12px 0;
+
+          mat-checkbox {
+            display: flex;
+            margin: 0 16px 0 4px;
+          }
+
+          &.complete {
+            text-decoration: line-through;
+          }
+        }
+
+        .mat-divider {
+          border-top-style: dashed;
+        }
+      }
+    }
+
+    .control-panel {
+      width: calc(100vw - 32px);
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+
+      @media (min-width: 960px) {
+        width: calc(100vw - 32px - 256px - 32px);
+        bottom: 32px;
+        right: 32px;
+      }
+
+      .overflow-panel {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-color: black;
+        color: white;
+        border-radius: 4px;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+
+        &.fight {
+          justify-content: center;
+        }
+
+        &.finished {
+          justify-content: space-between;
+        }
+      }
+
+      .paragraph-details {
+        display: flex;
+        justify-content: space-between;
+
+        .bold-button {
+          min-height: 40px;
+          padding-left: 18px;
+          padding-right: 18px;
+
+          paragraph-details-svg {
+            margin-right: 6px;
+          }
+        }
+      }
+
+      .timer {
+        padding: 0 8px;
+        margin-bottom: 16px;
+
+        .timer-time {
+          display: flex;
+          justify-content: space-between;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: -0.2px;
+        }
+      }
+
+      ::ng-deep {
+        mat-progress-bar {
+          border-radius: 2px;
+
+          .mat-progress-bar-fill {
+            &:after {
+              background-color: #f26334;
+              border-radius: 2px;
+            }
+          }
+
+          .mat-progress-bar-buffer {
+            background-color: #94928f;
+          }
+        }
+      }
+    }
+  }
+
+  .complete-paragraph-message {
+    position: absolute;
+    bottom: 64px;
+    display: flex;
+    width: calc(100% - 40px);
+    flex-direction: column;
+    align-items: center;
+
+    .icon-wrap {
+      height: 44px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .well-done-wrap {
+      font-size: 20px;
+      line-height: 32px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      letter-spacing: 0.15px;
+    }
+
+    .tip-wrap {
+      font-size: 14px;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      letter-spacing: 0.15px;
+    }
+  }
+}
+
+::ng-deep {
+  mat-bottom-sheet-container.mat-bottom-sheet-container {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 60px;
+    padding: 4px 4px 16px;
+    border-radius: 16px 16px 0 0;
+    justify-content: space-between;
+    background: mat-color($Oph-primary, 50);
+
+    button.mat-raised-button {
+      background: mat-color($Oph-primary, 50);
+      flex: 0 0 calc(33.33% - 24px);
+      margin: 8px;
+      justify-content: space-between;
+      border-radius: unset;
+      height: 60px;
+      box-shadow: none;
+      padding: 0 8px;
+
+      &.disable-focus {
+        &:focus {
+          text-decoration: red;
+        }
+      }
+
+      .mat-button-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 16px;
+
+        oph-icon {
+          flex: 0 0 100%;
+          justify-content: center;
+          margin-bottom: 6px;
+        }
+      }
+
+      &.disabled {
+        color: #cacaca;
+      }
+    }
+  }
+
+  .mat-snack-bar-container {
+    &.finished-overflow {
+      margin-bottom: 16px !important;
+    }
+
+    &.fight-overflow {
+      margin-bottom: 16px !important;
+
+      simple-snack-bar {
+        justify-content: center !important;
+      }
+    }
+  }
+}

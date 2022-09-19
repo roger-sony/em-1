@@ -1,0 +1,44 @@
+<form [formGroup]="form">
+  <noun-select
+    class="form-item"
+    [value]="form.value.noun"
+    [nouns]="nouns"
+    [fieldValues]="fieldValues"
+    (valueChange)="onNounChange($event)"
+  >
+  </noun-select>
+
+  <condition-attribute-select
+    *ngIf="form.value.noun"
+    class="form-item"
+    [formValue]="form.value"
+    [fieldValues]="fieldValues"
+    (valueChange)="onAttributeChange($event)"
+  >
+  </condition-attribute-select>
+
+  <ng-container *ngIf="form.value.name">
+    <condition-operator-select
+      class="form-item"
+      [value]="form.value.operation"
+      [nounName]="form.value.noun"
+      [attributeName]="form.value.name"
+      [unitOfMeasure]="unitOfMeasure"
+      (valueChange)="onOperatorChange($event)"
+    >
+    </condition-operator-select>
+    <ng-container *ngIf="form.value.operation">
+      <condition-value-input
+        [formValue]="form.value"
+        [fieldValues]="fieldValues"
+        [unitOfMeasure]="unitOfMeasure"
+        (valueChange)="onValueChange($event)"
+      >
+      </condition-value-input>
+      <div *ngIf="form.value.name === 'expiry_date'" class="ml-4">days from now</div>
+      <div *ngIf="form.value.name === '_last_updated'" class="ml-4">minutes ago</div>
+    </ng-container>
+  </ng-container>
+
+  <condition-form-back-button *ngIf="!conjunction && !outcome" (click)="onBackClick()"></condition-form-back-button>
+</form>

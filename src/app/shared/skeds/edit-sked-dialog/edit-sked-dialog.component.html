@@ -1,0 +1,78 @@
+<dialog-header [iconCircle]="true" [iconName]="'skeds'" [title]="'Edit Sked'"></dialog-header>
+
+<ng-container>
+  <!-- <div class="name-input-container">
+    <input
+      class="name-input"
+      #templateNameInput
+      (change)="onNameChange($event.target.value)"
+      [value]="data.sked?.title || ''"
+      [placeholder]="'Sked Name'"
+    />
+  </div> -->
+
+  <oph-form-field>
+    <div class="color-box" [ngStyle]="{'background-color': skedData.backgroundColor}"></div>
+    <oph-select [placeholder]="'Color'" [value]="data.sked?.backgroundColor" (valueChange)="onColorChange($event)">
+      <oph-option *ngFor="let color of colors" [value]="color.backgroundColor">
+        <div class="option-container">
+          <div class="color-box" [ngStyle]="{'background-color': color.backgroundColor}"></div>
+          <span>{{ color.name }}</span>
+        </div>
+      </oph-option>
+    </oph-select>
+  </oph-form-field>
+
+  <div class="time-container">
+    <div class="time-item">
+      <span class="label">Start day</span>
+      <oph-day-picker
+        (valueChange)="onStartDayChange($event)"
+        [value]="weekdays[skedData.startDay]"
+        [options]="weekdays"
+      ></oph-day-picker>
+    </div>
+    <div class="time-item">
+      <span class="label">Start time</span>
+      <oph-time-picker (valueChange)="onStartTimeChange($event)" [value]="skedData.start"></oph-time-picker>
+    </div>
+  </div>
+  <div class="time-container">
+    <div class="time-item">
+      <span class="label">End day</span>
+      <oph-day-picker
+        (valueChange)="onEndDayChange($event)"
+        [value]="weekdays[skedData.endDay]"
+        [options]="weekdays"
+      ></oph-day-picker>
+    </div>
+    <div class="time-item">
+      <span class="label">End time</span>
+      <oph-time-picker
+        (valueChange)="onEndTimeChange($event)"
+        [value]="skedData.end"
+        [midnightOption]="true"
+      ></oph-time-picker>
+    </div>
+  </div>
+  <div class="error-message">{{ errorMessage }}</div>
+</ng-container>
+
+<dialog-footer>
+  <div class="edit-sked-footer">
+    <button class="delete-button" mat-flat-button color="error" type="button" (click)="onDeleteClick()">Delete</button>
+    <div>
+      <dialog-cancel-button></dialog-cancel-button>
+      <button
+        class="create-button"
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="onSaveClick()"
+        [disabled]="(isValid$ | async) === false"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</dialog-footer>

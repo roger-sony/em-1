@@ -1,0 +1,35 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  width: 85%;
+}
+
+.menu-items {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.column-dropdown {
+  margin: 0px;
+}
+
+.oph-select-dropdown {
+  display: flex;
+  color: $black-color;
+  cursor: pointer;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+
+  &:hover {
+    background-color: $primary-color-lightest;
+  }
+}
+
+.mat-checkbox {
+  margin: 0 12px;
+}

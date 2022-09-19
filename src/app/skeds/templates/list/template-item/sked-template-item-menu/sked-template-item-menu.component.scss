@@ -1,0 +1,20 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+button {
+  all: unset;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+
+  &:hover {
+    background-color: rgba($black-color, 0.08);
+  }
+}

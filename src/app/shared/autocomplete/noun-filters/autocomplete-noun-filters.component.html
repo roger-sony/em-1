@@ -1,0 +1,25 @@
+<mat-form-field class="mr" appearance="outline" [style.width]="getWidth()">
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+  <input
+    (blur)="onBlur()"
+    [placeholder]="placeholder"
+    id="valueInputAuto2{{ index }}"
+    [(ngModel)]="inputText"
+    type="text"
+    (focus)="onFocus()"
+    (ngModelChange)="onChange()"
+    matInput
+    [matAutocomplete]="auto"
+    [required]="fieldRequired"
+    [attr.disabled]="fieldDisabled"
+  />
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of activeOptions" [value]="option" class="bold">
+      {{ option }}
+    </mat-option>
+    <mat-option *ngFor="let option of inactiveOptions" [value]="option" class="italic">
+      {{ option }}
+    </mat-option>
+  </mat-autocomplete>
+  <div id="valueInputErrorAuto2" style="color: red" *ngIf="inputError">Please enter a value</div>
+</mat-form-field>

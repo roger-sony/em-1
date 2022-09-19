@@ -1,0 +1,9 @@
+<oph-card
+  [iconName]="'paragraphs-light'"
+  [title]="task?.name"
+  [hideHeaderBottomBorder]="hideHeaderBottomBorder"
+  (click)="onCardClick()"
+>
+  <task-menu class="oph-card-header-button" [paragraph]="task" *ngIf="canEdit"></task-menu>
+  <task-content [paragraph]="task" [chapters]="chapters"></task-content>
+</oph-card>

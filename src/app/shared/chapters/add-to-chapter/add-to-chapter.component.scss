@@ -1,0 +1,33 @@
+@import '../../../../styles/variables';
+
+:host {
+  display: block;
+}
+
+button {
+  all: unset;
+  background-color: $black-color-lightest;
+  border-radius: 3px;
+  color: $black-color-light;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  height: 36px;
+  line-height: 36px;
+  white-space: nowrap;
+
+  & > .oph-icon {
+    margin: 0 8px;
+    opacity: 0.5;
+  }
+
+  &:hover {
+    color: $black-color;
+
+    & > .oph-icon {
+      opacity: 1;
+    }
+  }
+}

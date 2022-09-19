@@ -1,0 +1,12 @@
+@import '../../../node_modules/@angular/material/theming';
+
+@mixin oph-mat-checkbox-theme($config) {
+  .mat-checkbox {
+    font-family: mat-font-family($config);
+    margin: 0 8px;
+  }
+  .mat-checkbox-label {
+    display: inline-flex;
+    font-size: 14px;
+  }
+}

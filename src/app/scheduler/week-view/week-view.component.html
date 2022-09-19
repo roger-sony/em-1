@@ -1,0 +1,70 @@
+<div class="drag-drop-wrap" cdkDropListGroup>
+  <div class="main-wrap">
+    <div class="content" *ngIf="currentWeek | async; let week">
+      <div class="header-wrap">
+        <div class="week-title">
+          <!-- edit view -->
+          <div class="edit-wrap" *ngIf="!!labelEditMode.value">
+            <input class="label-edit-input" type="text" [(ngModel)]="week.label" />
+            <mat-icon class="postfix-edit-icon" (click)="updateWeekLabel(week)">edit</mat-icon>
+          </div>
+
+          <!-- untitled view -->
+          <div class="untitled-wrap" *ngIf="!week.label && !labelEditMode.value">
+            <span class="untitled-label">Untitled</span>
+            <mat-icon class="edit-icon" (click)="labelEditMode.next(!labelEditMode.value)">edit</mat-icon>
+          </div>
+
+          <!-- normal view -->
+          <div *ngIf="week.label && !labelEditMode.value">
+            <span>{{ week.label }}</span>
+            <mat-icon class="edit-icon" (click)="labelEditMode.next(!labelEditMode.value)">edit</mat-icon>
+          </div>
+        </div>
+        <div class="tags-wrap">
+          <span *ngFor="let tag of week.projectTags" class="tag-item" [style.background-color]="tag.color">
+            {{ tag.title }}
+          </span>
+        </div>
+
+        <div>
+          <mat-icon *ngIf="!(saveInProgress$ | async)" class="saved-icon">check</mat-icon>
+          <mat-spinner class="save-in-progress" *ngIf="saveInProgress$ | async"></mat-spinner>
+        </div>
+      </div>
+      <full-calendar #calendarView [options]="initialCalendarOptions"></full-calendar>
+      <ng-template #fcEventContent let-arg="arg">
+        <b>{{ arg.timeText }}</b>
+        <i>{{ arg.event.title }}</i>
+      </ng-template>
+    </div>
+  </div>
+  <div class="sked-sidebar">
+    <div class="title">Skeds</div>
+    <div class="bottom-colored-divider"></div>
+    <mat-divider></mat-divider>
+
+    <div class="input-btn-wrap">
+      <oph-form-field class="search-input">
+        <oph-icon [name]="'search'" [size]="24"></oph-icon>
+        <input ophInput placeholder="Search Activities" />
+      </oph-form-field>
+      <button class="create-sked" (click)="createSked()">
+        <mat-icon class="add">add</mat-icon>
+        <span class="btn-label">Create Sked</span>
+      </button>
+    </div>
+
+    <div class="skeds-wrap" #external>
+      <div class="sked-item fc-event" *ngFor="let template of skedTemplates | async">
+        <div class="sked-template-content">
+          <div class="sked-template-title">{{ template.title }}</div>
+          <div class="duration">{{ template.duration }} hours</div>
+        </div>
+        <div class="colors-wrap" *ngIf="template.colors?.length">
+          <div class="color-item" *ngFor="let color of template.colors" [style.background-color]="color"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

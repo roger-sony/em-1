@@ -1,0 +1,17 @@
+<dialog-header [title]="'Edit subtask'"></dialog-header>
+
+<dialog-content class="edit-task-dialog-content">
+  <subtask-form
+    [value]="subtask$ | async"
+    (valueChanges)="onValueChange($event)"
+    (validityChange)="onValidityChange($event)"
+  >
+  </subtask-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+  <button mat-flat-button color="primary" type="button" (click)="onSaveSubtask()" [disabled]="!(valid$ | async)">
+    Save
+  </button>
+</dialog-footer>

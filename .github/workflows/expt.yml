@@ -1,0 +1,38 @@
+name: Ophanim CI
+
+on:
+  push:
+    branches: [ beta, dev, docker, qa, k8s ]
+#    branches: [ k8s]
+  pull_request:
+    branches: [ beta, dev, docker, qa, k8s ]
+#    branches: [ k8s ]
+
+jobs: 
+  build:
+
+    env:
+      NODE_OPTIONS: --max_old_space_size=6144
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      BUILD_BRANCH: k8s
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      
+      - name: Print tag name
+        run: |
+         echo @github_ref@ ${GITHUB_REF}     
+         echo @all ref@ ${GITHUB_REF##*/}     
+         echo @heads@ ${GITHUB_REF#refs/heads/}     
+         echo @tags@ ${GITHUB_REF#refs/tags/}     
+         echo @skc4@ ${GITHUB_HEAD_REF} 
+         echo @releaseVersion1@  ${GITHUB_REF#refs/*/}   
+         echo build branch is $BUILD_BRANCH
+
+
+        

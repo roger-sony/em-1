@@ -1,0 +1,10 @@
+@import 'src/styles/variables';
+
+.mat-tab-group-container {
+  background-color: $light-background-color;
+  z-index: 1000;
+}
+
+mat-tab-group {
+  padding: 0px 16px 0px 16px;
+}

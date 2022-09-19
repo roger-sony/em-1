@@ -1,0 +1,29 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.floating-button-label {
+  background-color: $white-color;
+  border-radius: 3px;
+  box-shadow: 0 0 2px 0 rgba(35, 35, 47, 0.1), 0 2px 12px 0 rgba(35, 35, 47, 0.4);
+  color: $black-color-light;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  height: 32px;
+  line-height: 32px;
+  margin-right: 16px;
+  padding: 0 8px;
+}
+
+.small-floating-button {
+  margin: 0 8px;
+}
+
+button::ng-deep .mat-button-wrapper {
+  padding: unset;
+}

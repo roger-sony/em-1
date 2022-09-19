@@ -1,0 +1,44 @@
+<span class="title">WATCH TIME PERIOD</span>
+
+<form class="watch-time-container" [formGroup]="watchTimeForm">
+  <oph-date-picker
+    class="margin"
+    [value]="watchTimeForm.value.startDate"
+    [minValue]="chapter.startDate"
+    [maxValue]="chapter.endDate"
+    (valueChange)="onStartDateChange($event)"
+  ></oph-date-picker>
+
+  <div *ngIf="chapter" class="slider-container margin">
+    <ng5-slider
+      [value]="lowValue"
+      [highValue]="highValue"
+      [options]="options"
+      (highValueChange)="highValueChange($event)"
+      (valueChange)="valueChange($event)"
+    ></ng5-slider>
+  </div>
+
+  <div
+    [matTooltip]="today > chapter.endDate || today < chapter.startDate ? 'Today is outside of Chapter date range' : ''"
+  >
+    <button
+      class="margin"
+      type="submit"
+      mat-flat-button
+      (click)="onTodayClick()"
+      [disabled]="today > chapter.endDate || today < chapter.startDate"
+    >
+      <oph-icon class="button-icon" [name]="'calendar-single-event'" [size]="18"></oph-icon>
+      Today
+    </button>
+  </div>
+
+  <oph-date-picker
+    class="margin"
+    [value]="watchTimeForm.value.endDate"
+    [minValue]="chapter.startDate"
+    [maxValue]="chapter.endDate"
+    (valueChange)="onEndDateChange($event)"
+  ></oph-date-picker>
+</form>

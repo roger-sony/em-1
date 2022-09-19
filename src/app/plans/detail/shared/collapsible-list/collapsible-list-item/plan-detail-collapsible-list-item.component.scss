@@ -1,0 +1,27 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.left-container {
+  display: flex;
+
+  .icon-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    max-height: 32px;
+    background-color: $black-color-lightest;
+    border-radius: 50px;
+  }
+}
+
+.content-container {
+  padding: 0 8px 0 16px;
+}

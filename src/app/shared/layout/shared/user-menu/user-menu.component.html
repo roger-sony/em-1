@@ -1,0 +1,17 @@
+<user-button
+  [avatarSize]="mobile ? 28 : 32"
+  [caretShown]="!mobile"
+  [style.padding.px]="mobile ? 8 : 0"
+  (click)="onButtonClick()"
+></user-button>
+
+<oph-menu [origin]="userButton.element">
+  <oph-menu-item
+    *ngIf="!(skedsLegacy$ | async)"
+    [iconName]="'skeds'"
+    [text]="'Reinstantiate Sked'"
+    (click)="onReinstantiateSkedClick()"
+  ></oph-menu-item>
+  <!--  <oph-menu-item [iconName]="'palette'" [text]="'Toggle theme'" (click)="onToggleThemeClick()"></oph-menu-item>-->
+  <oph-menu-item [iconName]="'logout'" [text]="'Log Out'" (click)="onLogOutClick()"></oph-menu-item>
+</oph-menu>

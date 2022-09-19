@@ -1,0 +1,31 @@
+<ng-container *ngIf="cardView; else tableView">
+  <desktop-search-panel
+    [canEdit]="canEdit"
+    [sortOptions]="sortOptions"
+    [searchParams]="formattedSearchParams$ | async"
+    [hideEmptyToggle]="hideEmptyToggle"
+    [hideIcons]="hideIcons"
+    [darkBackground]="darkBackground"
+    (searchParamsChange)="onSearchParamsChange($event)"
+    placeholder="Search for Paragraphs"
+  ></desktop-search-panel>
+</ng-container>
+
+<ng-template #tableView>
+  <table-toolbar
+    [searchParams]="searchParams$ | async"
+    [allColumns]="allColumns"
+    [columnsChecked]="columnsChecked"
+    (columnsToDisplay)="setColumnsToDisplay($event)"
+  ></table-toolbar>
+</ng-template>
+
+<div class="vertical-divider" *ngIf="canEdit"></div>
+
+<!-- <button class="table-toggle" title="Table View" (click)="onTableClick()" disabled>
+  <div class="ophanello icon-grid"></div>
+</button>
+
+<div class="vertical-divider"></div> -->
+
+<create-tasks-button (click)="onCreateClick()" *ngIf="canEdit"></create-tasks-button>

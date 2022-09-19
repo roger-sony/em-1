@@ -1,0 +1,192 @@
+@import 'src/styles/variables';
+
+:host {
+  .card-wrap {
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 1px rgba(91, 91, 91, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+    display: inline-block;
+    width: 100%;
+
+    &:hover,
+    &.selected {
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05), 0 0 6px 0 rgba(164, 164, 164, 0.08),
+        0 2px 16px 0 rgba(118, 118, 140, 0.13), 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    &.selected {
+      border: 1px solid $primary-color;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+}
+
+.oph-card-header {
+  border-bottom: 1px solid $black-color-lightest;
+  display: flex;
+  margin: 0 16px;
+  padding: 16px 0;
+
+  .oph-card-button {
+    min-width: 46px;
+    text-align: center;
+    align-self: center;
+
+    .detail-menu {
+      height: auto;
+      width: auto;
+      background-color: inherit;
+      border: none;
+      cursor: pointer;
+      color: #949499;
+
+      .oph-icon {
+        vertical-align: middle;
+
+        &:hover {
+          background: rgba(35, 35, 47, 0.04);
+          border: 1px solid #ededee;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+
+  .oph-card-header-no-bottom {
+    display: flex;
+    margin: 0 16px;
+    padding: 16px 0;
+  }
+
+  .title-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .oph-card-title-container {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    margin: 0 20px;
+    min-width: 1px;
+
+    .oph-card-title {
+      color: $black-color;
+      font-family: 'Bitter', serif;
+      font-size: 14px;
+      font-weight: bold;
+      word-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+
+      p {
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        font-family: $bitter-font-family;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba(35, 35, 47, 0.8);
+      }
+    }
+
+    .oph-card-additional-info {
+      .updated {
+        font-family: $lato-font-family;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        letter-spacing: -0.2px;
+        color: rgba(35, 35, 47, 0.64);
+      }
+    }
+  }
+}
+
+.oph-card-content {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+
+  .unit-of-measure-wrap {
+    flex: 0 0 calc(50% - 32px);
+    max-width: calc(50% - 32px);
+    padding: 16px 16px 6px;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: stretch;
+
+    .unit-of-measure-label {
+      font-family: $lato-font-family;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 0.4px;
+      color: rgba(35, 35, 47, 0.64);
+    }
+
+    .unit-of-measure-value {
+      display: flex;
+      font-family: $lato-font-family;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+
+      .quantity {
+        max-width: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        letter-spacing: 0.5px;
+        color: rgba(35, 35, 47, 0.8);
+        margin: 0 1px 0 0;
+      }
+
+      .unit-of-measure {
+        letter-spacing: -0.2px;
+        color: rgba(35, 35, 47, 0.64);
+      }
+
+      &.non-quantitative {
+        .border-wrap {
+          padding: 2px 12px;
+          border: 1px solid #ededee;
+          box-sizing: border-box;
+          border-radius: 16px;
+          height: 32px;
+
+          .quantity {
+            max-width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.show-more-wrap {
+  border-top: 1px solid rgba(35, 35, 47, 0.05);
+  margin: 0 16px;
+  padding: 16px 0;
+
+  button {
+    box-shadow: none;
+    border: 1px solid #ededee;
+    font-size: 14px;
+    color: #f26334;
+  }
+}

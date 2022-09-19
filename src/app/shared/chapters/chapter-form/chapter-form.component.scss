@@ -1,0 +1,97 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.name-input-container {
+  margin: 0 16px;
+  border-bottom: 1px solid $black-color-lightest;
+}
+
+.name-input {
+  all: unset;
+  box-sizing: border-box;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $bitter-font-family;
+  font-size: 20px;
+  font-weight: bold;
+  height: 32px;
+  margin: 16px 0;
+  padding: 0 16px;
+  width: 100%;
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+}
+
+.date-picker-container {
+  padding: 16px 0 0 8px;
+}
+
+.date-picker {
+  margin-top: -11px;
+  width: 100%;
+}
+
+.date-range {
+  font-size: 14px;
+  color: $black-color-light;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+.progress-container {
+  margin: 16px 16px 0 16px;
+  padding: 0 12px;
+  border-bottom: 1px solid $border-color;
+
+  .progress-text {
+    font-size: 14px;
+    color: $black-color-light;
+    margin-left: 16px;
+  }
+
+  .slider-container {
+    display: flex;
+    justify-content: center;
+
+    mat-slider {
+      margin-top: 48px;
+    }
+  }
+}
+
+.header-text {
+  display: flex;
+  align-items: center;
+}
+
+.mat-slider {
+  width: 250px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px 24px 8px;
+  margin-top: -11px;
+  border-bottom: 1px solid $border-color;
+}
+
+.textarea-container {
+  padding: 8px 0 24px 8px;
+  margin-top: 16px;
+}
+
+.hint-container {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin: -11px 10px -11px 10px;
+  height: 12px;
+}

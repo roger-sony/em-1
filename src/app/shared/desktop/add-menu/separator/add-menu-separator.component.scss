@@ -1,0 +1,22 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  height: 24px;
+}
+
+.add-menu-separator-line {
+  background-color: $border-color;
+  flex-grow: 1;
+  height: 1px;
+  margin: 0 8px;
+  min-width: 1px;
+}
+
+.add-menu-separator-text {
+  color: $black-color-light;
+  flex-grow: 0;
+  font-family: $lato-font-family;
+  font-size: 12px;
+}

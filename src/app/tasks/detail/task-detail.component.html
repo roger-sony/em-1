@@ -1,0 +1,66 @@
+<ng-container *ngIf="{taskForm: taskForm$ | async, task: paragraph$ | async} as state">
+  <ng-container *ngIf="loading$ | async; else loading">
+    <task-detail-toolbar
+      (back)="onBackClick()"
+      (save)="onSaveClick()"
+      (valueChange)="onNameChange($event)"
+      [canEdit]="canEditParagraphs"
+      [canSave]="canSave$ | async"
+      [taskForm]="state.taskForm"
+      [saving]="saving$ | async"
+      [taskNames]="paragraphNames$ | async"
+      [paragraph]="state.task"
+    ></task-detail-toolbar>
+
+    <div class="columns-container">
+      <div class="left-column-container">
+        <div class="form-header">
+          <span class="text">Paragraph Details</span>
+        </div>
+        <task-form
+          [canEdit]="canEditParagraphs"
+          [page]="true"
+          [fieldValues]="taskFieldValues$ | async"
+          [roles]="roles$ | async"
+          [users]="users$ | async"
+          [value]="state.taskForm"
+          [paragraph]="state.task"
+          (valueChange)="onTaskFormValueChange($event)"
+        ></task-form>
+      </div>
+
+      <div class="middle-column-container">
+        <task-detail-subtasks
+          [canEdit]="canEditParagraphs"
+          [sentences]="storedSentences$ | async"
+          [paragraph]="state.task"
+          [roles]="roles$ | async"
+          [users]="users$ | async"
+        ></task-detail-subtasks>
+        <!-- <task-detail-rule-triggers
+          [storedRuleTriggers]="storedTaskRuleTriggers$ | async"
+          [plansMap]="plansMap$ | async"
+          (delete)="onDelete($event)"
+        ></task-detail-rule-triggers> -->
+      </div>
+
+      <div class="right-column-container">
+        <div class="checklist-title">
+          <span>Checklist</span>
+        </div>
+        <div class="checklist-container">
+          <oph-checklist
+            [canEdit]="canEditParagraphs"
+            [list]="state.task?.checkList || []"
+            (valueChange)="onCheckListChange($event)"
+            (edited)="onCheckListEdited($event)"
+          ></oph-checklist>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <loading-screen></loading-screen>
+  </ng-template>
+</ng-container>

@@ -1,0 +1,17 @@
+<span>This is a preview of the outcome if you run this Plan now.</span>
+<div class="button-container">
+  <button class="download-button" matTooltip="Download PDF" (click)="downloadPDFCLick()">
+    <oph-icon class="download-icon" [name]="'download'" [size]="24"></oph-icon>
+    PDF
+  </button>
+  <button class="download-button" matTooltip="Download Excel file" (click)="downloadXLSCLick()">
+    <oph-icon class="download-icon" [name]="'download'" [size]="24"></oph-icon>
+    XLS
+  </button>
+  <button class="button" matTooltip="Run Plan" (click)="runPlanClick()">
+    <oph-icon class="icon" [name]="'play-dark'" [size]="24"></oph-icon>
+  </button>
+  <button class="button" matTooltip="Save Report" (click)="saveReportClick()">
+    <oph-icon class="icon" [name]="'report'" [size]="24"></oph-icon>
+  </button>
+</div>

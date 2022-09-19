@@ -1,0 +1,15 @@
+<oph-form-field>
+  <oph-icon *ngIf="!hideIcons" [name]="'sort'" [size]="24"></oph-icon>
+  <oph-select
+    [minWidth]="minWidth || null"
+    [value]="value"
+    (valueChange)="onValueChange($event)"
+    [hideBorder]="true"
+    [hideIcons]="hideIcons"
+    [darkBackground]="darkBackground"
+  >
+    <oph-option *ngFor="let option of options; trackBy: trackByOptionField" [value]="option.field">
+      {{ option.label }}
+    </oph-option>
+  </oph-select>
+</oph-form-field>

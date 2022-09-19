@@ -1,0 +1,38 @@
+h2 {
+  display: inline;
+  margin-right: 0.5rem;
+}
+
+header {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+/*****************************************************************************
+                            Modal Styles
+******************************************************************************/
+.modal-content {
+  max-width: 450px;
+}
+
+.report-btn-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.report-btn-container button {
+  margin: 20px;
+}
+
+.report-form-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}

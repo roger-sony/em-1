@@ -1,0 +1,290 @@
+<div class="body" [formGroup]="form">
+  <div class="body-header">
+    <mat-form-field appearance="outline" class="icon-form-field">
+      <mat-select formControlName="icon" panelClass="icon-option-wrap">
+        <mat-select-trigger>
+          <img
+            [src]="'/assets/img/icons/builder/project-builder/task-icons/' + form.get('icon').value + '.svg'"
+            [height]="32"
+            [width]="32"
+            alt=""
+            aria-hidden="true"
+          />
+        </mat-select-trigger>
+        <mat-option *ngFor="let icon of icons" [value]="icon">
+          <img
+            [src]="'/assets/img/icons/builder/project-builder/task-icons/' + icon + '.svg'"
+            [height]="32"
+            [width]="32"
+            alt=""
+            aria-hidden="true"
+          />
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="task-name-form-field">
+      <mat-label>Task name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter task name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="duration-form-field">
+      <mat-label>Duration</mat-label>
+      <input matInput formControlName="duration" type="number" />
+      <span matSuffix> min</span>
+    </mat-form-field>
+    <mat-icon class="close-icon" (click)="cancel()">close</mat-icon>
+  </div>
+  <div class="body-content">
+    <div class="tabs-header">
+      <div class="tab-item" [class.active]="activeTab === 'details'" (click)="activeTab = 'details'">Details</div>
+      <div class="tab-item" [class.active]="activeTab === 'frequency'" (click)="activeTab = 'frequency'">Frequency</div>
+      <div class="tab-item" [class.active]="activeTab === 'subtasks'" (click)="activeTab = 'subtasks'">
+        Subtasks ({{ form.get('subtasks')?.value.length }})
+      </div>
+    </div>
+    <div class="tabs-body" [ngClass]="activeTab">
+      <div *ngIf="activeTab === 'details'">
+        <div>
+          <mat-label>Priority</mat-label>
+          <mat-chip-list class="priority" aria-label="Priority selection" formControlName="priority">
+            <mat-chip (click)="form.get('priority')?.patchValue(1)" [value]="1">1</mat-chip>
+            <mat-chip (click)="form.get('priority')?.patchValue(2)" [value]="2">2</mat-chip>
+            <mat-chip (click)="form.get('priority')?.patchValue(3)" [value]="3">3</mat-chip>
+            <mat-chip (click)="form.get('priority')?.patchValue(4)" [value]="4">4</mat-chip>
+            <mat-chip (click)="form.get('priority')?.patchValue(5)" [value]="5">5</mat-chip>
+            <mat-chip (click)="form.get('priority')?.patchValue(6)" [value]="6">6</mat-chip>
+            <mat-chip (click)="form.get('priority')?.patchValue(7)" [value]="7">7</mat-chip>
+          </mat-chip-list>
+        </div>
+        <div class="flex-count-wrap">
+          <mat-label>Flex</mat-label>
+          <mat-form-field appearance="outline" class="flex-count">
+            <mat-select formControlName="flexCount">
+              <mat-option *ngFor="let number of flexCounts" [value]="number">{{ number }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="flex-type">
+            <mat-select formControlName="flexType">
+              <mat-option value="sked">Sked</mat-option>
+              <mat-option value="week">Week</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-divider vertical></mat-divider>
+          <mat-checkbox class="abandoned-checkbox">Can be abandoned</mat-checkbox>
+        </div>
+        <div>
+          <div>
+            <mat-label>Assign to</mat-label>
+          </div>
+          <mat-form-field appearance="outline" class="assign-to">
+            <mat-chip-list #chipList aria-label="Assignee selection" multiple>
+              <mat-chip *ngFor="let assignee of assignees" (removed)="removeAssignee(assignee)">
+                {{ assignee }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <input
+                #assigneeInput
+                [formControl]="assigneeCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeyCodes"
+                (matChipInputTokenEnd)="addAssignee($event)"
+              />
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="assigneeSelected($event)">
+              <mat-option *ngFor="let assignee of filteredAssignees | async" [value]="assignee">
+                {{ assignee }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <mat-divider class="margin-0-m-16"></mat-divider>
+        <mat-form-field class="text-editor" appearance="outline">
+          <textarea matInput placeholder="Task description" formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-divider class="margin-0-m-16"></mat-divider>
+        <div class="triggers-wrap">
+          <div>
+            <mat-label>Trigger this task when:</mat-label>
+          </div>
+          <div class="trigger-area">Add condition</div>
+        </div>
+      </div>
+
+      <div class="frequency-wrap" *ngIf="activeTab === 'frequency'">
+        <div>
+          <mat-label>Frequency</mat-label>
+          <mat-chip-list class="frequency-type" aria-label="Frequency type selection" formControlName="frequencyType">
+            <mat-chip
+              (click)="form.get('frequencyType')?.patchValue('doNotRepeat')"
+              [value]="'doNotRepeat'"
+              disableRipple
+              >Do not repeat</mat-chip
+            >
+            <mat-chip (click)="form.get('frequencyType')?.patchValue('repeat')" [value]="'repeat'" disableRipple
+              >Repeat</mat-chip
+            >
+            <mat-chip (click)="form.get('frequencyType')?.patchValue('schedule')" [value]="'schedule'" disableRipple
+              >Schedule</mat-chip
+            >
+          </mat-chip-list>
+        </div>
+
+        <div *ngIf="form.get('frequencyType')?.value === 'doNotRepeat'">
+          <div>
+            <mat-label>Perform on</mat-label>
+            <mat-chip-list class="repeat-on" multiple aria-label="Perform On selection" formControlName="performOn">
+              <mat-chip (click)="onPerformOnChipClick('Monday')" [value]="'Monday'" disableRipple>M</mat-chip>
+              <mat-chip (click)="onPerformOnChipClick('Tuesday')" [value]="'Tuesday'" disableRipple>T</mat-chip>
+              <mat-chip (click)="onPerformOnChipClick('Wednesday')" [value]="'Wednesday'" disableRipple>W</mat-chip>
+              <mat-chip (click)="onPerformOnChipClick('Thursday')" [value]="'Thursday'" disableRipple>T</mat-chip>
+              <mat-chip (click)="onPerformOnChipClick('Friday')" [value]="'Friday'" disableRipple>F</mat-chip>
+              <mat-chip (click)="onPerformOnChipClick('Saturday')" [value]="'Saturday'" disableRipple>S</mat-chip>
+              <mat-chip (click)="onPerformOnChipClick('Sunday')" [value]="'Sunday'" disableRipple>S</mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="ends-wrap">
+            <mat-label>Ends:</mat-label>
+            <mat-radio-group formControlName="endsType">
+              <mat-radio-button value="never">Never</mat-radio-button>
+              <mat-radio-button value="on">
+                On
+                <mat-form-field appearance="outline" class="ends-on-form-field">
+                  <input matInput formControlName="endsOnDate" placeholder="Mon, 31 Jan 2022" />
+                </mat-form-field>
+
+                <!--                <mat-form-field appearance="fill">-->
+                <!--                  <mat-label>Choose a date</mat-label>-->
+                <!--                  <input matInput [matDatepicker]="picker" formControlName="endsOnDate">-->
+                <!--                  <mat-hint>MM/DD/YYYY</mat-hint>-->
+                <!--                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+                <!--                  <mat-datepicker #picker></mat-datepicker>-->
+                <!--                </mat-form-field>-->
+              </mat-radio-button>
+              <mat-radio-button value="after">
+                After
+                <mat-form-field appearance="outline" class="ends-on-form-field">
+                  <input matInput formControlName="endsAfterDate" placeholder="Mon, 31 Jan 2022" />
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <div *ngIf="form.get('frequencyType')?.value === 'schedule'">
+          <div>
+            <mat-label>Occurs on</mat-label>
+          </div>
+          <div class="occurs-on-wrap">
+            <mat-label>Day</mat-label>
+            <mat-form-field appearance="outline" class="occurs-on-count">
+              <mat-select formControlName="occursOnCount">
+                <mat-option *ngFor="let number of flexCounts" [value]="number">{{ number }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="occurs-on-type">
+              <mat-select formControlName="occursOnType">
+                <mat-option value="sked">Sked</mat-option>
+                <mat-option value="week">Week</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div *ngIf="form.get('frequencyType')?.value === 'repeat'">
+          <div class="repeat-every-wrap">
+            <mat-label>Repeat every</mat-label>
+            <mat-form-field appearance="outline" class="repeat-every-count">
+              <mat-select formControlName="repeatEveryCount">
+                <mat-option *ngFor="let number of flexCounts" [value]="number">{{ number }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="repeat-every-type">
+              <mat-select formControlName="repeatEveryType">
+                <mat-option value="sked">Sked</mat-option>
+                <mat-option value="week">Week</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="repeat-on-wrap">
+            <mat-label>Repeat on</mat-label>
+            <mat-chip-list class="repeat-on" aria-label="Repeat On selection" formControlName="repeatOn">
+              <mat-chip (click)="form.get('repeatOn')?.patchValue('Monday')" [value]="'Monday'" disableRipple
+                >M</mat-chip
+              >
+              <mat-chip (click)="form.get('repeatOn')?.patchValue('Tuesday')" [value]="'Tuesday'" disableRipple
+                >T</mat-chip
+              >
+              <mat-chip (click)="form.get('repeatOn')?.patchValue('Wednesday')" [value]="'Wednesday'" disableRipple
+                >W</mat-chip
+              >
+              <mat-chip (click)="form.get('repeatOn')?.patchValue('Thursday')" [value]="'Thursday'" disableRipple
+                >T</mat-chip
+              >
+              <mat-chip (click)="form.get('repeatOn')?.patchValue('Friday')" [value]="'Friday'" disableRipple
+                >F</mat-chip
+              >
+              <mat-chip (click)="form.get('repeatOn')?.patchValue('Saturday')" [value]="'Saturday'" disableRipple
+                >S</mat-chip
+              >
+              <mat-chip (click)="form.get('repeatOn')?.patchValue('Sunday')" [value]="'Sunday'" disableRipple
+                >S</mat-chip
+              >
+            </mat-chip-list>
+          </div>
+          <div class="ends-wrap">
+            <mat-label>Ends:</mat-label>
+            <mat-radio-group formControlName="endsType">
+              <mat-radio-button value="never">Never</mat-radio-button>
+              <mat-radio-button value="on">
+                On
+                <mat-form-field appearance="outline" class="ends-on-form-field">
+                  <input matInput formControlName="endsOnDate" placeholder="Mon, 31 Jan 2022" />
+                </mat-form-field>
+              </mat-radio-button>
+              <mat-radio-button value="after">
+                After
+                <mat-form-field appearance="outline" class="ends-on-form-field">
+                  <input matInput formControlName="endsAfterDate" placeholder="Mon, 31 Jan 2022" />
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+
+      <div class="subtasks-wrap" *ngIf="activeTab === 'subtasks'">
+        <div class="subtasks-header">
+          <div>Subtasks ({{ form.get('subtasks')?.value.length }})</div>
+          <button>
+            <mat-icon>add_circle_outline</mat-icon>
+            <span> Subtask</span>
+          </button>
+        </div>
+        <div cdkDropList class="subtasks-list" (cdkDropListDropped)="drop($event)">
+          <div class="subtask-item" *ngFor="let movie of form.get('subtasks')?.value || []; let i = index" cdkDrag>
+            <div class="subtask-item-body">
+              <mat-icon cdkDragHandle>drag_handle</mat-icon>
+              {{ movie }}
+            </div>
+            <div class="subtask-item-actions">
+              <mat-icon (click)="editSubtask(i)">edit</mat-icon>
+              <mat-icon (click)="removeSubtask(i)">remove_circle_outline</mat-icon>
+            </div>
+          </div>
+        </div>
+        <div class="new-subtask-item-wrap">
+          <input matInput #subtaskInput (keydown.enter)="addSubtask(subtaskInput)" placeholder="Add subtask" />
+          <mat-icon (click)="addSubtask(subtaskInput)">check</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dialog-subtasks">
+  <div>
+    <button class="cancel-btn" (click)="cancel()">Cancel</button>
+    <button class="save-btn" (click)="save()">Save</button>
+  </div>
+</div>

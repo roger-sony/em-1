@@ -1,0 +1,14 @@
+:host {
+  min-height: 1px;
+  overflow-y: auto;
+}
+
+.panel-content-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 15px;
+}
+
+.plan-card {
+  margin-bottom: 12px;
+}

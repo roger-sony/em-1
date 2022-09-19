@@ -1,0 +1,27 @@
+:host {
+  display: block;
+
+  .actions-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+
+    button {
+      height: 34px;
+      border-radius: 6px;
+
+      &.cancel {
+        background-color: transparent;
+        border: 1px solid rgba(47, 39, 35, 0.12);
+        color: #5d4037;
+      }
+
+      &.confirm {
+        background: #5d4037;
+        color: #fff;
+      }
+    }
+  }
+}

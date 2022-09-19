@@ -1,0 +1,106 @@
+@import '~@angular/material/theming';
+@import 'src/styles/variables';
+@import 'mat-autocomplete';
+@import 'mat-checkbox';
+@import 'mat-datepicker';
+@import 'mat-form-field';
+@import 'mat-tab-nav-bar';
+@import 'mat-select';
+@import 'custom/rule-form-input';
+@import 'custom/rule-form-select';
+// Plus imports for other components in your app.
+@import '../../app/shared/navbar/toolbar.component';
+@import '../../app/shared/navbar/matmenu.component';
+@import '../../app/skeds-legacy/current/begin-task-ph-modal/mat-checkbox.component';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$oph-primary-colors: (
+  50: #fdece7,
+  100: #fbd0c2,
+  200: #f9b19a,
+  300: #f69271,
+  400: #f47a52,
+  500: #f26334,
+  600: #f05b2f,
+  700: #ee5127,
+  800: #ec4721,
+  900: #e83515,
+  A100: #ffffff,
+  A200: $primary-color-lightest,
+  A400: $primary-color-lighter,
+  A700: $primary-color-light,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+$oph-primary-palette: mat-palette($oph-primary-colors, 500);
+$oph-accent-palette: mat-palette($oph-primary-colors, 500);
+$oph-warn-palette: mat-palette($mat-red);
+$oph-theme: mat-light-theme($oph-primary-palette, $oph-accent-palette, $oph-warn-palette);
+
+@include angular-material-theme($oph-theme);
+
+$oph-typography: mat-typography-config(
+  $font-family: 'Lato, sans-serif',
+);
+
+@include angular-material-typography($oph-typography);
+@include oph-mat-autocomplete-theme($oph-theme);
+@include oph-mat-checkbox-theme($oph-theme);
+@include oph-mat-datepicker-theme($oph-theme);
+@include oph-mat-form-field-theme($oph-theme);
+@include oph-mat-tab-nav-bar-theme($oph-theme);
+@include oph-mat-select-theme($oph-theme);
+
+// Custom components
+
+.rule-form {
+  @include rule-form-input($oph-theme);
+  @include rule-form-select($oph-theme);
+}
+
+// Legacy theme
+
+$legacy-primary: mat-palette($mat-ophanimblue, 500);
+$legacy-accent: mat-palette($mat-ophanimblue, 500);
+$legacy-warn: mat-palette($mat-red);
+$legacy-theme: mat-light-theme($legacy-primary, $legacy-accent, $legacy-warn);
+
+$legacy-typography: mat-typography-config();
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
+.legacy-content,
+.legacy-navbar,
+.legacy-login,
+.legacy-spinner {
+  @include angular-material-theme($legacy-theme);
+  @include angular-material-typography($legacy-typography);
+  @include candy-checkbox-typography($legacy-theme);
+  @include candy-toolbar-theme($legacy-theme);
+  @include candy-matmenu-theme($legacy-theme);
+}

@@ -1,0 +1,14 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+}
+
+.light-text {
+  font-size: 12px;
+  color: $black-color-light;
+  margin-bottom: 4px;
+  letter-spacing: 0.4px;
+}

@@ -1,0 +1,15 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  color: $black-color;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  line-height: 32px;
+
+  & > * {
+    margin: 2px;
+  }
+}

@@ -1,0 +1,10 @@
+<nouns-search-panel></nouns-search-panel>
+
+<add-menu
+  [addButtonText]="'Add Noun'"
+  [createOptionText]="'Create new Noun'"
+  [inputPlaceholder]="'Search for Noun'"
+  [options]="options$ | async"
+  (add)="onAdd($event)"
+  (create)="onCreate()"
+></add-menu>

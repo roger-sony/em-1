@@ -1,0 +1,14 @@
+<oph-icon class="condition-list-icon" [name]="'square-dot-dark'"></oph-icon>
+
+<rule-form
+  [global]="global"
+  [fact]="global && (index || index === 0) ? filteredFacts[index] : null"
+  [rule]="!global && (index || index === 0) ? (plan?.rules)[index] : null"
+  [fieldValues]="fieldValues"
+  [mobile]="mobile"
+  [tasks]="tasks"
+  [unitOfMeasure]="unitOfMeasure"
+  (cancel)="onCancel()"
+  (save)="onSave($event)"
+  class="condition-form"
+></rule-form>

@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.trigger-form {
+  display: block;
+  margin: 8px 16px;
+}

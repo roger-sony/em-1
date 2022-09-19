@@ -1,0 +1,41 @@
+@import 'src/styles/variables';
+
+:host {
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  margin: 0 16px;
+  // padding: 8px 0;
+}
+
+.dialog-title {
+  color: $black-color;
+  display: flex;
+  align-items: center;
+  font-family: 'Bitter', serif;
+  font-size: 14px;
+  font-weight: bold;
+
+  & > .oph-icon-wrapper {
+    margin-right: 8px;
+
+    &.oph-icon-circle {
+      background-color: $black-color-lightest;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      height: 32px;
+      width: 32px;
+    }
+  }
+}
+
+button {
+  all: initial;
+  cursor: pointer;
+  display: flex;
+}

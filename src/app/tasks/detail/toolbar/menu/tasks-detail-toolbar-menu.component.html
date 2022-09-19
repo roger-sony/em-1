@@ -1,0 +1,10 @@
+<button #toggleButton (click)="onToggleClick()">
+  <span>More actions</span>
+  <span class="ophanello icon-caret---down"></span>
+</button>
+
+<oph-menu [origin]="toggleButton">
+  <oph-menu-item-new [iconName]="'icon-clock'" [text]="'Schedule'" (click)="onSchedule()"></oph-menu-item-new>
+  <oph-menu-item-new [iconName]="'icon-duplicate'" [text]="'Clone'" (click)="onClone()"></oph-menu-item-new>
+  <oph-menu-item-new [iconName]="'icon-delete'" [text]="'Delete'" (click)="onDelete()"></oph-menu-item-new>
+</oph-menu>

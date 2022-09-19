@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+:host {
+  color: $black-color;
+  cursor: pointer;
+  display: block;
+  font-family: $lato-font-family;
+  font-size: 16px;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 8px;
+}
+
+div {
+  overflow: hidden;
+  padding: 0 24px 0 48px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

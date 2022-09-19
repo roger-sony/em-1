@@ -1,0 +1,42 @@
+<ng-container *ngIf="{paragraph: paragraph$ | async, valid: valid$ | async} as state">
+  <dialog-header
+    [title]="'Schedule ' + state.paragraph?.name"
+    class="header"
+    (close)="onClose()"
+    [preventClose]="true"
+  ></dialog-header>
+
+  <dialog-content>
+    <cadence-form
+      [value]="cadenceForm$ | async"
+      [disableEndRepeatOptions]="true"
+      (valueChange)="onCadenceFormValueChange($event)"
+      (add)="onAdd()"
+      (reset)="onReset()"
+      class="cadence-form"
+      task="true"
+    >
+    </cadence-form>
+
+    <schedule-task-cadence-list
+      [cadences]="cadences$ | async"
+      (valueChange)="onListChange($event)"
+    ></schedule-task-cadence-list>
+  </dialog-content>
+
+  <dialog-footer>
+    <dialog-cancel-button (close)="onClose()" [preventClose]="true"></dialog-cancel-button>
+    <div [matTooltip]="state.valid ? '' : 'Either Add or Reset schedule'">
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="onSave()"
+        class="save-button"
+        [disabled]="!state.valid"
+      >
+        Save
+      </button>
+    </div>
+  </dialog-footer>
+</ng-container>

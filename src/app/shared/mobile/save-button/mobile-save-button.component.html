@@ -1,0 +1,13 @@
+<button
+  *ngIf="soft; else hardSaveButton"
+  [disabled]="disabled"
+  (click)="onButtonClick()"
+  class="soft-save-button"
+  title="Save"
+>
+  <oph-icon [name]="'success_black'" [size]="24"></oph-icon>
+</button>
+
+<ng-template #hardSaveButton>
+  <button mat-flat-button color="primary" [disabled]="disabled" (click)="onButtonClick()">Save</button>
+</ng-template>

@@ -1,0 +1,6 @@
+<div class="container" [class.selected]="selected" (click)="onOptionClick()">
+  <div *ngIf="iconSrc" class="icon-container">
+    <oph-icon [name]="iconSrc" [size]="name === 'selection' ? 10 : 16"></oph-icon>
+  </div>
+  <span [class.no-margin]="!iconSrc">{{ name | multiWordTitlecase }}</span>
+</div>

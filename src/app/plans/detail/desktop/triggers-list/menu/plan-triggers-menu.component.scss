@@ -1,0 +1,31 @@
+@import '../../../../../../styles/variables';
+
+.menu-container {
+  display: flex;
+}
+
+.icon {
+  opacity: 0.5;
+}
+
+.icon-background:hover .icon {
+  opacity: 1;
+}
+
+.icon-background {
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.icon-background:hover {
+  background-color: $black-color-lightest;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+}

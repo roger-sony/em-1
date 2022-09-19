@@ -1,0 +1,10 @@
+@import 'src/styles/variables';
+
+:host {
+  color: $error-color;
+  display: block;
+  font-family: $lato-font-family;
+  font-size: 12px;
+  height: 16px;
+  line-height: 16px;
+}

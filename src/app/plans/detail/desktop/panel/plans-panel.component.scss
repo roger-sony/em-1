@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-grow: 1;
+}
+
+.plans-panel-container {
+  width: 396px;
+  background-color: #eaeff4;
+  display: flex;
+  flex-direction: column;
+}

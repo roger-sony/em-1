@@ -1,0 +1,51 @@
+@import 'src/styles/variables';
+
+:host {
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+}
+
+.desktop-header-left {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  min-width: 1px;
+  margin: 0 8px;
+}
+
+.desktop-header-right {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+  min-width: 1px;
+  margin-right: 32px;
+}
+
+.back-button,
+.round-icon,
+h2 {
+  flex-grow: 0;
+  margin-right: 8px;
+  min-width: 1px;
+}
+
+.round-icon {
+  background-color: rgba($black-color, 0.04);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+}
+
+h2 {
+  color: $black-color;
+  font-family: $bitter-font-family;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}

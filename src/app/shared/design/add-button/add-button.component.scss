@@ -1,0 +1,32 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  height: 36px;
+  border: 1px solid $black-color-lightest;
+  padding: 0 12px;
+}
+
+.orange-color {
+  color: $white-color;
+  background-color: $primary-color;
+}
+
+.white-color {
+  color: $primary-color;
+}
+
+.icon-plus {
+  margin-right: 4px;
+
+  &:before {
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+}

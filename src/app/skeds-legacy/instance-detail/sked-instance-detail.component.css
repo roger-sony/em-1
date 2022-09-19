@@ -1,0 +1,60 @@
+@media (min-width: 960px) {
+  :host {
+    display: block;
+    padding-top: 24px;
+  }
+}
+
+.mr {
+  margin-right: 10px;
+}
+
+.ml {
+  margin-left: 30px;
+}
+
+.success {
+  color: #63b567;
+  font-weight: bold;
+}
+
+.warning {
+  color: #f45c54;
+  font-weight: bold;
+}
+
+.abandoned {
+  color: #f45c54;
+}
+
+.complete {
+  color: #63b567;
+}
+
+.moved {
+  color: #ff913d;
+}
+
+.in-progress {
+  color: #449ff3;
+}
+
+.auto-abandoned {
+  color: #aaa;
+}
+
+.extra-narrow-input {
+  width: 70px;
+}
+
+#sked-balance-card {
+  padding: 10px;
+  height: 200px;
+  position: fixed;
+  right: 0;
+}
+
+#sked-balance-card-btn {
+  float: right;
+  margin-top: -28px;
+}

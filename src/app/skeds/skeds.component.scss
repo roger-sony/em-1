@@ -1,0 +1,16 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+h3 {
+  -webkit-font-smoothing: antialiased;
+  font-family: $bitter-font-family;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 16px 0 16px 24px;
+  margin: 0;
+  border-bottom: 1px solid $black-color-lightest;
+  border-left: 1px solid $black-color-lightest;
+}

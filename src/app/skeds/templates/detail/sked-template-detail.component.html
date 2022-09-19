@@ -1,0 +1,36 @@
+<ng-container
+  *ngIf="{
+    templateId: skedTemplateId$ | async,
+    name: name$ | async,
+    template: skedTemplate$ | async,
+    skeds: skeds$ | async
+  } as state"
+>
+  <sked-new-template-toolbar
+    *ngIf="!state.templateId; else edit"
+    [name]="state.name"
+    (save)="onSaveClick()"
+    (cancel)="onCancelClick()"
+  ></sked-new-template-toolbar>
+
+  <ng-template #edit>
+    <sked-new-template-toolbar
+      *ngIf="editing$ | async; else default"
+      [name]="state.template?.displayName"
+      (save)="onSaveClick($event)"
+      (cancel)="onCancelClick()"
+    ></sked-new-template-toolbar>
+    <ng-template #default>
+      <sked-edit-template-toolbar
+        [canEdit]="canEditChapters"
+        [template]="state.template"
+        (use)="onUseTemplateClick()"
+        (save)="onSaveClick()"
+      ></sked-edit-template-toolbar>
+    </ng-template>
+  </ng-template>
+
+  <div class="calendar-container">
+    <full-calendar #calendar [options]="(calendarOptions$ | async) || initialCalendarOptions"></full-calendar>
+  </div>
+</ng-container>

@@ -1,0 +1,5 @@
+<span>{{ chapter?.name }}</span>
+
+<button *ngIf="!readonly" [title]="'Remove from Chapter'" (click)="onRemoveClick($event)">
+  <oph-icon [name]="'remove-alt'" [size]="16"></oph-icon>
+</button>

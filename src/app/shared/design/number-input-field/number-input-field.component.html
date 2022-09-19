@@ -1,0 +1,17 @@
+<oph-form-field>
+  <oph-label *ngIf="label">{{ label }}</oph-label>
+
+  <input
+    ophInput
+    [disabled]="disabled"
+    [min]="min"
+    [max]="max"
+    [placeholder]="placeholder || ''"
+    [value]="value"
+    (input)="onInput($event)"
+    type="number"
+  />
+  <oph-icon [name]="'caret-double'" [size]="24" (click)="onIconClick($event)" class="number-input-icon"></oph-icon>
+
+  <oph-error *ngIf="error">{{ error }}</oph-error>
+</oph-form-field>

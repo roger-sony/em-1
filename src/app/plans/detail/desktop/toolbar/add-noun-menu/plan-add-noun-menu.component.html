@@ -1,0 +1,16 @@
+<add-menu
+  [addButtonText]="'Add Condition'"
+  [createOptionText]="'Create new Noun'"
+  [inputPlaceholder]="'Search for Noun'"
+  [options]="options$ | async"
+  (add)="onAddNounCondition($event)"
+  (create)="onCreateNoun()"
+>
+  <oph-menu-item
+    [fontSize]="14"
+    [iconName]="'global'"
+    [text]="'Add Global Condition'"
+    (click)="onAddGlobalCondition()"
+  ></oph-menu-item>
+  <div class="small-text">Apply to all Nouns in this Plan</div>
+</add-menu>

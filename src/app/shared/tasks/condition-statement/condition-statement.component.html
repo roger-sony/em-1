@@ -1,0 +1,6 @@
+<span class="name">{{ fact.name | inventoryFieldName | lowercase }}</span>
+<span [class.bold]="fact.operation !== '$eq'">&nbsp;{{ fact.operation | inventoryFieldOperatorName }}&nbsp;</span>
+<span class="bold">{{ fact.value }}</span>
+
+<span *ngIf="fact.name === 'expiry_date'">&nbsp;days from now</span>
+<span *ngIf="fact.name === '_last_updated'">&nbsp;minutes from now</span>

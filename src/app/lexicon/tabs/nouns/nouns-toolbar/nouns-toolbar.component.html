@@ -1,0 +1,135 @@
+<ng-container *ngIf="cardView; else tableView">
+  <div class="menu-items">
+    <desktop-search-input
+      [value]="name"
+      (valueChange)="onTextChange($event)"
+      placeholder="Search nouns..."
+      class="desktop-search-panel-shrinkable"
+    ></desktop-search-input>
+
+    <mat-slide-toggle class="hide-disabled" [(ngModel)]="hideDisabled" (ngModelChange)="onHideDisabledChange($event)">
+      Hide disabled
+    </mat-slide-toggle>
+  </div>
+
+  <div class="menu-items justify-flex-end">
+    <sort-field-select
+      [minWidth]="'unset'"
+      [options]="sortOptions"
+      [value]="sortField"
+      [hideIcons]="true"
+      [darkBackground]="true"
+      (valueChange)="onSortFieldChange($event)"
+    ></sort-field-select>
+
+    <button
+      mat-button
+      class="nouns-view-button"
+      *ngIf="!sortDirection || sortDirection === 'asc'"
+      (click)="onSortDirectionChange('desc')"
+    >
+      <oph-icon name="nouns-sort-up" [size]="16"></oph-icon>
+    </button>
+
+    <button
+      mat-button
+      class="nouns-view-button"
+      *ngIf="sortDirection === 'desc'"
+      (click)="onSortDirectionChange('asc')"
+    >
+      <oph-icon name="nouns-sort-down" [size]="16"></oph-icon>
+    </button>
+
+    <!-- <button mat-button class="nouns-view-button" (click)="onToggleView()">
+      <oph-icon name="nouns-table" [size]="16"></oph-icon>
+    </button> -->
+
+    <div class="nouns-create-wrap">
+      <button mat-button class="nouns-create-new-button" (click)="onCreateClick()">
+        <oph-icon name="nouns-plus-white" [size]="12"></oph-icon>
+        <mat-label>Create new</mat-label>
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #tableView>
+  <div class="menu-items">
+    <button mat-button class="toggle" (click)="onIncludeConcreteClick()" [ngClass]="{active: includeConcrete}">
+      <oph-icon name="nouns-check" [size]="14" *ngIf="includeConcrete"></oph-icon>
+      Concrete
+    </button>
+    <button mat-button class="toggle" (click)="onIncludeAbstractClick()" [ngClass]="{active: includeAbstract}">
+      <oph-icon name="nouns-check" [size]="14" *ngIf="includeAbstract"></oph-icon>
+      Abstract
+    </button>
+    <button
+      mat-button
+      class="toggle"
+      (click)="onIncludeActionClick()"
+      [ngClass]="{active: includeAction}"
+      [disabled]="true"
+    >
+      <oph-icon name="nouns-check" [size]="14" *ngIf="includeAction"></oph-icon>
+      Action
+    </button>
+
+    <mat-slide-toggle
+      class="include-inactive"
+      [ngClass]="{toggled: hideDisabled}"
+      name="includeInactive"
+      [(ngModel)]="hideDisabled"
+      (ngModelChange)="onHideDisabledChange($event)"
+      >Inactive
+    </mat-slide-toggle>
+  </div>
+
+  <div class="menu-items justify-flex-end">
+    <button
+      mat-button
+      [matMenuTriggerFor]="menu"
+      class="columns-menu-button"
+      (onMenuClose)="columnsMenuOpened = false"
+      (onMenuOpen)="columnsMenuOpened = true"
+      [ngClass]="{opened: columnsMenuOpened}"
+    >
+      <mat-label>Select columns to display</mat-label>
+      <oph-icon [name]="'dropdown-arrow-down'" [size]="11"></oph-icon>
+    </button>
+    <mat-menu
+      #menu="matMenu"
+      class="nouns-menu"
+      xPosition="before"
+      (click)="$event.preventDefault(); $event.stopPropagation()"
+    >
+      <div mat-menu-item *ngFor="let column of possibleColumns" disableRipple (click)="toggleColumn($event, column)">
+        <mat-checkbox
+          [checked]="isChecked(column)"
+          (click)="toggleColumn($event, column)"
+          [style.transition]="'none'"
+          color="primary"
+        >
+          <mat-label>{{
+            column
+              | replace: '_':' '
+              | replace: 'item':'noun'
+              | replace: 'inventory':'nouns'
+              | replace: 'qty':'Current Value'
+              | titlecase
+          }}</mat-label>
+        </mat-checkbox>
+      </div>
+    </mat-menu>
+
+    <button mat-button class="nouns-view-button" (click)="onToggleView()">
+      <oph-icon name="nouns-list" [size]="16"></oph-icon>
+    </button>
+
+    <div class="nouns-create-wrap">
+      <button mat-button class="nouns-create-new-button">
+        <oph-icon name="nouns-plus-white" [size]="12"></oph-icon>
+        <mat-label>Create new</mat-label>
+      </button>
+    </div>
+  </div>
+</ng-template>

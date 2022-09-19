@@ -1,0 +1,17 @@
+<dialog-header [title]="(fact$ | async) ? 'Edit condition for subtasks' : 'New condition for subtasks'"></dialog-header>
+
+<dialog-content class="dialog-content">
+  <span class="if">If</span>
+  <subtask-condition-form
+    [formValue]="fact$ | async"
+    [fieldValues]="inventoryFieldValues$ | async"
+    [fieldNames]="inventoryFieldNames$ | async"
+    (valueChanges)="onValueChanges($event)"
+  >
+  </subtask-condition-form>
+</dialog-content>
+
+<dialog-footer>
+  <dialog-cancel-button></dialog-cancel-button>
+  <button mat-flat-button color="primary" type="button" (click)="onSave()" [disabled]="!(valid$ | async)">Save</button>
+</dialog-footer>

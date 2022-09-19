@@ -1,0 +1,34 @@
+@import '../../../../styles/variables';
+
+.trigger-type-label {
+  color: $black-color-light;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  height: 20px;
+  margin: 16px 0;
+}
+
+.trigger-type-buttons {
+  display: flex;
+  margin: 16px 0;
+}
+
+.trigger-conditions {
+  margin: 24px 0;
+}
+
+.trigger-checkbox {
+  margin-right: 16px;
+}
+
+.trigger-checkbox-tooltip {
+  margin-left: 4px;
+}
+
+.mobile {
+  padding: 0px 16px;
+}
+
+.mobile-margin {
+  margin-bottom: 24px;
+}

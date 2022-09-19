@@ -1,0 +1,18 @@
+#valueInputAuto {
+  position: relative;
+}
+
+#valueInputErrorAuto {
+  position: absolute;
+  top: 46px;
+}
+
+.options {
+  border: solid black;
+  background-color: red;
+}
+
+.filteredOptions {
+  border: solid black;
+  background-color: red;
+}

@@ -1,0 +1,18 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+<ng-container *ngIf="{authenticated: authenticated$ | async, mobile: mobile$ | async} as state">
+  <mobile-layout *ngIf="state.authenticated && state.mobile">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </mobile-layout>
+
+  <desktop-layout *ngIf="state.authenticated && !state.mobile">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </desktop-layout>
+
+  <ng-container *ngIf="!state.authenticated">
+    <app-navbar class="legacy-navbar"></app-navbar>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+</ng-container>

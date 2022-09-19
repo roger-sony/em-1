@@ -1,0 +1,31 @@
+@import 'src/styles/variables';
+
+input {
+  all: unset;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $bitter-font-family;
+  font-size: 16px;
+  font-weight: bold;
+  height: 24px;
+  width: 100%;
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+}
+
+div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: $lato-font-family;
+  height: 24px;
+  margin-left: 56px;
+  margin-top: 24px;
+  cursor: pointer;
+
+  oph-icon {
+    margin-right: 24px;
+  }
+}

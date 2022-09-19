@@ -1,0 +1,20 @@
+<oph-card [hideHeader]="true">
+  <div class="template-status-container">
+    <sked-template-in-use *ngIf="template.live" [status]="'live'"></sked-template-in-use>
+    <sked-template-in-use *ngIf="template.status === 'next'" [status]="'next'"></sked-template-in-use>
+  </div>
+  <div class="footer">
+    <div class="text-container">
+      <div class="name">{{ template.displayName }}</div>
+      <span class="small-text"
+        ><strong>{{ template.skeds?.length || 0 }}</strong> Sked{{ template.skeds?.length === 1 ? '' : 's' }}</span
+      >
+      <span class="small-text">Modified {{ template.lastUpdated | timeAgo }}</span>
+    </div>
+    <sked-template-item-menu
+      [template]="template"
+      (click)="onMenuClick($event)"
+      *ngIf="canEdit"
+    ></sked-template-item-menu>
+  </div>
+</oph-card>

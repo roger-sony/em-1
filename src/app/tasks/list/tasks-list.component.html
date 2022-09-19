@@ -1,0 +1,38 @@
+<tasks-list-header></tasks-list-header>
+
+<tasks-control-panel
+  [cardView]="cardView"
+  [canEdit]="canEditParagraphs"
+  (setCardView)="onViewChange($event)"
+  [allColumns]="allColumns"
+  [columnsChecked]="columnsChecked"
+  (columnsToDisplay)="setColumnsChecked($event)"
+></tasks-control-panel>
+
+<ng-container *ngIf="paragraphsLoading$ | async; else loaded">
+  <loading-screen></loading-screen>
+</ng-container>
+
+<ng-template #loaded>
+  <ng-container *ngIf="cardView; else tableView">
+    <task-grid
+      [canEdit]="canEditParagraphs"
+      [filteredTasksPage]="filteredTasksPage$ | async"
+      [filteredTasks]="paragraphs$ | async"
+      [paragraphsCount]="paragraphsCount$ | async"
+      [chapters]="chapters$ | async"
+      [paginationTo]="paginationTo$ | async"
+      [paginationFrom]="paginationFrom$ | async"
+      [hideHeaderBottomBorder]="hideHeaderBottomBorder"
+      (pageEvent)="pageEventChange($event)"
+    ></task-grid>
+  </ng-container>
+</ng-template>
+
+<ng-template #tableView>
+  <task-table
+    [tasks]="filteredTasksTable$ | async"
+    [queryParams]="queryParams$ | async"
+    [displayedColumns]="displayedColumns"
+  ></task-table>
+</ng-template>

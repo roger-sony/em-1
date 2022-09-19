@@ -1,0 +1,85 @@
+<table mat-table matSort multiTemplateDataRows [dataSource]="dataSource" [width]="'100%'">
+  <ng-container *ngFor="let c of displayedColumns" [matColumnDef]="c">
+    <th mat-header-cell *matHeaderCellDef style="padding-top: 10px; vertical-align: baseline" [width]="'20px'">
+      <p mat-sort-header class="nouns-header-text" *ngIf="shouldShowLabel(c)">
+        {{
+          c
+            | replace: '_':' '
+            | replace: 'item':'noun'
+            | replace: 'inventory':'nouns'
+            | replace: 'qty':'Current Value'
+            | titlecase
+        }}
+      </p>
+      <!-- TODO: Reverse this boolean, it's confusing -->
+      <mat-form-field appearance="outline" *ngIf="isFilterable(c)">
+        <input
+          class="filter-input"
+          matInput
+          (keyup)="updateFilters(c, $event.target.value)"
+          placeholder="Filter"
+          [value]="filterFields[c]"
+        />
+      </mat-form-field>
+    </th>
+    <td mat-cell *matCellDef="let element" class="hover-cell" [ngSwitch]="c">
+      <span *ngSwitchCase="'adjust_inventory'">
+        <button
+          class="adjust-button"
+          mat-button
+          (click)="handleEditClick('adjust', element)"
+          matTooltip="Adjust current value"
+        >
+          <oph-icon [name]="'refresh'" [size]="18"></oph-icon>
+        </button>
+      </span>
+      <span *ngSwitchCase="'details'">
+        <mat-icon color="primary" (click)="openInventoryDetail(element)" class="details clicky">more_vert</mat-icon>
+      </span>
+      <span *ngSwitchCase="'active'">
+        <mat-slide-toggle [color]="'primary'" [(ngModel)]="element[c]"></mat-slide-toggle>
+      </span>
+      <!-- TODO: Refactor for better performance -->
+      <span *ngSwitchCase="'qty'">
+        <span *ngIf="itemMeasurementSettings[element.subcategory]?.type === 'range'; else number">
+          <span *ngIf="getRangeMeasurementValue(element.subcategory, element[c]); else pleaseUpdateMessage">
+            {{ getRangeMeasurementValue(element.subcategory, element[c]) }}
+          </span>
+        </span>
+        <ng-template #number>
+          <span>{{ element['quantity'] | displayFormat: c }}</span>
+        </ng-template>
+      </span>
+      <p class="cell-text" *ngSwitchCase="'display_name'" matTooltip="{{ element[c] | displayFormat: c }}">
+        {{ element['displayName'] | displayFormat: c }}
+      </p>
+      <p class="cell-text" *ngSwitchCase="'master_item'" matTooltip="{{ element[c] | displayFormat: c }}">
+        {{ element['masterItem'] | displayFormat: c }}
+      </p>
+      <span *ngSwitchCase="'last_updated'">
+        <span>{{ element['lastUpdated'] | displayFormat: c }}</span>
+      </span>
+      <span *ngSwitchCase="'unit_of_measure'">
+        <span>{{ element['unitOfMeasure'] | displayFormat: c }}</span>
+      </span>
+      <p class="cell-text" *ngSwitchDefault matTooltip="{{ element[c] | displayFormat: c }}">
+        {{ element[c] | displayFormat: c }}
+      </p>
+    </td>
+  </ng-container>
+
+  <ng-template #pleaseUpdateMessage>
+    <em>
+      Please Update
+      <mat-icon
+        color="primary"
+        matTooltip="This noun's value doesn't exist in the latest Measurement Settings. Please edit the noun and select a value."
+        >help</mat-icon
+      >
+    </em>
+  </ng-template>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>

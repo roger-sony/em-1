@@ -1,0 +1,19 @@
+<div class="sked-calendar-wrap">
+  <page-title title="Current Chapter"></page-title>
+  <ng-container *ngIf="{calendarOptions: calendarOptions$ | async} as state">
+    <skeds-calendar-view-toolbar
+      [name]="(currentTemplateView$ | async)?.displayName"
+      (navigateWeek)="onNavigateWeekClick($event)"
+      (zoom)="onZoom($event)"
+      [status]="status$ | async"
+      [zoomLength]="zoomOptions?.length"
+      [zoomIndex]="zoomIndex$ | async"
+      [calendarOptions]="state.calendarOptions"
+    ></skeds-calendar-view-toolbar>
+
+    <div class="calendar-view-calendar-container">
+      <full-calendar #calendarView [options]="state.calendarOptions || initialCalendarOptions"></full-calendar>
+      <div class="empty-space"></div>
+    </div>
+  </ng-container>
+</div>

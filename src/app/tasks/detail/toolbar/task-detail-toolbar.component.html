@@ -1,0 +1,21 @@
+<div class="left-container">
+  <back-button (back)="back.next()"></back-button>
+
+  <div class="input-container">
+    <input
+      class="task-name-input"
+      placeholder="Enter name... *"
+      [value]="taskForm?.name"
+      (input)="onNameInput($event.target.value)"
+    />
+    <div *ngIf="invalid$ | async" class="error">Paragraph name is required</div>
+    <div *ngIf="taskNameUsed$ | async" class="error">This name is already taken</div>
+  </div>
+</div>
+
+<button mat-flat-button color="primary" *ngIf="canEdit" (click)="onSaveClick()" [disabled]="!canSave || saving">
+  Save
+</button>
+<tasks-detail-toolbar-menu *ngIf="!canSave && paragraph && canEdit" [task]="paragraph"></tasks-detail-toolbar-menu>
+
+<div #hiddenText class="hidden">{{ taskForm?.name }}</div>

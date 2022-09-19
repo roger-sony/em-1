@@ -1,0 +1,222 @@
+:host {
+  display: block;
+
+  .privileges-wrap {
+    min-height: calc(100vh - 32px - 56px);
+    font-style: normal;
+    font-size: 15px;
+    line-height: 24px;
+    background: #faf7ed;
+    border-radius: 8px;
+    padding: 16px;
+    box-sizing: border-box;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &.days-wrap {
+        background: #f0ecdd;
+        border-radius: 8px;
+        margin-bottom: 12px;
+
+        li {
+          &:first-child {
+            border-bottom-left-radius: 8px;
+          }
+
+          &:last-child {
+            border: none;
+            border-bottom-right-radius: 8px;
+          }
+
+          &:not(:last-child) {
+            border-right: 1px solid rgba(47, 39, 35, 0.12);
+          }
+        }
+      }
+
+      &.dates-table {
+        li {
+          height: 179px;
+          background: #fefdf5;
+          position: relative;
+
+          &:first-child {
+            border-bottom-left-radius: 8px;
+          }
+
+          &:not(:last-child) {
+            border-right: 1px solid rgba(47, 39, 35, 0.12);
+          }
+
+          &:last-child {
+            border: none;
+            border-bottom-right-radius: 8px;
+          }
+
+          .date-number {
+            position: absolute;
+            left: 12px;
+            top: 5px;
+          }
+        }
+      }
+
+      &:not(.has-skeds) {
+        li {
+          &:first-child {
+            border-top-left-radius: 8px;
+          }
+
+          &:last-child {
+            border-top-right-radius: 8px;
+          }
+        }
+      }
+
+      li {
+        display: inline-block;
+        width: calc(100% / 7);
+        padding: 2px 12px;
+        text-align: start;
+        font-weight: 600;
+        font-size: 12px;
+
+        &.days {
+          font-weight: bold;
+          text-transform: uppercase;
+
+          &:hover {
+            background: inherit;
+            cursor: default;
+          }
+        }
+
+        &.grey {
+          .date-number {
+            color: #ccc;
+          }
+        }
+
+        .list-content {
+          position: absolute;
+          top: 50px;
+          left: 12px;
+          width: calc(100% - 24px);
+
+          .day-item {
+            background: #faf7ed;
+            border-radius: 5px;
+            padding: 0 5px;
+            overflow: hidden;
+
+            .sked-item {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              .sked-interval {
+                margin-right: 10px;
+                white-space: nowrap;
+              }
+
+              .sked-colors {
+                display: flex;
+                gap: 5px;
+
+                .color-item {
+                  border-radius: 2px;
+                  width: 10px;
+                  height: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .dates-wrap {
+      position: relative;
+
+      .week-wrap {
+        position: relative;
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+
+        .week-title-wrap {
+          padding: 11px 11px 11px 20px;
+          background: #f0ecdd;
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .actions-wrap {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+
+            .content-copy {
+              font-size: 20px;
+              width: 20px;
+              height: 20px;
+            }
+
+            .mat-icon {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .week-template-item {
+        position: absolute;
+        top: calc(50% - 41px); // 41px is half of "empty" block height
+        left: 16px; // left margin to center block
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex: 1 0 calc(100% - 32px); // 32px is left/right margin
+        width: calc(100% - 32px); // 32px is left/right margin
+        height: 83px;
+        background: #fefdf5;
+        border: 1px solid #e5e3dc;
+        border-radius: 8px;
+        padding: 0 22px;
+
+        &.duplicate {
+          border-color: #4fd1c5;
+        }
+
+        .template-item-label {
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 16px;
+          color: #5d4037;
+        }
+
+        .create-week-btn {
+          width: 37px;
+          height: 37px;
+          background: #e5e3dc;
+          display: flex;
+          align-items: center;
+          border-radius: 8px;
+          border: none;
+          cursor: pointer;
+
+          mat-icon {
+            color: #7c645f;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

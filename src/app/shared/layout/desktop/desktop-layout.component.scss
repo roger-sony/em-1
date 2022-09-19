@@ -1,0 +1,35 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  & > * {
+    flex-grow: 1;
+  }
+}
+
+main {
+  display: flex;
+  flex-grow: 1;
+  min-height: 1px;
+}
+
+.desktop-sidebar {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.desktop-content {
+  padding: 16px;
+  flex-grow: 1;
+  min-width: 1px;
+  overflow: auto;
+}

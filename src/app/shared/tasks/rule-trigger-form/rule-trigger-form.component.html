@@ -1,0 +1,52 @@
+<form [formGroup]="form">
+  <div class="flex-row">
+    <div class="text">When this task is</div>
+    <input
+      ophInput
+      formControlName="taskEvent"
+      [matAutocomplete]="taskEventAutocomplete"
+      class="taskEvent"
+      placeholder="Select event"
+    />
+  </div>
+
+  <div class="flex-row">
+    <div class="text">Then trigger</div>
+    <input
+      ophInput
+      (input)="onPlanInput($event.target.value)"
+      [matAutocomplete]="planAutocomplete"
+      class="status"
+      placeholder="Select a Plan"
+      formControlName="ruleId"
+    />
+  </div>
+
+  <div class="checkbox-container">
+    <mat-checkbox formControlName="saveReport" class="save-report">
+      <span>Save a report</span>
+      <span class="ophanello icon-info-2"></span>
+    </mat-checkbox>
+
+    <mat-checkbox formControlName="triggerActions">
+      <span>Trigger Actions</span>
+      <span class="ophanello icon-info-2"></span>
+    </mat-checkbox>
+  </div>
+</form>
+
+<mat-autocomplete #planAutocomplete="matAutocomplete">
+  <div class="autocomplete-list">
+    <mat-option
+      *ngFor="let plan of filteredPlans$ | async; trackBy: trackByPlanId"
+      [value]="plan.displayName"
+      (click)="onPlanSelect(plan.displayName)"
+    >
+      {{ plan.displayName }}
+    </mat-option>
+  </div>
+</mat-autocomplete>
+
+<mat-autocomplete #taskEventAutocomplete="matAutocomplete">
+  <mat-option *ngFor="let taskEvent of taskEvents" [value]="taskEvent">{{ taskEvent }}</mat-option>
+</mat-autocomplete>

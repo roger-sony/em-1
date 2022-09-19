@@ -1,0 +1,10 @@
+<mat-select
+  [value]="formValue.name"
+  disableOptionCentering="true"
+  placeholder="Select attribute..."
+  (selectionChange)="onAttributeSelect($event.value)"
+>
+  <mat-option *ngFor="let fieldKey of fieldKeys" [value]="fieldKey">
+    {{ fieldKey | inventoryFieldName }}
+  </mat-option>
+</mat-select>

@@ -1,0 +1,17 @@
+<div *ngIf="group.name === editedGroup" (click)="onOverlayClick()" class="focus-overlay"></div>
+
+<oph-card
+  [class.focused-card]="group.name === editedGroup"
+  class="noun-card"
+  [iconName]="group.global ? 'global' : 'noun'"
+  [title]="group.name"
+>
+  <plan-noun-card-menu
+    *ngIf="group.facts?.length || group.rules?.length"
+    [group]="group"
+    [plan]="plan"
+    [index]="index"
+    class="oph-card-header-button"
+  ></plan-noun-card-menu>
+  <plan-noun-card-content [group]="group" [plan]="plan" [editedIndex]="editedIndex"></plan-noun-card-content>
+</oph-card>

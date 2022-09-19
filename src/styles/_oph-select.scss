@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+.oph-option-disabled {
+  color: $black-color-light !important;
+}
+
+.oph-option-multiple {
+  padding-left: 0 !important;
+}
+
+.oph-option-selected:not(.oph-option-multiple) {
+  background-color: $black-color-lightest;
+}

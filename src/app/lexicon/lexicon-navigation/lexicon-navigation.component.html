@@ -1,0 +1,42 @@
+<nav mat-tab-nav-bar class="default-class">
+  <a
+    mat-tab-link
+    [routerLink]="['./nouns']"
+    routerLinkActive
+    #nounsActive="routerLinkActive"
+    [active]="nounsActive.isActive"
+    >Nouns</a
+  >
+  <a
+    mat-tab-link
+    [routerLink]="['./verbs']"
+    routerLinkActive
+    #verbsActive="routerLinkActive"
+    [active]="verbsActive.isActive"
+    >Verbs</a
+  >
+  <a
+    mat-tab-link
+    [routerLink]="['./adjectives']"
+    routerLinkActive
+    #adjectivesActive="routerLinkActive"
+    [active]="adjectivesActive.isActive"
+    >Adjectives</a
+  >
+  <a
+    mat-tab-link
+    [routerLink]="['./sentences']"
+    routerLinkActive
+    #sentencesActive="routerLinkActive"
+    [active]="sentencesActive.isActive"
+    >Sentences</a
+  >
+  <!-- <a
+    mat-tab-link
+    [routerLink]="['./configuration']"
+    routerLinkActive
+    #templatesActive="routerLinkActive"
+    [active]="templatesActive.isActive"
+    >Configuration</a
+  > -->
+</nav>

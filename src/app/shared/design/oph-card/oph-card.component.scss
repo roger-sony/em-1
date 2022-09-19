@@ -1,0 +1,54 @@
+@import 'src/styles/variables';
+
+:host {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 1px rgba(91, 91, 91, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+  display: inline-block;
+
+  &:hover,
+  &.selected {
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05), 0 0 6px 0 rgba(164, 164, 164, 0.08),
+      0 2px 16px 0 rgba(118, 118, 140, 0.13), 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  &.selected {
+    border: 1px solid $primary-color;
+  }
+}
+
+.oph-card-header {
+  border-bottom: 1px solid $black-color-lightest;
+  display: flex;
+  margin: 0 16px;
+  padding: 16px 0;
+}
+
+.oph-card-header-no-bottom {
+  display: flex;
+  margin: 0 16px;
+  padding: 16px 0;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+}
+
+.oph-card-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  margin: 0 20px;
+  min-width: 1px;
+}
+
+.oph-card-title {
+  color: $black-color;
+  font-family: 'Bitter', serif;
+  font-size: 14px;
+  font-weight: bold;
+  word-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}

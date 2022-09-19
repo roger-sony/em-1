@@ -1,0 +1,30 @@
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.messageDisplay {
+  position: fixed;
+  width: 100%;
+  z-index: 2000;
+}
+
+.spacer {
+  width: 100%;
+  height: 100px;
+}
+
+.loading-spinner-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}

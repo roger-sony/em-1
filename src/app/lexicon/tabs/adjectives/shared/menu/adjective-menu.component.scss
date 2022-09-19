@@ -1,0 +1,32 @@
+@import 'src/styles/variables';
+
+button {
+  all: unset;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  margin-top: -7px;
+
+  &:hover {
+    background-color: $black-color-lightest;
+  }
+}
+
+oph-icon {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.separator {
+  height: 1px;
+  background-color: $black-color-lightest;
+  margin-left: 52px;
+  width: 148px;
+}

@@ -1,0 +1,66 @@
+@import '../../../../styles/variables';
+
+:host {
+  background-color: rgba($black-color, 0.03);
+  background-image: linear-gradient(to bottom, #f4f4f4 35%, rgba(246, 246, 247, 0) 110%);
+  border-radius: 8px;
+  color: $black-color-light;
+  display: block;
+  font-size: 16px;
+  position: relative;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
+@media (min-width: $mobile-breakpoint) {
+  :host {
+    font-size: 14px;
+  }
+}
+
+.list-picker-content {
+  padding: 8px;
+}
+
+.list-picker-item {
+  border-radius: 3px;
+  cursor: pointer;
+  display: block;
+  font-family: 'Lato', sans-serif;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 16px;
+  margin: 8px 0;
+
+  &.selected {
+    background-color: $black-color-lightest;
+    color: $black-color;
+  }
+}
+
+.list-picker-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 45px;
+  width: 100%;
+  border-radius: 8px;
+  background-image: linear-gradient(to bottom, #f4f4f4 35%, rgba(246, 246, 247, 0) 110%);
+  pointer-events: none;
+}
+
+.list-picker-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  height: 45px;
+  width: 100%;
+  border-radius: 8px;
+  background-image: linear-gradient(to top, #f4f4f4 35%, rgba(246, 246, 247, 0) 110%);
+  pointer-events: none;
+}

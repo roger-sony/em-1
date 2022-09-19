@@ -1,0 +1,22 @@
+<mat-nav-list [ngSwitch]="type">
+  <ng-container *ngSwitchCase="dialogType.Tasks">
+    <a [routerLink]="'/tasks'" (click)="onItemClick()" mat-list-item> View Tasks </a>
+    <a [routerLink]="'/task-scheduler'" (click)="onItemClick()" mat-list-item> Task Scheduler </a>
+  </ng-container>
+  <ng-container *ngSwitchCase="dialogType.Plans">
+    <a [routerLink]="'/decision-tables'" (click)="onItemClick()" mat-list-item> Decision Tables </a>
+    <a [routerLink]="'/rule-triggers'" (click)="onItemClick()" mat-list-item> Rule Triggers </a>
+  </ng-container>
+  <ng-container *ngSwitchCase="dialogType.Skeds">
+    <a [routerLink]="'/skeds'" (click)="onItemClick()" mat-list-item> View Week </a>
+    <a [routerLink]="'/current-sked'" (click)="onItemClick()" mat-list-item> Current Sked </a>
+  </ng-container>
+  <ng-container *ngSwitchCase="dialogType.Reports">
+    <a [routerLink]="'/decision-table-reports'" (click)="onItemClick()" mat-list-item> View/Run Reports </a>
+    <a [routerLink]="'/queued-actions'" (click)="onItemClick()" mat-list-item> Queued Actions </a>
+  </ng-container>
+  <ng-container *ngSwitchCase="dialogType.Users">
+    <a [routerLink]="'/users'" (click)="onItemClick()" mat-list-item> Manage Users </a>
+    <a [routerLink]="'/roles'" (click)="onItemClick()" mat-list-item> Manage Roles </a>
+  </ng-container>
+</mat-nav-list>

@@ -1,0 +1,215 @@
+<form [formGroup]="form">
+  <div [class.hidden]="page" class="form-section name-section">
+    <input
+      autocomplete="off"
+      #nameInput
+      matInput
+      [formControlName]="formControl.Name"
+      placeholder="Enter name... *"
+      type="text"
+      (input)="onNameInput($event.target['value'])"
+    />
+    <div *ngIf="nameControl.invalid && (nameControl.dirty || nameControl.touched)" class="form-error name-position">
+      Paragraph name is required
+    </div>
+    <div *ngIf="taskNameInvalid$ | async" class="form-error name-position">This name is already taken</div>
+  </div>
+
+  <!-- <div class="form-section abandon-section">
+    <mat-slide-toggle [formControlName]="formControl.Abandon" labelPosition="before">
+      <div class="abandon-label">
+        <oph-icon name="abandon" size="24"></oph-icon>
+        <span class="abandon-text">Can be abandoned</span>
+      </div>
+    </mat-slide-toggle>
+  </div> -->
+
+  <div class="form-section">
+    <mat-form-field appearance="fill">
+      <!-- <mat-label>{{ durationFocus ? 'Duration (minutes) *' : 'Duration *' }}</mat-label> -->
+      <mat-label>Derived Effort</mat-label>
+      <oph-icon matPrefix name="clock-light" size="24"></oph-icon>
+      <div class="input-section">
+        <input
+          matInput
+          (focus)="durationFocus = true"
+          (blur)="durationFocus = false"
+          type="number"
+          min="1"
+          max="120"
+          [formControlName]="formControl.Effort"
+          disabled
+        />
+        <!-- <span
+          *ngIf="!durationFocus && effortControl.value"
+          class="minute-text"
+          [style.marginLeft.px]="durationWidth.clientWidth - 175"
+          >{{ effortControl.value !== 1 ? 'minutes' : 'minute' }}</span
+        > -->
+      </div>
+      <!-- <div *ngIf="effortControl.invalid && (effortControl.dirty || effortControl.touched)" class="form-error">
+        Duration is required
+      </div> -->
+    </mat-form-field>
+  </div>
+
+  <div class="form-section form-flex">
+    <mat-form-field *ngIf="false" appearance="fill">
+      <mat-label>Skeds</mat-label>
+      <oph-icon matPrefix name="skeds" size="24"></oph-icon>
+      <mat-select [formControlName]="formControl.Skeds" [multiple]="true">
+        <mat-option *ngFor="let skedTemplate of skedTemplates" [value]="skedTemplate.id">
+          {{ skedTemplate | skedTemplateName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="select-form-field">
+      <mat-label>Priority *</mat-label>
+      <oph-icon matPrefix name="flag-light" size="24"></oph-icon>
+      <mat-select [formControlName]="formControl.Priority" class="task-form-select">
+        <mat-option *ngFor="let priority of basicPriorities" [value]="priority">{{ priority }}</mat-option>
+        <mat-option [value]="20">Emergency</mat-option>
+      </mat-select>
+      <div *ngIf="priorityControl.invalid && (priorityControl.dirty || priorityControl.touched)" class="form-error">
+        Priority is required
+      </div>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="select-form-field">
+      <mat-label>Movability *</mat-label>
+      <oph-icon matPrefix name="movability-light" size="24"></oph-icon>
+      <mat-select [formControlName]="formControl.Movability" class="task-form-select">
+        <mat-option *ngFor="let movability of movabilities" [value]="movability">{{ movability }}</mat-option>
+      </mat-select>
+      <div
+        *ngIf="movabilityControl.invalid && (movabilityControl.dirty || movabilityControl.touched)"
+        class="form-error"
+      >
+        Movability is required
+      </div>
+    </mat-form-field>
+  </div>
+
+  <div class="form-section">
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>{{ instructionsControl.value ? 'Instructions' : 'Enter Instructions' }}</mat-label>
+      <oph-icon matPrefix name="text" size="24"></oph-icon>
+      <textarea matInput [formControlName]="formControl.Instructions" [matTextareaAutosize]="true"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="form-section">
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>{{ rolesControl.value?.length > 0 ? 'Assigned Roles' : 'Assign to Role' }}</mat-label>
+      <oph-icon matPrefix name="role" size="24"></oph-icon>
+      <mat-chip-list #roleChipList class="task-form-role-chip" [disabled]="!canEdit">
+        <mat-chip
+          *ngFor="let role of selectedRoles$ | async"
+          [removable]="removable"
+          (removed)="removeRoleFromSelectedRoles(role)"
+        >
+          <span>{{ role || '' }}</span>
+          <mat-icon matChipRemove *ngIf="removable && canEdit">cancel</mat-icon>
+        </mat-chip>
+        <input
+          #rolesInput
+          #rolesInputTrigger="matAutocompleteTrigger"
+          [matChipInputFor]="roleChipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matAutocomplete]="roleAutocomplete"
+          (input)="onRoleInput($event.target['value'])"
+          (click)="rolesInputTrigger.openPanel()"
+        />
+      </mat-chip-list>
+      <mat-autocomplete #roleAutocomplete="matAutocomplete" (optionSelected)="selectRoleOnMatChipList($event)">
+        <mat-option *ngFor="let role of searchFilteredRoles$ | async" [value]="role.displayName">
+          {{ role.displayName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>{{ usersControl.value?.length > 0 ? 'Assigned Users' : 'Assign to User' }}</mat-label>
+      <oph-icon matPrefix name="user" size="20"></oph-icon>
+      <mat-chip-list #userChipList class="task-form-user-chip" [disabled]="!canEdit">
+        <mat-chip
+          *ngFor="let user of selectedUsers$ | async"
+          [removable]="removable"
+          (removed)="removeUserFromSelectedUsers(user)"
+        >
+          <oph-icon class="avatar" matPrefix name="avatar" size="24"></oph-icon>
+          {{ user || '' }}
+          <mat-icon matChipRemove *ngIf="removable && canEdit">cancel</mat-icon>
+        </mat-chip>
+        <input
+          #usersInput
+          #usersInputTrigger="matAutocompleteTrigger"
+          [matChipInputFor]="userChipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matAutocomplete]="userAutocomplete"
+          (input)="onUserInput($event.target['value'])"
+          (click)="usersInputTrigger.openPanel()"
+        />
+      </mat-chip-list>
+      <mat-autocomplete #userAutocomplete="matAutocomplete" (optionSelected)="selectUserOnMatChipList($event)">
+        <mat-option *ngFor="let user of searchFilteredUsers$ | async" [value]="user.userName">
+          <oph-icon matPrefix name="avatar" size="24"></oph-icon>
+          {{ user.userName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Up-Points</mat-label>
+      <oph-icon matPrefix name="star" size="24"></oph-icon>
+      <div class="input-section">
+        <input
+          matInput
+          [formControlName]="formControl.UpPoints"
+          type="number"
+          min="0"
+          (focus)="upPointsFocus = true"
+          (blur)="upPointsFocus = false"
+        />
+        <span
+          *ngIf="!upPointsFocus && upPointsControl.value"
+          class="minute-text"
+          [style.marginLeft.px]="upPointsWidth.clientWidth - 175"
+          >{{ upPointsControl.value !== 1 ? 'points' : 'point' }}</span
+        >
+      </div>
+    </mat-form-field>
+  </div>
+  <span class="up-points-text">Score you can use to reward workers for performing unpleasant Paragraphs</span>
+
+  <div class="form-section form-flex">
+    <mat-form-field appearance="fill" class="select-form-field">
+      <mat-label>Location</mat-label>
+      <oph-icon matPrefix name="location" size="20"></oph-icon>
+      <input matInput [formControlName]="formControl.Location" [matAutocomplete]="locationAutocomplete" />
+      <mat-autocomplete #locationAutocomplete="matAutocomplete">
+        <mat-option *ngFor="let location of locations$ | async; trackBy: trackByValue" [value]="location">
+          {{ location }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="select-form-field">
+      <mat-label>Category</mat-label>
+      <oph-icon matPrefix name="category" size="24"></oph-icon>
+      <input matInput [formControlName]="formControl.Category" [matAutocomplete]="categoryAutocomplete" />
+      <mat-autocomplete #categoryAutocomplete="matAutocomplete">
+        <mat-option *ngFor="let category of categories$ | async; trackBy: trackByValue" [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</form>
+
+<!-- <div class="hidden" #durationWidth>{{ effortControl.value }}</div> -->
+<div class="hidden" #upPointsWidth>{{ upPointsControl.value }}</div>

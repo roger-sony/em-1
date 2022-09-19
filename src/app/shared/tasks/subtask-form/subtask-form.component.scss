@@ -1,0 +1,109 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  margin: 0 8px;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.condition-container {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  .subtask-condition {
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .if {
+    font-size: 20px;
+    margin: 8px 0;
+  }
+
+  oph-select {
+    margin-right: 8px;
+    width: 114px;
+  }
+
+  button {
+    all: unset;
+    // margin-left: 12px;
+
+    .icon-delete {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+
+      &:before {
+        font-size: 24px;
+      }
+
+      &:hover {
+        color: $black-color;
+      }
+    }
+  }
+}
+
+.content-item {
+  width: 192px;
+
+  .label {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+}
+
+.add-button {
+  margin-top: 8px;
+  width: 132px;
+}
+
+.margin-right {
+  margin-right: 8px;
+}
+
+.add-condition-container {
+  text-align: center;
+
+  .add-button-plain {
+    display: flex;
+    align-items: center;
+    color: $black-color-light;
+    font-size: 14px;
+    height: 36px;
+    border: none;
+    padding: 0 12px;
+    width: 134px;
+    margin-top: 8px;
+  }
+
+  .icon-plus {
+    margin-right: 4px;
+
+    &:before {
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+  }
+
+  .then {
+    font-size: 20px;
+    margin: 16px 0;
+  }
+}
+
+.subtask-condition-form-container {
+  width: 90%;
+}

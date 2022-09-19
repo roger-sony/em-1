@@ -1,0 +1,114 @@
+<div class="container">
+  <!-- content -->
+  <div
+    class="content"
+    cdkDropListGroup
+    [ngClass]="builderType | async"
+    *ngIf="(currentProject | async) || {}; let project"
+  >
+    <div class="flex-box content-items-wrap">
+      <div class="content-item">
+        <div class="builder-item-wrap">
+          <div
+            class="colored-thing"
+            (click)="onColorMenuClick(project)"
+            [matMenuTriggerFor]="menu"
+            [style.background-color]="project?.color || '#E5E3DC'"
+          ></div>
+          <mat-menu #menu="matMenu" classList="project-color-select">
+            <div
+              class="colored-thing"
+              *ngFor="let color of colors"
+              [style.background-color]="color"
+              (click)="onColorSelect(project, color)"
+            ></div>
+          </mat-menu>
+
+          <div class="main-part" (click)="editProjectName(project)">
+            <span *ngIf="isProjectSelected(project) && project.title">{{ project.title }}</span>
+            <!--            <span *ngIf="!isProjectSelected(project) || (isProjectSelected(project) && !project.title)">UNTITLED</span>-->
+            <input placeholder="Enter task"
+                   *ngIf="isProjectSelected(project) === false"/>
+
+            <!--            <mat-icon *ngIf="isProjectSelected(project)" (click)="editProjectName(project)">edit</mat-icon>-->
+          </div>
+          <div class="actions-wrap">
+            <mat-form-field appearance="outline" *ngIf="project.tasks?.length">
+              <input matInput placeholder="Seach"/>
+              <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+            <button mat-button class="duplicate-project-button" *ngIf="isProjectSelected(project)">
+              <mat-icon>content_copy</mat-icon>
+              Duplicate
+            </button>
+            <button
+              mat-button
+              class="create-project-button"
+              *ngIf="isProjectSelected(project)"
+              (click)="createProject()"
+            >
+              <mat-icon>add</mat-icon>
+              Create Project
+            </button>
+            <button
+              mat-button
+              class="save-button"
+              [disabled]="!(hasUnsavedChanges | async) || (saveInProgress | async)"
+              (click)="saveProject(project)"
+            >
+              <span *ngIf="(hasUnsavedChanges | async) && !(saveInProgress | async)">Save</span>
+              <span *ngIf="saveInProgress | async">Saving</span>
+              <span *ngIf="!(hasUnsavedChanges | async) && !(saveInProgress | async)">Saved</span>
+            </button>
+          </div>
+        </div>
+        <div class="body-content-wrap" [style.border-color]="project.color">
+          <div class="task-template-list">
+            <div
+              cdkDropList
+              class="list-wrap"
+              cdkDropListConnectedTo="taskTemplatesList"
+              [cdkDropListData]="project.tasks"
+              (cdkDropListDropped)="drop($event)"
+            >
+              <div class="empty-item" *ngIf="!project.tasks?.length">
+                <div class="text-wrap" *ngIf="isProjectSelected(project)">
+                  <div class="bold-part">Create a new Activity</div>
+                  <div class="thin-part">Or drag a activity over from the sidebar.</div>
+                </div>
+                <div class="text-wrap" *ngIf="!isProjectSelected(project)">
+                  <div class="bold-part">Create a new Project</div>
+                </div>
+                <div class="icon-wrap">
+                  <mat-icon *ngIf="isProjectSelected(project)" (click)="createTaskForTemplate(project)">add</mat-icon>
+                  <mat-icon *ngIf="!isProjectSelected(project)" (click)="createProject()">add</mat-icon>
+                </div>
+              </div>
+              <div class="task-template-box" *ngFor="let task of project.tasks; let i = index">
+                <div class="icon-wrap">
+                  <oph-icon [name]="'/builder/project-builder/task-icons/' + task.icon" [size]="32"></oph-icon>
+                </div>
+                <div class="title-wrap">
+                  <div class="title">{{ task.name }}</div>
+                  <div class="duration">{{ task.duration }} min</div>
+                </div>
+                <div class="control-icons-wrap">
+                  <mat-icon (click)="editTask(project, i)">edit</mat-icon>
+                  <mat-icon (click)="removeTask(project, i)">delete</mat-icon>
+                </div>
+                <div class="tasks-number">
+                  {{ task.subtasks?.length || 0 }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right side nav -->
+    <div class="flex-box right-side-bar">
+      <side-tabs></side-tabs>
+    </div>
+  </div>
+</div>

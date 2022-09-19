@@ -1,0 +1,69 @@
+<div class="legacy-content">
+  <mat-card class="example-card">
+    <h1>Create Task Trigger</h1>
+    <mat-card-content>
+      <h2>Select A Rule to Run</h2>
+      <div class="form-container">
+        <mat-form-field appearance="outline" class="mr" style="width: 500px">
+          <mat-select [(ngModel)]="ruleTrigger.ruleId" placeholder="Rule / Decision Table">
+            <mat-option *ngFor="let d of dTables" [value]="d._id">{{ d.display_name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br /><br />
+        <h2>When Should It Run?</h2>
+        When
+        <mat-form-field appearance="outline">
+          <mat-select [(ngModel)]="ruleTrigger.taskId" placeholder="Select Task" label="Select Task">
+            <mat-option *ngFor="let t of tasks" [value]="t._id">{{ t.shortTask }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        is
+        <mat-form-field appearance="outline">
+          <mat-select [(ngModel)]="ruleTrigger.taskEvent" placeholder="Select Task Event" label="Select Task Event">
+            <mat-option *ngFor="let e of taskEvents" [value]="e">{{ e }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br /><br />
+        <h2>What Should Happen Each Time It Runs?</h2>
+        <mat-checkbox [(ngModel)]="ruleTrigger.saveReport">
+          Save a Report
+          <mat-icon color="accent" matTooltip="If checked, a report will be saved every time this rule runs."
+            >info</mat-icon
+          >
+        </mat-checkbox>
+        <br /><br />
+        <mat-checkbox [(ngModel)]="ruleTrigger.triggerActions">
+          Trigger Actions
+          <mat-icon
+            color="accent"
+            matTooltip="If unchecked, this rule will NOT trigger any actions. Uncheck this if you only want to run reports."
+            >info</mat-icon
+          >
+        </mat-checkbox>
+      </div>
+    </mat-card-content>
+    <!--============= Submit/Cancel =============-->
+    <mat-card-actions>
+      <button
+        class="mr"
+        mat-raised-button
+        color="primary"
+        (click)="submitForm()"
+        [disabled]="
+          !ruleTrigger.ruleId ||
+          !ruleTrigger.taskId ||
+          !ruleTrigger.taskEvent ||
+          !(ruleTrigger.triggerActions || ruleTrigger.saveReport)
+        "
+      >
+        Save Scheduled Rule
+      </button>
+      <button mat-raised-button color="warn" (click)="goBack()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div class="debug">
+  <h2>Debug</h2>
+  <pre>{{ ruleTrigger | json }}</pre>
+</div>

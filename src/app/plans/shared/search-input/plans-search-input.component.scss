@@ -1,0 +1,33 @@
+@import 'src/styles/variables';
+
+.input-container {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+}
+
+.plan-search-input {
+  background-color: white;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  width: 100%;
+  padding-left: 42px;
+  border: 1px solid $black-color-lightest;
+  color: $black-color;
+  font-family: $lato-font-family;
+  font-size: 14px;
+}
+
+::placeholder {
+  color: $black-color-lighter;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  margin: 0 16px;
+  opacity: 1;
+}

@@ -1,0 +1,101 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+oph-card {
+  width: 100%;
+}
+
+.chapters-card-item {
+  padding: 8px 20px 20px 4px;
+}
+
+.chapters-card-item-progress {
+  padding: 8px 20px 20px 8px;
+}
+
+.title-text {
+  font-size: 12px;
+  font-family: $lato-font-family;
+  color: $black-color-light;
+}
+
+.date-text {
+  font-size: 14px;
+  font-family: $lato-font-family;
+}
+
+.content-container {
+  margin-left: 24px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.paragraph {
+  color: $black-color;
+  font-size: 14px;
+  font-family: $lato-font-family;
+}
+
+.chip-container {
+  padding: 16px 16px;
+  display: flex;
+}
+
+.chapter-status {
+  height: 16px;
+  border-radius: 16px;
+  font-family: $lato-font-family;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.draft {
+  width: 55px;
+  background-color: $black-color-lightest;
+}
+
+.live {
+  width: 50px;
+  background-color: rgba(0, 213, 146, 0.2);
+}
+
+.light {
+  color: $black-color-light;
+}
+
+.text {
+  margin-bottom: 1px;
+  font-weight: 300;
+}
+
+.updated {
+  font-family: $lato-font-family;
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.info-container {
+  display: flex;
+  margin-top: 8px;
+}
+
+.overview-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 0 16px 20px;
+  border-bottom: 1px solid rgba($black-color, 0.05);
+
+  .info {
+    margin-left: 24px;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    color: $black-color-light;
+  }
+}

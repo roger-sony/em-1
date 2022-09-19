@@ -1,0 +1,23 @@
+<dialog-header (close)="onClose()" [iconCircle]="true" [iconName]="'chapter'" [title]="'New Chapter'"></dialog-header>
+
+<chapter-form
+  [value]="chapterForm$ | async"
+  [usedColors]="usedColors$ | async"
+  (valueChange)="onValueChange($event)"
+  (validityChange)="onValidityChange($event)"
+>
+</chapter-form>
+
+<dialog-footer>
+  <dialog-cancel-button (close)="onClose()"></dialog-cancel-button>
+  <button
+    class="create-button"
+    mat-flat-button
+    color="primary"
+    type="button"
+    (click)="onSaveClick()"
+    [disabled]="saveDisabled$ | async"
+  >
+    Create
+  </button>
+</dialog-footer>

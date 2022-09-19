@@ -1,0 +1,5 @@
+<mat-select [formControl]="control" placeholder="Time...">
+  <mat-option *ngFor="let skedTime of options" [value]="skedTime">
+    {{ skedTime | skedTimeName }}
+  </mat-option>
+</mat-select>

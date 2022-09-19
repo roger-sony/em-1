@@ -1,0 +1,130 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+
+  ::ng-deep {
+    .header-wrap {
+      img {
+        position: absolute;
+        margin-top: 10px;
+      }
+
+      dialog-header {
+        margin: 0;
+        padding-left: 50px;
+
+        * {
+          font-family: $bitter-font-family;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 20px;
+          line-height: 32px;
+        }
+      }
+    }
+
+    dialog-content {
+      font-family: $lato-font-family;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.15px;
+      color: rgba(35, 35, 47, 0.8);
+      padding-left: 0;
+      padding-right: 0;
+
+      .unit-of-measure-wrap {
+        flex: 0 0 180px;
+        max-width: 180px;
+        padding: 16px 0 0;
+        justify-content: space-between;
+        align-items: stretch;
+        align-content: stretch;
+
+        .update-item {
+          margin-bottom: 10px;
+
+          input.oph-input {
+            &[disabled] {
+              border-radius: 0;
+            }
+          }
+
+          span[matsuffix] {
+            padding-right: 5px;
+
+            &.disabled {
+              background-color: rgba(35, 35, 47, 0.05);
+              color: rgba(35, 35, 47, 0.25);
+              height: 34px;
+            }
+          }
+
+          .unit-of-measure-label {
+            font-family: $lato-font-family;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 16px;
+            letter-spacing: 0.4px;
+            color: rgba(35, 35, 47, 0.64);
+            padding-left: 5px;
+            margin-bottom: 5px;
+          }
+
+          .unit-of-measure-value {
+            display: flex;
+            font-family: $lato-font-family;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+
+            .quantity {
+              max-width: 50%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              letter-spacing: 0.5px;
+              color: rgba(35, 35, 47, 0.8);
+              margin: 0 1px 0 0;
+            }
+
+            .unit-of-measure {
+              letter-spacing: -0.2px;
+              color: rgba(35, 35, 47, 0.64);
+            }
+          }
+
+          oph-select {
+            .container {
+              width: 100%;
+            }
+          }
+
+          .control-wrap.date-picker {
+            oph-date-picker {
+              max-width: 100%;
+              min-width: unset;
+              border: 1px solid rgba(35, 35, 47, 0.08);
+
+              input.oph-input {
+                max-width: calc(100% - 44px);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    dialog-footer {
+      margin: 0;
+
+      dialog-cancel-button {
+        margin-right: 8px;
+      }
+    }
+  }
+}

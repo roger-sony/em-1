@@ -1,0 +1,37 @@
+@import 'src/styles/variables';
+
+:host {
+  padding-left: 20px;
+  display: flex;
+  height: 48px;
+  cursor: pointer;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  color: rgba(47, 39, 35, 0.64);
+  font-family: Bitter, serif;
+  font-size: 14px;
+  text-decoration: none;
+  width: 100%;
+
+  &:hover,
+  &.active {
+    color: rgba(47, 39, 35, 0.87);
+  }
+}
+
+.sidebar-item-indicator {
+  border-radius: 0 3px 3px 0;
+  height: 16px;
+  width: 3px;
+}
+
+.sidebar-item-icon {
+  margin: 0 4px 0 9px;
+}
+
+.sidebar-item-text {
+  margin: 0 4px;
+}

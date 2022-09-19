@@ -1,0 +1,28 @@
+<oph-menu *ngIf="{options: filteredOptions$ | async} as state" [origin]="origin" (show)="onMenuShow($event)">
+  <div class="add-menu-search">
+    <input ophInput [placeholder]="inputPlaceholder" [value]="search$ | async" (input)="onSearchInput($event)" />
+  </div>
+
+  <ng-container *ngIf="state.options?.length > 0">
+    <div class="add-menu-list">
+      <oph-menu-item
+        *ngFor="let option of state.options; trackBy: trackByOptionValue"
+        [fontSize]="14"
+        [hideIcon]="true"
+        [text]="option.displayValue || option.value"
+        (click)="onAddClick(option)"
+      ></oph-menu-item>
+    </div>
+
+    <add-menu-separator></add-menu-separator>
+  </ng-container>
+
+  <oph-menu-item
+    [fontSize]="14"
+    [iconName]="'plus-small'"
+    [text]="createOptionText"
+    (click)="onCreateClick()"
+  ></oph-menu-item>
+
+  <ng-content></ng-content>
+</oph-menu>

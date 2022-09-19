@@ -1,0 +1,29 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+
+  &::ng-deep {
+    .mat-tab-link-container {
+      padding-left: 32px;
+
+      .mat-tab-link {
+        -webkit-font-smoothing: antialiased;
+        font-family: $bitter-font-family;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: 0.75px;
+        line-height: 16px;
+        opacity: 0.87;
+        color: rgba(35, 35, 47, 0.8);
+        margin: 0;
+
+        &.mat-tab-label-active {
+          color: #23232f;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

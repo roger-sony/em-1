@@ -1,0 +1,56 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 32px 0 16px;
+  border-bottom: 1px solid $black-color-lightest;
+}
+
+.input-container {
+  position: relative;
+
+  .error {
+    position: absolute;
+    color: $error-color;
+    font-size: 12px;
+    top: 34px;
+    left: 10px;
+  }
+}
+
+.left-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.task-name-input {
+  all: unset;
+  width: 100%;
+  caret-color: $primary-color;
+  line-height: 36px;
+  margin-left: 12px;
+  font-size: 20px;
+  font-family: $bitter-font-family;
+  // border-bottom: 1px solid rgba($black-color, 0.3);
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+}
+
+.hidden {
+  display: block;
+  visibility: hidden;
+  position: absolute;
+  white-space: pre;
+  font-size: 20px;
+  font-family: $bitter-font-family;
+}
+
+button {
+  margin-right: 8px;
+}

@@ -1,0 +1,37 @@
+<table class="oph-table mt" matSort (matSortChange)="sortData($event)">
+  <tr>
+    <th mat-sort-header="noun">
+      <oph-icon class="icon" [name]="'noun'" [size]="16"></oph-icon>
+      <span>Noun</span>
+    </th>
+    <th mat-sort-header="attributes">Attribute</th>
+    <th mat-sort-header="conditions">Condition</th>
+    <th mat-sort-header="value">Measured Value</th>
+    <th mat-sort-header="task">Task Triggered</th>
+    <th mat-sort-header="update">Last Update</th>
+  </tr>
+  <tr *ngFor="let rule of sortedData" [ngClass]="{'green-row': rule.conditionMet}">
+    <td>{{ rule.noun | inventoryPreviewDisplay }}</td>
+    <td>
+      <div *ngFor="let attribute of rule.attributes" class="light-text">{{ attribute | titlecase }}</div>
+    </td>
+    <td>
+      <div
+        [ngClass]="rule.conditionMet ? 'condition-container condition-met' : 'condition-container'"
+        matTooltip="Condition Met"
+        [matTooltipDisabled]="!rule.conditionMet"
+        *ngFor="let condition of rule.conditions"
+      >
+        <span *ngIf="condition.operation" class="operation">{{ condition.operation }}</span>
+        <span>{{ condition.value }} </span>
+        <span *ngIf="condition.uom" class="light-text">{{ condition.uom | lowercase }} </span>
+        <img *ngIf="rule.conditionMet" src="assets/img/icons/success-green.svg" class="success-icon" />
+        <div class="empty-div"></div>
+        <br />
+      </div>
+    </td>
+    <td>{{ rule.measuredValue }}</td>
+    <td>{{ rule.taskTriggered }}</td>
+    <td>{{ rule.lastUpdate }}</td>
+  </tr>
+</table>

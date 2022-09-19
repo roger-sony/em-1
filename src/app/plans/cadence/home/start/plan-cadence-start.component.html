@@ -1,0 +1,23 @@
+<form *ngIf="{date: date$ | async} as state" [formGroup]="form">
+  <div class="start-buttons">
+    <button (click)="onDateButtonClick()" class="date-button" type="button">
+      <oph-icon [name]="'calendar-single-event'" [size]="24"></oph-icon>
+      <span>{{ state.date | moment: 'dddd, MMM D' }}</span>
+    </button>
+
+    <button (click)="onTimeButtonClick()" type="button">
+      <span>{{ time$ | async | moment: 'H:mm A' }}</span>
+    </button>
+  </div>
+
+  <mat-calendar
+    *ngIf="calendarShown$ | async; else timePicker"
+    [selected]="state.date"
+    [minDate]="today"
+    (selectedChange)="onDateChange($event)"
+  ></mat-calendar>
+
+  <ng-template #timePicker>
+    <mobile-time-picker [formControlName]="controls.Time" class="mobile-time-picker"></mobile-time-picker>
+  </ng-template>
+</form>

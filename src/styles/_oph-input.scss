@@ -1,0 +1,28 @@
+@import 'src/styles/variables';
+
+.oph-input {
+  all: unset;
+  background-color: $white-color;
+  border: 1px solid $black-color-lightest;
+  border-radius: 3px;
+  caret-color: $primary-color;
+  color: $black-color;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 8px;
+
+  &:focus {
+    border: 1px solid $primary-color;
+  }
+
+  &::placeholder {
+    color: $black-color-lighter;
+  }
+
+  &[disabled] {
+    background-color: $black-color-lightest;
+    color: $black-color-lighter;
+  }
+}

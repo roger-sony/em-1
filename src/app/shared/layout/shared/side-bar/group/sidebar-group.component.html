@@ -1,0 +1,15 @@
+<ng-container *ngIf="{expanded: expanded$ | async} as state">
+  <div [class.active]="active" (click)="onClick()" class="sidebar-group">
+    <oph-icon [name]="'sidebar/' + icon + iconSuffix" [size]="24" class="sidebar-group-icon"></oph-icon>
+    <div class="sidebar-group-text">{{ text }}</div>
+    <oph-icon
+      [name]="'sidebar/' + (state.expanded ? 'caret-up' : 'caret-down') + caretIconSuffix"
+      [size]="24"
+      class="sidebar-group-icon"
+    ></oph-icon>
+  </div>
+
+  <ng-container *ngIf="state.expanded">
+    <ng-content></ng-content>
+  </ng-container>
+</ng-container>

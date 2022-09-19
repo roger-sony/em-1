@@ -1,0 +1,116 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+@import './variables';
+
+.dark-mode {
+  &.mat-app-background {
+    font-family: 'Asap', serif;
+    background-color: $background-color;
+    color: rgba(47, 39, 35, 0.87);
+
+    .mat-drawer-container {
+      background-color: #faf7ed;
+    }
+  }
+
+  .mat-checkbox-checked.mat-accent {
+    .mat-checkbox-background {
+      background-color: mat-color($Oph-accent, 400);
+
+      .mat-checkbox-checkmark-path {
+        stroke: white !important;
+      }
+    }
+
+    &:not(.mat-checkbox-disabled),
+    &:active:not(.mat-checkbox-disabled) {
+      .mat-ripple-element {
+        background: mat-color($Oph-accent, 400);
+      }
+    }
+  }
+
+  mat-divider.mat-divider {
+    border-top-color: mat-color($Oph-primary, 400);
+  }
+
+  .bold-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: mat-color($Oph-primary, 500) !important;
+    box-shadow: 0 4px 0 mat-color($Oph-primary, 500) !important;
+    border-radius: 16px !important;
+    border: 2px solid mat-color($Oph-primary, 500) !important;
+    background-color: mat-color($Oph-primary, 50) !important;
+
+    svg {
+      stroke: mat-color($Oph-primary, 500);
+    }
+  }
+
+  .bold-button:active {
+    top: 4px;
+
+    color: mat-color($Oph-accent, 400) !important;
+    box-shadow: 0 4px 0 mat-color($Oph-accent, 400) !important;
+    border-radius: 16px !important;
+    border: 2px solid mat-color($Oph-accent, 400) !important;
+    background-color: mat-color($Oph-primary, 50) !important;
+
+    svg {
+      stroke: mat-color($Oph-accent, 400);
+    }
+  }
+
+  /*-----------Form field----------*/
+
+  .mat-form-field {
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    font-size: 14px;
+
+    &.mat-paginator-page-size-select {
+      min-width: 65px;
+
+      .mat-form-field-flex {
+        padding: 0 8px 0;
+      }
+    }
+
+    .mat-form-field-underline {
+      background-image: unset !important;
+      background-color: mat-color($Oph-primary, 50) !important;
+    }
+  }
+
+  .mat-form-field-outline-start {
+    border-radius: 8px 0 0 8px !important;
+    min-width: 8px !important;
+  }
+
+  .mat-form-field-outline-gap {
+    border-radius: 0;
+    border: 1px solid currentColor;
+    border-left-style: none;
+    border-right-style: none;
+  }
+
+  .mat-form-field-outline-end {
+    border-radius: 0 8px 8px 0 !important;
+  }
+
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+  .mat-form-field-appearance-outline.mat-form-field-can-float
+    .mat-input-server:focus
+    + .mat-form-field-label-wrapper
+    .mat-form-field-label {
+    transform: translateY(-0.75em) scale(0.75);
+    width: 133.3333733333%;
+  }
+
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap {
+    border-top-color: currentcolor !important;
+  }
+}

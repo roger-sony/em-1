@@ -1,0 +1,26 @@
+<div class="nouns-empty-container" *ngIf="nouns && !nouns.length; else chaptersList">
+  <div class="icon-circle">
+    <oph-icon [name]="'chapter'" [size]="40" class="chapter-empty-icon"></oph-icon>
+  </div>
+  <p class="no-chapter">No Nouns have been found!</p>
+  <button mat-button class="nouns-create-new-button" (click)="onCreateClick()">
+    <oph-icon name="nouns-plus-white" [size]="12"></oph-icon>
+    <mat-label>Create new</mat-label>
+  </button>
+</div>
+
+<ng-template #chaptersList>
+  <div class="overview-detail-container">
+    <div class="card-container">
+      <lexicon-noun-card
+        *ngFor="let noun of nouns"
+        [noun]="noun"
+        (click)="onCardClick(noun)"
+        (editNoun)="onEditNoun($event)"
+        (cloneNoun)="onCloneNoun($event)"
+        (nounStatusUpdated)="onNounsStatusUpdate()"
+        class="noun-card"
+      ></lexicon-noun-card>
+    </div>
+  </div>
+</ng-template>

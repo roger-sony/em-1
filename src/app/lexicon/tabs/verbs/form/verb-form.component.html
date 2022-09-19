@@ -1,0 +1,5 @@
+<input class="input" placeholder="Name" [formControl]="name" />
+
+<textarea class="input textarea" placeholder="Description" [formControl]="description"></textarea>
+
+<button mat-flat-button (click)="onAdd()" [disabled]="!name.value.length">Add</button>

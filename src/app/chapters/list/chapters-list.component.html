@@ -1,0 +1,20 @@
+<chapters-list-header></chapters-list-header>
+
+<chapters-control-panel *ngIf="!(mobile$ | async)"></chapters-control-panel>
+
+<ng-container *ngIf="{chapters: filteredChapters$ | async} as state">
+  <chapters-list-empty
+    *ngIf="state.chapters && !state.chapters?.length; else chaptersList"
+    (create)="onCreateButtonClick()"
+  ></chapters-list-empty>
+  <ng-template #chaptersList>
+    <div class="card-container">
+      <chapter-card
+        *ngFor="let chapter of state.chapters"
+        [chapter]="chapter"
+        (click)="onCardClick(chapter.id)"
+        class="chapter-card"
+      ></chapter-card>
+    </div>
+  </ng-template>
+</ng-container>

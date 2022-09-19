@@ -1,0 +1,31 @@
+@import 'src/styles/variables';
+
+.noun-container {
+  min-width: 37px;
+  height: 24px;
+  border-radius: 3px;
+  background-color: $black-color-lightest;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noun-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.count {
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  font-family: $lato-font-family;
+  margin-left: 2px;
+  text-align: center;
+  padding-right: 2px;
+}
+
+.grey {
+  opacity: 0.25;
+}

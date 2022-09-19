@@ -1,0 +1,198 @@
+<div class="container">
+  <div class="header-wrap">
+    <img src="/assets/img/icons/box-in-grey-circle.svg" [height]="40" [width]="40" alt="" aria-hidden="true" />
+    <dialog-header title="New noun" *ngIf="isCreate"></dialog-header>
+    <dialog-header title="Edit noun" *ngIf="isEdit"></dialog-header>
+    <dialog-header title="Clone noun" *ngIf="isClone"></dialog-header>
+  </div>
+
+  <dialog-content class="dialog-content">
+    <form #form="ngForm" *ngIf="noun">
+      <mat-form-field>
+        <input
+          name="nounLabel"
+          matInput
+          [(ngModel)]="noun.name"
+          [placeholder]="namePlaceholder"
+          (focus)="nameFocused = true"
+          (blur)="nameFocused = false"
+          [maxLength]="140"
+          required
+        />
+        <mat-error *ngIf="form.form?.get('nounLabel')?.invalid">Noun name is required</mat-error>
+      </mat-form-field>
+    </form>
+    <div>
+      <div class="adjective-header-row">
+        <oph-label class="adjective-name-title">Adjective</oph-label>
+        <oph-label class="adjective-value-title">Value</oph-label>
+        <oph-label class="adjective-uom-title">Unit</oph-label>
+      </div>
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div
+          class="adjective-row example-box"
+          *ngFor="let adjective of noun.adjectives; let i = index"
+          [cdkDragData]="adjective"
+          cdkDrag
+        >
+          <div class="control-wrap drag-wrap">
+            <oph-icon cdkDragHandle name="adjective-handle-drag" [size]="24"></oph-icon>
+          </div>
+
+          <div class="control-wrap adjective-name">
+            <input
+              ophInput
+              [value]="adjective.name"
+              placeholder="Pick adjective..."
+              [matAutocomplete]="auto"
+              (keydown)="filterAdjectives($event)"
+              #autoTrigger="matAutocompleteTrigger"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let adjective of filteredAdjectives | async"
+                [value]="adjective.name"
+                (onSelectionChange)="updateAdjectiveType(adjective, i)"
+              >
+                {{ adjective.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+
+          <div class="control-wrap adjective-value" *ngIf="!adjective.options && adjective.type !== 'date'">
+            <input
+              ophInput
+              [(ngModel)]="selectedValues[i]"
+              [type]="adjective.numeric ? 'number' : 'text'"
+              [maxLength]="adjective.numeric ? null : 140"
+              placeholder="Value..."
+            />
+          </div>
+
+          <div class="control-wrap date-picker" *ngIf="adjective.type === 'date' && !adjective.options">
+            <oph-date-picker
+              class="margin"
+              [value]="selectedValues[i]"
+              [minValue]="null"
+              [maxValue]="null"
+              (valueChange)="onDateChange($event, i)"
+            ></oph-date-picker>
+          </div>
+
+          <oph-form-field *ngIf="adjective.options" class="control-wrap oph-select">
+            <oph-select
+              [class.selected]="!!selectedValues[i]"
+              [(ngModel)]="selectedValues[i]"
+              [hideBorder]="true"
+              [hideIcons]="false"
+            >
+              <oph-option *ngFor="let option of adjective.options" [value]="option">
+                {{ option }}
+              </oph-option>
+            </oph-select>
+          </oph-form-field>
+
+          <div class="control-wrap adjective-uom" *ngIf="!isCreate || !adjective.unitOfMeasure?.length <= 1">
+            <input ophInput [(ngModel)]="adjective.unitOfMeasure" type="text" disabled />
+          </div>
+
+          <oph-form-field *ngIf="isCreate && adjective.unitOfMeasure?.length > 1" class="control-wrap oph-select">
+            <oph-select
+              [class.selected]="!!selectedUoMs[i]"
+              [(ngModel)]="selectedUoMs[i]"
+              [disabled]="!(adjective.unitOfMeasure?.length > 1)"
+              [hideBorder]="true"
+              [hideIcons]="!(adjective.unitOfMeasure?.length > 1)"
+            >
+              <oph-option *ngFor="let option of adjective.unitOfMeasure" [value]="option">
+                {{ option }}
+              </oph-option>
+            </oph-select>
+          </oph-form-field>
+
+          <mat-slide-toggle class="adjective-updatable" [(ngModel)]="adjective.updateable" disabled>
+            Updatable
+          </mat-slide-toggle>
+
+          <div
+            class="control-wrap adjective-reset-value"
+            *ngIf="!(adjective.options || adjective.type === 'date') || isEdit"
+          >
+            <input
+              ophInput
+              *ngIf="adjective.type !== 'date'"
+              [(ngModel)]="adjective.resetValue"
+              [disabled]="isEdit || !adjective.updateable"
+              [type]="adjective.numeric ? 'number' : 'text'"
+              [maxLength]="adjective.numeric ? null : 140"
+              placeholder="Reset value..."
+            />
+
+            <input
+              ophInput
+              *ngIf="adjective.type === 'date'"
+              [value]="adjective.resetValue | date: 'MMMM d, y'"
+              disabled
+              placeholder="Reset value..."
+            />
+          </div>
+
+          <div class="control-wrap adjective-reset-value" *ngIf="adjective.type === 'date' && !isEdit">
+            <oph-date-picker
+              class="margin"
+              [(ngModel)]="adjective.resetValue"
+              [disabled]="isEdit"
+              [minValue]="null"
+              [maxValue]="null"
+            ></oph-date-picker>
+          </div>
+
+          <oph-form-field class="control-wrap oph-select remove-select" *ngIf="adjective.options && !isEdit">
+            <oph-select
+              [class.selected]="!!adjective.resetValue"
+              [(ngModel)]="adjective.resetValue"
+              [hideBorder]="true"
+              [hideIcons]="false"
+              [disabled]="isEdit || !adjective.updateable"
+            >
+              <oph-option *ngFor="let option of adjective.options" [value]="option">
+                {{ option }}
+              </oph-option>
+            </oph-select>
+          </oph-form-field>
+
+          <div class="control-wrap remove-wrap">
+            <oph-icon name="adjective-remove" [size]="24" (click)="removeAdjective(i)"></oph-icon>
+          </div>
+        </div>
+      </div>
+
+      <button mat-flat-button color="primary" type="button" [disabled]="!canAddAdjective" (click)="addAdjective()">
+        <oph-icon *ngIf="canAddAdjective" name="adjective-add-active"></oph-icon>
+        <oph-icon *ngIf="!canAddAdjective" name="adjective-add-disabled"></oph-icon>
+        Add adjective
+      </button>
+    </div>
+    <div class="batch-box-wrap" *ngIf="isCreate || isClone">
+      <mat-slide-toggle class="create-batch-nouns-slider" [(ngModel)]="createBatch">
+        Create batch of nouns
+      </mat-slide-toggle>
+
+      <div class="batch-count-wrap" *ngIf="createBatch">
+        <input ophInput id="batchAmount" [min]="1" [max]="99" [maxLength]="2" type="number" [(ngModel)]="batchAmount" />
+        <label for="batchAmount">Count of nouns</label>
+      </div>
+
+      <div class="batch-count-wrap" *ngIf="createBatch">
+        <input ophInput id="batchStart" [min]="1" [max]="999" [maxLength]="3" type="number" [(ngModel)]="batchStart" />
+        <label for="batchStart">Noun name starts from</label>
+      </div>
+    </div>
+  </dialog-content>
+
+  <dialog-footer>
+    <dialog-cancel-button></dialog-cancel-button>
+
+    <button mat-flat-button color="primary" type="button" [disabled]="!canSave" (click)="onSaveClick()">Save</button>
+  </dialog-footer>
+</div>

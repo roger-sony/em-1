@@ -1,0 +1,79 @@
+@import 'src/styles/variables';
+
+.triggers-list-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 20px;
+  border: solid $black-color-lightest;
+  border-width: 43px 17px 17px 17px;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+.triggers-title {
+  font-family: $bitter-font-family;
+  font-size: 14px;
+  line-height: 1.43;
+  color: $black-color-light;
+  position: absolute;
+  top: -31px;
+  left: 4px;
+}
+
+.trigger-item {
+  cursor: default;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: solid 1px $black-color-lightest;
+  height: 48px;
+}
+
+.caret-icon {
+  position: absolute;
+  right: 0px;
+  top: -35px;
+  cursor: pointer;
+}
+
+.icon-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 18px;
+  width: 32px;
+  height: 32px;
+  background-color: $black-color-lightest;
+  border-radius: 50px;
+}
+
+.text {
+  margin-left: 15px;
+}
+
+.text-lighter {
+  -webkit-font-smoothing: antialiased;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  color: $black-color-light;
+}
+
+.text-light {
+  -webkit-font-smoothing: antialiased;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  font-weight: bold;
+  color: $black-color-light;
+}
+
+.trigger-menu {
+  position: absolute;
+  right: 8px;
+}
+
+.line {
+  height: 1px;
+  margin: 18px 20px 18px 20px;
+  border-top: 1px solid $black-color-lightest;
+}

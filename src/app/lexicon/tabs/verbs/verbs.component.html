@@ -1,0 +1,12 @@
+<ng-container *ngIf="{verbs: verbs$ | async} as state">
+  <ng-container *ngIf="!(loaded$ | async); else loaded">
+    <loading-screen></loading-screen>
+  </ng-container>
+
+  <ng-template #loaded>
+    <div class="content-container">
+      <verb-form [verbs]="state.verbs" (add)="onAdd($event)"></verb-form>
+      <verb-list [verbs]="state.verbs" (delete)="onDelete($event)"></verb-list>
+    </div>
+  </ng-template>
+</ng-container>

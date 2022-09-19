@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+:host {
+  border-top: 1px solid $black-color-lightest;
+  display: block;
+  margin: 0 8px;
+  padding: 8px 0;
+}
+
+.title {
+  font-size: 16px;
+  margin: 8px 0 4px;
+}
+
+.text {
+  font-size: 14px;
+  color: $black-color-light;
+  margin-bottom: 8px;
+}

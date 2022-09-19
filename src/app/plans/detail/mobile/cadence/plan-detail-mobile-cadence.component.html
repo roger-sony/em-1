@@ -1,0 +1,14 @@
+<div *ngIf="ruleSchedule; else setCadence" class="plan-cadence-custom-link">
+  <mobile-subpage-link matRipple [iconName]="'clock-v-2'" (click)="onCadenceClick()">
+    <div class="title">{{ cadenceForm | cadenceRepetition }}</div>
+    <div class="text">{{ cadenceForm | cadenceStart }} - {{ cadenceForm | cadenceEnd }}</div>
+  </mobile-subpage-link>
+</div>
+
+<ng-template #setCadence>
+  <div class="plan-cadence-custom-link">
+    <mobile-subpage-link matRipple [iconName]="'calendar-empty'" (click)="onCadenceClick()">
+      Set A Cadence
+    </mobile-subpage-link>
+  </div>
+</ng-template>

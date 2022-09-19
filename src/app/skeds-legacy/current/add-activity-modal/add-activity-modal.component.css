@@ -1,0 +1,41 @@
+.modal-content {
+  width: 600px;
+}
+
+.innerContent {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.message {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.radioButtonBox {
+  margin-top: 25px;
+  margin-left: 100px;
+}
+
+.radioButtons {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.button {
+  width: 150px;
+  margin-top: 12px;
+}
+
+.matSpinner {
+  display: flex;
+  justify-content: center;
+}

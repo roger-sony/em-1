@@ -1,0 +1,17 @@
+<div *ngIf="!default" class="floating-button-label">
+  <ng-content></ng-content>
+</div>
+
+<button *ngIf="!small; else smallButton" mat-fab [color]="default && 'primary'">
+  <ng-container *ngTemplateOutlet="buttonIcon"></ng-container>
+</button>
+
+<ng-template #smallButton>
+  <button mat-mini-fab [color]="undefined" class="small-floating-button">
+    <ng-container *ngTemplateOutlet="buttonIcon"></ng-container>
+  </button>
+</ng-template>
+
+<ng-template #buttonIcon>
+  <oph-icon [name]="'fab/' + iconName" [size]="small ? 24 : 32"></oph-icon>
+</ng-template>

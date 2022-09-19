@@ -1,0 +1,71 @@
+<form [formGroup]="form">
+  <div>
+    <input
+      ophInput
+      (input)="onVerbInput($event.target.value)"
+      [matAutocomplete]="verbAutocomplete"
+      class="status"
+      placeholder="Select a Verb"
+      formControlName="verb"
+    />
+
+    <mat-autocomplete #verbAutocomplete="matAutocomplete">
+      <div class="autocomplete-list">
+        <mat-option
+          *ngFor="let verb of filteredVerbs$ | async; trackBy: trackByVerbId"
+          [value]="verb.name"
+          (click)="onVerbSelect(verb.name)"
+        >
+          {{ verb.name }}
+        </mat-option>
+      </div>
+    </mat-autocomplete>
+
+    <input
+      ophInput
+      (input)="onNounInput($event.target.value)"
+      [matAutocomplete]="nounAutocomplete"
+      class="status"
+      placeholder="Select a Noun"
+      formControlName="noun"
+    />
+
+    <mat-autocomplete #nounAutocomplete="matAutocomplete">
+      <div class="autocomplete-list">
+        <mat-option
+          *ngFor="let noun of filteredNouns$ | async; trackBy: trackByNounId"
+          [value]="noun.name"
+          (click)="onNounSelect(noun.name)"
+        >
+          {{ noun.name }}
+        </mat-option>
+      </div>
+    </mat-autocomplete>
+  </div>
+
+  <div class="select-container">
+    <div appearance="fill" class="select-item">
+      <mat-label>Priority</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option *ngFor="let option of options" [value]="option">{{ option }}</mat-option>
+        <mat-option [value]="20">Emergency</mat-option>
+      </mat-select>
+    </div>
+
+    <div appearance="fill" class="select-item">
+      <mat-label>Movability</mat-label>
+      <mat-select formControlName="movability">
+        <mat-option *ngFor="let option of options" [value]="option">{{ option }}</mat-option>
+      </mat-select>
+    </div>
+
+    <div appearance="fill" class="select-item">
+      <mat-label>Effort</mat-label>
+      <mat-select formControlName="effort">
+        <mat-option *ngFor="let option of options" [value]="option">{{ option }}</mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <button mat-flat-button [disabled]="!form.valid" (click)="onAdd()">Add</button>
+</form>

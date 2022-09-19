@@ -1,0 +1,10 @@
+<div class="line"></div>
+<div class="set-button" (click)="onButtonClick()">
+  <div class="flex">
+    <oph-icon [name]="iconName" [size]="24" class="icon-left"></oph-icon>
+    <div>
+      <ng-content class="content"></ng-content>
+    </div>
+  </div>
+  <oph-icon [name]="'arrow-right'" [size]="24" class="icon-right"></oph-icon>
+</div>

@@ -1,0 +1,29 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.option-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+}
+
+.option-display-value {
+  color: $black-color;
+  font-family: $lato-font-family;
+  font-size: 16px;
+  height: 48px;
+  line-height: 48px;
+  margin: 0 24px 0 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.option-selected-icon {
+  margin-right: 16px;
+}

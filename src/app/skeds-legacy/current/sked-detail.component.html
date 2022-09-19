@@ -1,0 +1,301 @@
+<ng-container *ngIf="skedsLoading$ | async; else loaded">
+  <loading-screen></loading-screen>
+</ng-container>
+
+<ng-template #loaded>
+  <div class="legacy-content" *ngIf="sked; else noSked">
+    <ng-container *ngIf="{skedsLegacy: skedsLegacy$ | async} as state">
+      <!--***************************************************************************
+                                  Header
+  ****************************************************************************-->
+      <header *ngIf="sked?.tasks; else noSked">
+        <h2>
+          Current Sked: {{ sked.displayName || '' | formatWeekday }}
+          {{ sked._StartTime || sked.skedData.startTime | convert24To12 }} -
+          {{ sked._EndTime || sked.skedData.endTime | convert24To12 }}
+          <mat-icon
+            *ngIf="state.skedsLegacy"
+            class="clicky"
+            color="primary"
+            aria-label="edit sked"
+            routerLink="/sked-instance/{{ sked._id }}"
+            >edit</mat-icon
+          >
+        </h2>
+        <div style="display: none">{{ sked$ | async }}</div>
+        <span class="fill-remaining-space"></span>
+        <button mat-mini-fab color="accent" (click)="getSked()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </header>
+      <!--***************************************************************************
+                        Sked Status Cards & Table Controls
+  ****************************************************************************-->
+      <main *ngIf="sked?.tasks && roles && users">
+        <div class="mb flex-mobile-wrap">
+          <mat-card>
+            <mat-card-subtitle>Remaining Tasks:</mat-card-subtitle>
+            <mat-card-title>{{ totalSkedEffort | number: '1.0-0' }} minutes</mat-card-title>
+          </mat-card>
+          <mat-card>
+            <mat-card-subtitle>Remaining Employee Time:</mat-card-subtitle>
+            <mat-card-title>{{ remainingEmployeeTime | number: '1.0-0' }} minutes</mat-card-title>
+          </mat-card>
+        </div>
+        <div class="flex-mobile-wrap">
+          <div>
+            <mat-button-toggle-group #taskFilters="matButtonToggleGroup" selected="all">
+              <mat-button-toggle (change)="updateFilters('claimedBy', '')">All Tasks</mat-button-toggle>
+              <mat-button-toggle value="unclaimed" (change)="updateFilters('claimedBy', undefined)" value
+                >Unclaimed Tasks</mat-button-toggle
+              >
+              <mat-button-toggle (change)="updateFilters('claimedBy', currentUser)" value="claimed"
+                >My Tasks</mat-button-toggle
+              >
+            </mat-button-toggle-group>
+          </div>
+          <button mat-raised-button color="primary" class="addActivityButton" (click)="toggleAddActivityModal()">
+            Add Activity
+          </button>
+          <add-task-shortcut
+            *ngIf="state.skedsLegacy"
+            (addTaskClick)="addTask($event)"
+            [sked]="sked"
+            [tasks]="tasks"
+          ></add-task-shortcut>
+          <span class="fill-remaining-space"></span>
+          <button mat-raised-button color="accent" class="clearFilterButton" (click)="clearStorage()">
+            Clear Filters
+          </button>
+          <mat-form-field *ngIf="roles" style="margin-right: 5px">
+            <mat-select
+              placeholder="Show Tasks Assigned To"
+              [(ngModel)]="displayedRoles"
+              (ngModelChange)="selectRoleChange()"
+              (selectionChange)="updateFilters('assignedTo', displayedRoles)"
+              multiple
+            >
+              <mat-option *ngFor="let r of objectKeys(roles)" [value]="r">{{ roles[r].displayName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select
+              placeholder="Show/Hide Columns"
+              [(ngModel)]="displayedColumns"
+              (ngModelChange)="selectColumnChange()"
+              multiple
+            >
+              <mat-option *ngFor="let c of possibleColumns" [value]="c">{{ c | unCamelCase }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!--***************************************************************************
+                                    Table
+  ****************************************************************************-->
+        <div style="overflow: auto" class="mat-elevation-z8">
+          <table class="table-responsive" mat-table [dataSource]="dataSource" matSort>
+            <ng-container *ngFor="let c of displayedColumns" [matColumnDef]="c">
+              <!--**************** Column Names ******************-->
+              <th mat-header-cell *matHeaderCellDef style="padding-top: 10px">
+                <span *ngIf="c !== 'effort'" mat-sort-header>{{ c | unCamelCase }}</span>
+                <span *ngIf="c === 'effort'" mat-sort-header>Estimated Duration</span>
+                <mat-form-field appearance="outline" *ngIf="isFilterable(c)">
+                  <input
+                    class="filter-input"
+                    matInput
+                    (keyup)="updateFilters(c, $event.target.value)"
+                    placeholder="Filter"
+                    [value]="skedFilters.input[c]"
+                  />
+                </mat-form-field>
+              </th>
+              <!--******************* Rows ***********************-->
+              <td mat-cell *matCellDef="let element" class="hover-cell" [ngSwitch]="c">
+                <span *ngSwitchCase="'displayName'">
+                  {{ element.shortTask }}
+                </span>
+                <span *ngSwitchCase="'effort'"> {{ element.effort }} minutes </span>
+                <span *ngSwitchCase="'actualDuration'"> {{ element.actualDuration || 'n/a' }} minutes </span>
+                <span *ngSwitchCase="'assignedTo'">
+                  <ng-container *ngFor="let a of element.assignedToUser">
+                    <span>{{ usersMap[a]?.username }}</span>
+                  </ng-container>
+                </span>
+                <span *ngSwitchCase="'roles'">
+                  <ng-container *ngFor="let a of element.assignedTo; let last = last">
+                    {{ roles[a].displayName }}<span *ngIf="!last">,</span>
+                  </ng-container>
+                </span>
+                <span *ngSwitchCase="'details'">
+                  <mat-icon class="clicky" color="accent" (click)="viewTaskDetail(element)">more_vert</mat-icon>
+                </span>
+                <span *ngSwitchCase="'updateTaskStatus'">
+                  <button
+                    [disabled]="
+                      element.assignedToUser?.length > 0 &&
+                      usersMap[element.assignedToUser[0]]?.username !== currentUser
+                    "
+                    *ngIf="!element.claimedBy && (element.status === 'created' || element.status === 'in progress')"
+                    mat-mini-fab
+                    matTooltip="Claim Task"
+                    (click)="handleTaskClaimClick(element)"
+                    [color]="
+                      element.assignedToUser?.length > 0 &&
+                      usersMap[element.assignedToUser[0]]?.username === currentUser
+                        ? 'success'
+                        : 'primary'
+                    "
+                  >
+                    <mat-icon>person_add</mat-icon>
+                  </button>
+                  <button
+                    *ngIf="
+                      element.claimedBy &&
+                      element.claimedBy === currentUser &&
+                      element.claimedBy.length > 0 &&
+                      (element.status === 'created' || element.status === 'in progress')
+                    "
+                    mat-mini-fab
+                    matTooltip="Unclaim Task"
+                    (click)="handleTaskUnclaimClick(element)"
+                    [color]="
+                      element.assignedToUser?.length > 0 &&
+                      usersMap[element.assignedToUser[0]]?.username === currentUser
+                        ? 'success'
+                        : 'primary'
+                    "
+                  >
+                    <mat-icon>person_add_disabled</mat-icon>
+                  </button>
+                  <button
+                    [disabled]="
+                      element.assignedToUser?.length > 0 &&
+                      usersMap[element.assignedToUser[0]]?.username !== currentUser
+                    "
+                    *ngIf="(!element.claimedBy || element.claimedBy == currentUser) && element.status === 'created'"
+                    mat-mini-fab
+                    matTooltip="Begin Task"
+                    (click)="handleTaskStatusClick(element, 'in progress')"
+                    [color]="
+                      element.assignedToUser?.length > 0 &&
+                      usersMap[element.assignedToUser[0]]?.username === currentUser
+                        ? 'success'
+                        : 'primary'
+                    "
+                  >
+                    <mat-icon>play_arrow</mat-icon>
+                  </button>
+                  <button
+                    *ngIf="element.claimedBy === currentUser && element.status === 'in progress' && !element.paused"
+                    mat-mini-fab
+                    matTooltip="Pause Task"
+                    color="primary"
+                  >
+                    <mat-icon>pause</mat-icon>
+                  </button>
+                  <button
+                    *ngIf="element.claimedBy === currentUser && element.status === 'in progress' && element.paused"
+                    mat-mini-fab
+                    matTooltip="Resume Task"
+                    (click)="handleTaskResumeClick(element)"
+                    color="primary"
+                  >
+                    <mat-icon>play_arrow</mat-icon>
+                  </button>
+                  <button
+                    *ngIf="element.claimedBy == currentUser && element.status === 'in progress' && !element.paused"
+                    mat-mini-fab
+                    matTooltip="Complete Task"
+                    (click)="handleTaskStatusClick(element, 'complete')"
+                    color="success"
+                  >
+                    <mat-icon>done_outline</mat-icon>
+                  </button>
+                  <button
+                    [disabled]="
+                      element.assignedToUser?.length > 0 &&
+                      usersMap[element.assignedToUser[0]]?.username !== currentUser
+                    "
+                    *ngIf="
+                      (!element.claimedBy || element.claimedBy == currentUser) &&
+                      element.status !== 'complete' &&
+                      element.status !== 'abandoned' &&
+                      element.status !== 'auto-abandoned'
+                    "
+                    mat-mini-fab
+                    matTooltip="Abandon Task"
+                    (click)="handleTaskStatusClick(element, 'abandoned')"
+                    color="warn"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <em>{{ constructStatusMessage(element) }}</em>
+                </span>
+                <span *ngSwitchDefault>{{ element[c] | displayFormat: c }}</span>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+        <!--******************* Table Pagination ***********************-->
+        <mat-paginator
+          class="mat-elevation-z8"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[10, 20, 50, 100]"
+          (page)="pageSizeChange($event.pageSize)"
+          showFirstLastButtons
+        ></mat-paginator>
+      </main>
+    </ng-container>
+  </div>
+
+  <ng-template #noSked>
+    <div class="no-sked">No Sked in progress</div>
+  </ng-template>
+
+  <!--***************************************************************************
+                                  Modals
+  ****************************************************************************-->
+  <!-- TODO: This component is deprecated. It needs to be deleted along with
+    its display method(s) & variable(s) in the parent component -->
+  <sked-subtask-modal
+    *ngIf="viewingSubtaskDetail"
+    (closeSubtaskModalClick)="closeSubtaskDetail()"
+    [task]="activeTask"
+    [recipes]="recipes"
+  ></sked-subtask-modal>
+
+  <sked-task-detail-modal
+    *ngIf="viewingTaskDetail"
+    (closeTaskModalClick)="closeTaskDetail()"
+    [task]="activeTask"
+    [roles]="roles"
+    [users]="usersMap"
+  ></sked-task-detail-modal>
+
+  <sked-task-claim-modal
+    *ngIf="viewingTaskClaimDetail"
+    (closeTaskClaimModalClick)="closeTaskClaimDetail()"
+  ></sked-task-claim-modal>
+
+  <sked-begin-task-ph-modal
+    *ngIf="viewingTaskBeginPhDetail && activeTask.claimedBy === currentUser"
+    [activeTask]="activeTask"
+    (handlePauseTask)="pauseTask(activeTask)"
+    (openAbandonModalClick)="openAbandonModal()"
+    (observations)="updateObservations($event)"
+    (closeTaskDetailDoneClick)="closeTaskDetailDone()"
+  ></sked-begin-task-ph-modal>
+
+  <sked-abandon-modal
+    *ngIf="viewingAbandonModal"
+    (closeAbandonModalClick)="closeAbandonModal()"
+    (closeAbandonModalOnlyClick)="closeAbandonModalOnly()"
+  ></sked-abandon-modal>
+
+  <sked-add-activity-modal
+    *ngIf="viewingAddActivityModal"
+    (toggleAddActivityModal)="toggleAddActivityModal()"
+  ></sked-add-activity-modal>
+</ng-template>

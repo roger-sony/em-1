@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.conditions-container {
+  padding: 16px;
+}
+
+.conditions-title {
+  font-family: $bitter-font-family;
+  font-size: 12px;
+  color: $black-color-light;
+}
+
+.title-container {
+  margin: 8px 0 24px 8px;
+}

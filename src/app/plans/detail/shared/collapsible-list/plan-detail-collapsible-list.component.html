@@ -1,0 +1,34 @@
+<div class="list-container">
+  <ng-container *ngIf="options?.length; else empty">
+    <div class="header-container" (click)="onHeaderClick()">
+      <span>{{ name | uppercase }}</span>
+      <oph-icon [class.caret-icon-flipped]="!isOpened" [name]="'caret-down-2'" [size]="24"></oph-icon>
+    </div>
+
+    <div *ngIf="isOpened">
+      <plan-detail-collapsible-list-item
+        *ngFor="let option of options"
+        class="item"
+        [option]="option"
+        [iconName]="iconName"
+      >
+        <ng-container *ngIf="name === 'conditions'; else triggers">
+          <plan-detail-condition-display
+            [option]="option"
+            [tasks]="tasks"
+            [unitOfMeasures]="unitOfMeasures"
+            [unitOfMeasuresMap]="unitOfMeasuresMap"
+          ></plan-detail-condition-display>
+        </ng-container>
+
+        <ng-template #triggers> triggers </ng-template>
+      </plan-detail-collapsible-list-item>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #empty>
+  <div class="empty-container">
+    <span>no {{ name | lowercase }} have been added yet</span>
+  </div>
+</ng-template>

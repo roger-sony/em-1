@@ -1,0 +1,41 @@
+@import 'src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.schedule-item {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+
+  &:first-child {
+    padding: 16px 0 12px 0;
+  }
+
+  &:last-child {
+    padding: 12px 0 16px 0;
+  }
+}
+
+.delete-button {
+  all: unset;
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+
+  .icon-delete {
+    &:hover {
+      color: $black-color;
+    }
+
+    &:before {
+      font-size: 24px;
+    }
+  }
+}

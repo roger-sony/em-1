@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+  <span>When</span>
+
+  <input
+    ophInput
+    [formControlName]="controlNames.DisplayName"
+    [matAutocomplete]="auto"
+    [matAutocompleteDisabled]="mobile"
+    (click)="onInputClick()"
+    placeholder="Select Noun"
+    [class.mobile-input]="mobile"
+  />
+
+  <span>is Updated</span>
+</form>
+
+<mat-autocomplete #auto="matAutocomplete">
+  <div class="autocomplete-list">
+    <mat-option *ngFor="let noun of filteredNouns$ | async; trackBy: trackByNounId" [value]="noun.subcategory">
+      {{ noun.subcategory }}
+    </mat-option>
+  </div>
+  <add-menu-separator></add-menu-separator>
+  <oph-menu-item
+    [fontSize]="14"
+    [iconName]="'plus-small'"
+    [text]="'Create new Noun'"
+    (click)="onCreateClick($event)"
+  ></oph-menu-item>
+</mat-autocomplete>

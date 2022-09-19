@@ -1,0 +1,18 @@
+<ng-container *ngIf="{chapter: chapter$ | async} as state">
+  <chapter-overview-duration-panel [chapter]="state.chapter"></chapter-overview-duration-panel>
+
+  <chapter-overview-watch-time-panel
+    [chapter]="state.chapter"
+    [dateRange]="dateRange$ | async"
+  ></chapter-overview-watch-time-panel>
+
+  <div class="overview-detail-container">
+    <chapter-detail-card [chapter]="state.chapter" class="item"></chapter-detail-card>
+    <nouns-activity-card [activity]="nounActivity$ | async" class="item"></nouns-activity-card>
+    <tasks-activity-card
+      class="item"
+      [tasks]="taskActivity$ | async"
+      [activityFilter]="activityFilter$ | async"
+    ></tasks-activity-card>
+  </div>
+</ng-container>

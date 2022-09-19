@@ -1,0 +1,18 @@
+<oph-form-field>
+  <oph-icon [name]="'sort'" [size]="24"></oph-icon>
+  <oph-select
+    [multiple]="true"
+    [placeholder]="'Filter by Chapter'"
+    [hideBorder]="true"
+    [value]="value"
+    (valueChange)="onValueChange($event)"
+  >
+    <oph-option
+      *ngFor="let chapter of chapters; trackBy: trackByChapterId"
+      [disabled]="chapter.id === defaultChapterId"
+      [value]="chapter.id"
+    >
+      {{ chapter.name }}
+    </oph-option>
+  </oph-select>
+</oph-form-field>

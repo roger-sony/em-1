@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.menu-items {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+
+  & > * {
+    margin-right: 8px;
+  }
+}
+
+.desktop-search-panel-shrinkable {
+  min-width: 0;
+}

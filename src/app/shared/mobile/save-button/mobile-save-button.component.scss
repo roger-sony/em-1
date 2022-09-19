@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.soft-save-button {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  height: 40px;
+  width: 40px;
+}

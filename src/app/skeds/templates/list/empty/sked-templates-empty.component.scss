@@ -1,0 +1,50 @@
+@import 'src/styles/variables';
+
+.templates-empty-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.templates-empty-icon {
+  opacity: 0.5;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 100px;
+  background-color: $black-color-lightest;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-templates {
+  opacity: 0.5;
+  font-family: $lato-font-family;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $black-color;
+  margin-top: 20px;
+}
+
+.create-templates-empty-button {
+  width: 150px;
+  height: 36px;
+  border-radius: 3px;
+  background-color: $white-color;
+  display: flex;
+  align-items: center;
+  color: $primary-color;
+  font-family: $lato-font-family;
+  font-size: 14px;
+  border: 1px solid $black-color-lightest;
+  cursor: pointer;
+}
+
+.templates-empty-create-button-icon {
+  margin-right: 5px;
+  margin-left: 1px;
+}
