@@ -21,8 +21,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {EditSkedDialogComponent} from 'src/app/shared/skeds/edit-sked-dialog/edit-sked-dialog.component';
 import {SkedTemplateUseDialogComponent} from '../shared/use-dialog/sked-template-use-dialog.component';
 import {SkedTemplateAbandonDialogComponent} from '../shared/abandon-dialog/sked-template-abandon-dialog.component';
-import {DateClickArg, EventDropArg, EventResizeDoneArg} from '@fullcalendar/interaction';
+import {DateClickArg, EventResizeDoneArg} from '@fullcalendar/interaction';
 import {selectActiveUserPrivileges} from '../../../core/store/active-user/active-user.selector';
+import {EventDropArg} from '@fullcalendar/angular';
 
 @Component({
   selector: 'sked-template-detail',

@@ -1,6 +1,14 @@
 :host {
   display: block;
 
+  .body-wrap {
+    .task-name-input {
+      position: absolute;
+      top: 4.1rem;
+      left: 18rem;
+    }
+  }
+
   .actions-wrap {
     display: flex;
     align-items: center;

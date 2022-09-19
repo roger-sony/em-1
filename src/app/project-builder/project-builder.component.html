@@ -24,17 +24,24 @@
             ></div>
           </mat-menu>
 
-          <div class="main-part" (click)="editProjectName(project)">
-            <span *ngIf="isProjectSelected(project) && project.title">{{ project.title }}</span>
-            <!--            <span *ngIf="!isProjectSelected(project) || (isProjectSelected(project) && !project.title)">UNTITLED</span>-->
-            <input placeholder="Enter task"
-                   *ngIf="isProjectSelected(project) === false"/>
+          <div *ngIf="!checkIfEditingProjectName()" class="main-part" (click)="setIsEditingProjectName()">
+            <span *ngIf="isProjectSelected(project)">{{ project.title }}</span>
+            <span *ngIf="!isProjectSelected(project) || (isProjectSelected(project) && !project.title)">UNTITLED </span>
+            <!--            Testing replacing project title with input -->
+            <!--            <input placeholder="Enter task" *ngIf="isProjectSelected(project) === false" />-->
 
             <!--            <mat-icon *ngIf="isProjectSelected(project)" (click)="editProjectName(project)">edit</mat-icon>-->
           </div>
+          <div *ngIf="checkIfEditingProjectName()" class="body-wrap" [formGroup]="form">
+            <mat-form-field class="task-name-input" appearance="outline">
+              <mat-label>Project Title</mat-label>
+              <input matInput formControlName="title" name="task-name"
+                     class="editing-task-name" />
+            </mat-form-field>
+          </div>
           <div class="actions-wrap">
             <mat-form-field appearance="outline" *ngIf="project.tasks?.length">
-              <input matInput placeholder="Seach"/>
+              <input matInput placeholder="Seach" />
               <mat-icon matPrefix>search</mat-icon>
             </mat-form-field>
             <button mat-button class="duplicate-project-button" *ngIf="isProjectSelected(project)">

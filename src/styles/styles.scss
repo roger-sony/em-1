@@ -589,3 +589,22 @@ button {
     stroke: $primary-color !important;
   }
 }
+
+.body-wrap {
+  .task-name-input {
+    overflow: visible !important;
+
+    .mat-form-field-wrapper {
+    }
+
+    .mat-form-field-flex {
+      background: white;
+      max-height: 33px !important;
+      height: 100%;
+      margin-top: 12px !important;
+      .mat-form-field-infix {
+        padding: 0.5rem 0 !important;
+      }
+    }
+  }
+}

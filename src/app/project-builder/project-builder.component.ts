@@ -20,8 +20,9 @@ import {
   UpdateCurrentProjectAction,
 } from '../core/store/project-builder/project-builder.action';
 import {EditTaskComponent} from './edit-task/edit-task.component';
-import {RenameProjectComponent} from './rename-project/rename-project.component';
+// import {RenameProjectComponent} from './rename-project/rename-project.component';
 import {MatMenuTrigger} from '@angular/material/menu';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'project-builder',
@@ -57,7 +58,25 @@ export class ProjectBuilderComponent implements OnDestroy {
     '#834DAE',
   ];
 
-  constructor(private store$: Store, private dialog: MatDialog, private cdRef: ChangeDetectorRef) {}
+  public readonly form: FormGroup = new FormGroup({
+    title: new FormControl('', Validators.required),
+  });
+
+  public isEditingProjectName: boolean = false;
+
+  constructor(
+    // @Inject(MAT_DIALOG_DATA) data: {title: string},
+    private store$: Store,
+    private dialog: MatDialog,
+    private cdRef: ChangeDetectorRef // private data: { //   title: string; // }
+  ) {
+    // this.form.get('title')?.patchValue(this.form);
+    // console.log(this.form.get('title'));
+  }
+
+  save() {
+    console.log(this.form.get('title')?.value);
+  }
 
   ngOnDestroy(): void {
     this.store$.dispatch(new ClearProjectBuilderAction());
@@ -167,26 +186,63 @@ export class ProjectBuilderComponent implements OnDestroy {
     );
   }
 
-  editProjectName(project: ProjectTemplateModel) {
-    this.dialog
-      .open(RenameProjectComponent, {
-        ...new MatDialogConfig(),
-        data: {
-          title: `${project.title}`,
-        },
-      })
-      .afterClosed()
-      .subscribe(res => {
-        if (res) {
-          project.title = res;
-          this.store$.dispatch(new UpdateCurrentProjectAction({project}));
+  // editProjectName(project: ProjectTemplateModel) {
+  //   this.dialog
+  //     .open(RenameProjectComponent, {
+  //       ...new MatDialogConfig(),
+  //       data: {
+  //         title: `${project.title}`,
+  //       },
+  //     })
+  //     .afterClosed()
+  //     .subscribe(res => {
+  //       if (res) {
+  //         project.title = res;
+  //         this.store$.dispatch(new UpdateCurrentProjectAction({project}));
+  //
+  //         setTimeout(() => {
+  //           this.store$.dispatch(new SetSaveInProgressAction({saveInProgress: true}));
+  //           this.store$.dispatch(new SaveCurrentProjectAction({project}));
+  //         }, 2500);
+  //       }
+  //     });
+  // }
 
-          setTimeout(() => {
-            this.store$.dispatch(new SetSaveInProgressAction({saveInProgress: true}));
-            this.store$.dispatch(new SaveCurrentProjectAction({project}));
-          }, 2500);
-        }
-      });
+  editProjectName(project: ProjectTemplateModel) {
+    // {
+    // ...new MatDialogConfig(),
+    //   data: {
+    //     title: `${project.title}`,
+    //   },
+    // }
+
+    if (this.form.get('title')?.value) {
+      project.title = this.form.get('title')?.value;
+      this.store$.dispatch(new UpdateCurrentProjectAction({project}));
+
+      setTimeout(() => {
+        this.store$.dispatch(new SetSaveInProgressAction({saveInProgress: true}));
+        this.store$.dispatch(new SaveCurrentProjectAction({project}));
+      }, 2500);
+    }
+  }
+
+  checkIfEditingProjectName() {
+    return this.isEditingProjectName;
+  }
+
+  setIsEditingProjectName() {
+    this.isEditingProjectName = true;
+  }
+
+  setIsNotEditingProjectName() {
+    this.isEditingProjectName = false;
+  }
+
+  toggleEditingProjectName(project: ProjectTemplateModel) {
+    this.isEditingProjectName = !this.isEditingProjectName;
+
+    this.editProjectName(project);
   }
 
   onColorMenuClick(project: ProjectTemplateModel) {

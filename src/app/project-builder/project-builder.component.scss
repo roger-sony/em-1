@@ -67,6 +67,16 @@
                 }
               }
 
+              .body-wrap {
+                .mat-form-field-appearance-outline .mat-form-field-flex {
+                  background-color: white;
+                }
+
+                .editing-task-name {
+                  color: #a3a099;
+                }
+              }
+
               .actions-wrap {
                 margin-left: auto;
                 align-items: center;
@@ -140,7 +150,6 @@
                 .create-project-button {
                   display: flex;
                   align-items: center;
-                  width: 128px;
                   height: 34px;
                   padding: 6px 10px 6px 6px;
                   background: #5d4037;
@@ -460,3 +469,9 @@
     }
   }
 }
+
+
+
+//.mat-form-field-appearance-outline .mat-form-field-flex {
+//  background-color: white !important;
+//}
